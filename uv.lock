@@ -445,6 +445,14 @@ wheels = [
 ]
 
 [[package]]
+name = "puepy"
+version = "0.6.5"
+source = { path = "static/puepy-0.6.5-py3-none-any.whl" }
+wheels = [
+    { filename = "puepy-0.6.5-py3-none-any.whl", hash = "sha256:d41e19193b39c01d4af87656bd3335bdcf23c48c4b6f79e0f3c50b6581e7f711" },
+]
+
+[[package]]
 name = "pure-eval"
 version = "0.2.3"
 source = { registry = "https://pypi.org/simple" }
@@ -563,6 +571,7 @@ name = "pyscript-review"
 version = "2.0.0"
 source = { editable = "." }
 dependencies = [
+    { name = "puepy" },
     { name = "pydantic" },
     { name = "pyyaml" },
     { name = "taskipy" },
@@ -585,6 +594,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "puepy", path = "static/puepy-0.6.5-py3-none-any.whl" },
     { name = "pydantic", specifier = ">=2.0.0" },
     { name = "pyyaml", specifier = ">=6.0.0" },
     { name = "taskipy", specifier = ">=1.12.0" },

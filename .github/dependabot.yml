@@ -17,3 +17,7 @@ updates:
     schedule:
       interval: weekly
     target-branch: main
+    groups:
+      actions:
+        patterns:
+          - "*"
