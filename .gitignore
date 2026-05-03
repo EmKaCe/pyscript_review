@@ -81,7 +81,6 @@ Desktop.ini
 
 # Project-specific ignores
 .sisyphus/
-.sisyphus.backup/
 .opencode/
 .codeboarding/
 

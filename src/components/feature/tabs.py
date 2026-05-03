@@ -8,6 +8,7 @@ from puepy import Component, Prop, t
 @t.component()
 class SciProTabs(Component):
     """Container for a tabbed interface."""
+
     component_name = "sci-pro-tabs"
     props = [Prop("value", "Active tab value", str, "")]
 
@@ -19,16 +20,20 @@ class SciProTabs(Component):
 @t.component()
 class SciProTabsList(Component):
     """Container for tab triggers."""
+
     component_name = "sci-pro-tabs-list"
 
     def populate(self) -> None:
-        with t.div(class_name="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-full mb-4"):
+        with t.div(
+            class_name="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground w-full mb-4"
+        ):
             self.insert_slot()
 
 
 @t.component()
 class SciProTabsTrigger(Component):
     """Button to switch tabs."""
+
     component_name = "sci-pro-tabs-trigger"
     props = [Prop("value", "Value associated with this tab", str, "")]
 
@@ -39,13 +44,10 @@ class SciProTabsTrigger(Component):
 
         classes = [
             "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 flex-1",
-            "bg-background text-foreground shadow-sm" if is_active else "hover:bg-background/50"
+            "bg-background text-foreground shadow-sm" if is_active else "hover:bg-background/50",
         ]
 
-        with t.button(
-            class_name=classes,
-            on_click=lambda _e: self._on_click(value)
-        ):
+        with t.button(class_name=classes, on_click=lambda _e: self._on_click(value)):
             self.insert_slot()
 
     def _on_click(self, value: str) -> None:
@@ -59,6 +61,7 @@ class SciProTabsTrigger(Component):
 @t.component()
 class SciProTabsContent(Component):
     """Panel containing tab content."""
+
     component_name = "sci-pro-tabs-content"
     props = [Prop("value", "Value associated with this panel", str, "")]
 
@@ -67,5 +70,7 @@ class SciProTabsContent(Component):
         active_value = self.parent.props_values.get("value")  # Root Tabs component
 
         if value == active_value:
-            with t.div(class_name="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"):
+            with t.div(
+                class_name="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            ):
                 self.insert_slot()

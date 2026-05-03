@@ -68,7 +68,8 @@ def download_text(text: str, filename: str) -> None:
         filename: The desired download filename, e.g. ``"notes.txt"``.
     """
     try:
-        from js import Blob  # type: ignore[import-untyped]
+        from js import JSON, Blob  # type: ignore[import-untyped]
+        from pyodide.ffi import to_js
     except ImportError:
         warnings.warn(
             "download_text: js module not available (no-op outside browser)",
@@ -76,7 +77,8 @@ def download_text(text: str, filename: str) -> None:
         )
         return
 
-    blob = Blob.new([text], {"type": "text/plain;charset=utf-8"})
+    options = JSON.parse('{"type": "text/plain;charset=utf-8"}')
+    blob = Blob.new(to_js([text]), options)
     download_blob(blob, filename)
 
 
@@ -97,7 +99,8 @@ def download_json(data: Any, filename: str) -> None:
             ``json.dumps``). Only raised in browser mode.
     """
     try:
-        from js import Blob  # type: ignore[import-untyped]
+        from js import JSON, Blob  # type: ignore[import-untyped]
+        from pyodide.ffi import to_js
     except ImportError:
         warnings.warn(
             "download_json: js module not available (no-op outside browser)",
@@ -106,5 +109,6 @@ def download_json(data: Any, filename: str) -> None:
         return
 
     text = json.dumps(data, indent=2, ensure_ascii=False)
-    blob = Blob.new([text], {"type": "application/json;charset=utf-8"})
+    options = JSON.parse('{"type": "application/json;charset=utf-8"}')
+    blob = Blob.new(to_js([text]), options)
     download_blob(blob, filename)

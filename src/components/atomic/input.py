@@ -112,7 +112,10 @@ class SciProInput(Component):
             classes.append("pr-9")
 
         extra_classes = self.attrs.get("class_name", "")
-        input_attrs: dict[str, object] = {"type": input_type, "class_name": classes + [extra_classes]}
+        input_attrs: dict[str, object] = {
+            "type": input_type,
+            "class_name": classes + [extra_classes],
+        }
 
         if placeholder:
             input_attrs["placeholder"] = placeholder

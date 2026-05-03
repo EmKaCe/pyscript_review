@@ -82,18 +82,29 @@ class SettingsPage(BasePage):
 
     def _render_theme_card(self, theme_id: str, icon: str, label: str, is_active: bool) -> None:
         """Render a clickable card for a specific theme."""
-        active_cls = " ring-2 ring-primary border-primary bg-primary/5" if is_active else " hover:border-primary/50"
+        active_cls = (
+            " ring-2 ring-primary border-primary bg-primary/5"
+            if is_active
+            else " hover:border-primary/50"
+        )
 
         with t.div(
             class_name=f"relative cursor-pointer transition-all duration-200 flex flex-col items-center justify-center p-6 border rounded-xl gap-3 {active_cls}",
-            on_click=lambda _e, t=theme_id: self._on_theme_change(t)
+            on_click=lambda _e, t=theme_id: self._on_theme_change(t),
         ):
-            with t.div(class_name=f"p-3 rounded-full { 'bg-primary text-primary-foreground' if is_active else 'bg-muted text-muted-foreground' }"):
+            with t.div(
+                class_name=f"p-3 rounded-full {'bg-primary text-primary-foreground' if is_active else 'bg-muted text-muted-foreground'}"
+            ):
                 t.sci_pro_icon(name=icon, size="md")
-            t.span(label, class_name=f"font-semibold text-sm { 'text-primary' if is_active else 'text-muted-foreground' }")
+            t.span(
+                label,
+                class_name=f"font-semibold text-sm {'text-primary' if is_active else 'text-muted-foreground'}",
+            )
             if is_active:
                 with t.div(class_name="absolute top-2 right-2"):
-                    t.sci_pro_badge(variant="default", label="Active", class_name="scale-75 origin-top-right")
+                    t.sci_pro_badge(
+                        variant="default", label="Active", class_name="scale-75 origin-top-right"
+                    )
 
     def _render_review_mode_section(self) -> None:
         """Review Mode selector."""
@@ -191,11 +202,21 @@ class SettingsPage(BasePage):
                 t.sci_pro_icon(name="calendar", size="sm", class_name="text-muted-foreground")
                 t.h2("Semester", class_name="text-lg font-semibold")
             with t.sci_pro_card(class_name="overflow-hidden border-primary/20"):
-                with t.div(class_name="bg-primary/5 px-6 py-8 flex flex-col items-center justify-center text-center"):
-                    t.span("Current Academic Period", class_name="text-xs uppercase tracking-widest text-muted-foreground font-bold mb-2")
-                    t.span(semester, class_name="text-4xl font-black tracking-tighter text-primary font-mono")
+                with t.div(
+                    class_name="bg-primary/5 px-6 py-8 flex flex-col items-center justify-center text-center"
+                ):
+                    t.span(
+                        "Current Academic Period",
+                        class_name="text-xs uppercase tracking-widest text-muted-foreground font-bold mb-2",
+                    )
+                    t.span(
+                        semester,
+                        class_name="text-4xl font-black tracking-tighter text-primary font-mono",
+                    )
                     with t.p(class_name="mt-4 text-xs text-muted-foreground max-w-[240px]"):
-                        t("This period is automatically determined based on the current date and system configuration.")
+                        t(
+                            "This period is automatically determined based on the current date and system configuration."
+                        )
 
     # Event Handlers...
     def _on_theme_change(self, mode: str) -> None:

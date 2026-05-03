@@ -49,11 +49,16 @@ from src.components.atomic import (  # noqa: F401
     SciProTooltip,
 )
 from src.components.feature import (  # noqa: F401
+    SciProCategoryPanel,
+    SciProCriteriaList,
     SciProDropdownMenu,
     SciProEvaluationOutput,
     SciProGradingSidebar,
     SciProHeader,
+    SciProImportReviewCard,
+    SciProLoadReviewCard,
     SciProModeToggle,
+    SciProNewReviewCard,
     SciProPopover,
     SciProReviewFooter,
     SciProSidebarSheet,

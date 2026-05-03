@@ -1,6 +1,7 @@
 """Feature composite components — 14 Basecoat JS-wrapping SciPro composites."""
 
 from .category_panel import SciProCategoryPanel
+from .criteria_list import SciProCriteriaList
 from .dropdown import SciProDropdownMenu
 from .evaluation_output import SciProEvaluationOutput
 from .grading_sidebar import SciProGradingSidebar
@@ -22,6 +23,7 @@ from .toast import SciProToaster, show_toast
 
 __all__ = [
     "SciProCategoryPanel",
+    "SciProCriteriaList",
     "SciProDropdownMenu",
     "SciProEvaluationOutput",
     "SciProGradingSidebar",

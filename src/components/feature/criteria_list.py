@@ -17,7 +17,10 @@ class SciProCriteriaList(Component):
         bundle = self.application.state.get("criteria_bundle")
         if not bundle:
             with t.div(class_name="rounded-md border border-dashed p-8 text-center"):
-                t.p("Select an assignment to view criteria", class_name="text-sm text-muted-foreground")
+                t.p(
+                    "Select an assignment to view criteria",
+                    class_name="text-sm text-muted-foreground",
+                )
             return
 
         rs = ReviewState(self.application.state)
@@ -31,5 +34,5 @@ class SciProCriteriaList(Component):
                         t.sci_pro_category_panel(
                             category=cat,
                             category_key=cat.slug,
-                            selections=rs.category_selections.get(cat.slug)
+                            selections=rs.category_selections.get(cat.slug),
                         )

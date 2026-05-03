@@ -24,7 +24,13 @@ class BasePage(Page):
     page-specific content into the app shell.
     """
 
-    redraw_on_app_state_changes = ["mode", "theme", "sidebar_open", "assignment_id", "criteria_bundle"]
+    redraw_on_app_state_changes = [
+        "mode",
+        "theme",
+        "sidebar_open",
+        "assignment_id",
+        "criteria_bundle",
+    ]
 
     def populate(self) -> None:
         """Render the full app shell: sidebar, header, main content."""
@@ -39,7 +45,6 @@ class BasePage(Page):
             self.application.state["active_page"] = "settings"
         elif self._route == "/docs":
             self.application.state["active_page"] = "docs"
-
 
         with t.div(
             class_name="flex h-screen w-screen overflow-hidden bg-background text-foreground font-sans"
@@ -92,8 +97,7 @@ class BasePage(Page):
                 t.span(label)
 
     def _render_criteria_section(self) -> None:
-        """Render criteria navigation when on the review page.
-        """
+        """Render criteria navigation when on the review page."""
         if self._route != "/review":
             return
 
@@ -121,7 +125,7 @@ class BasePage(Page):
                 href=f"#category-{slug}",
                 class_name="flex items-center gap-2 w-full px-3 py-1.5 rounded-md text-sm text-sidebar-foreground/70 hover:text-sidebar-foreground transition-colors",
                 on_click=self._on_criteria_click,
-                data_slug=slug
+                data_slug=slug,
             ):
                 t.span("›", class_name="text-sidebar-foreground/50")
                 with t.span(class_name="truncate"):

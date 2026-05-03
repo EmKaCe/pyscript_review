@@ -159,8 +159,6 @@ def parse_criteria_yaml(
     )
 
 
-
-
 def parse_assignments_yaml(data: dict[str, Any] | None) -> list[AssignmentConfig]:
     """Parse assignments YAML data into a list of AssignmentConfig.
 
@@ -288,10 +286,7 @@ def get_criteria_for_assignment(
             assignment_data = _read_yaml(criteria_dir.rstrip("/") + "/" + crit_rel) or {}
 
             # 3. Merge data
-            merged_data: dict[str, Any] = {
-                "general": {},
-                "assignment_specific": []
-            }
+            merged_data: dict[str, Any] = {"general": {}, "assignment_specific": []}
 
             # Merge general sections (dicts)
             merged_data["general"].update(general_data.get("general", {}))
@@ -299,7 +294,9 @@ def get_criteria_for_assignment(
 
             # Merge assignment_specific sections (lists)
             merged_data["assignment_specific"].extend(general_data.get("assignment_specific", []))
-            merged_data["assignment_specific"].extend(assignment_data.get("assignment_specific", []))
+            merged_data["assignment_specific"].extend(
+                assignment_data.get("assignment_specific", [])
+            )
 
             return parse_criteria_yaml(merged_data, assignment.id, assignment.name)
     return None

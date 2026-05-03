@@ -38,9 +38,27 @@ class SciProCategoryPanel(Component):
 
         # Sentiment group configurations
         sentiment_groups = [
-            ("positive", "Positive Aspects", "i-lucide-check-circle", "text-green-600", "bg-green-50/50 border-green-100"),
-            ("neutral", "Observations", "i-lucide-info", "text-blue-600", "bg-blue-50/50 border-blue-100"),
-            ("negative", "Areas for Improvement", "i-lucide-alert-circle", "text-red-600", "bg-red-50/50 border-red-100"),
+            (
+                "positive",
+                "Positive Aspects",
+                "i-lucide-check-circle",
+                "text-green-600",
+                "bg-green-50/50 border-green-100",
+            ),
+            (
+                "neutral",
+                "Observations",
+                "i-lucide-info",
+                "text-blue-600",
+                "bg-blue-50/50 border-blue-100",
+            ),
+            (
+                "negative",
+                "Areas for Improvement",
+                "i-lucide-alert-circle",
+                "text-red-600",
+                "bg-red-50/50 border-red-100",
+            ),
         ]
 
         with t.div(class_name="space-y-4"):
@@ -52,7 +70,10 @@ class SciProCategoryPanel(Component):
                 with t.div(class_name=f"rounded-lg border p-3 {section_style}"):
                     with t.div(class_name="flex items-center gap-2 mb-3"):
                         t.i(class_name=f"{icon} {icon_color} size-4")
-                        t.span(label, class_name="text-xs font-bold uppercase tracking-wider opacity-70")
+                        t.span(
+                            label,
+                            class_name="text-xs font-bold uppercase tracking-wider opacity-70",
+                        )
 
                     with t.div(class_name="space-y-4"):
                         for mp in points:
@@ -63,10 +84,14 @@ class SciProCategoryPanel(Component):
                                         point_id = sp.id or sp.text
                                         is_checked = point_id in checked_items
 
-                                        with t.label(class_name="flex items-start gap-2 bg-background/30 p-1.5 rounded hover:bg-background/50 cursor-pointer transition-colors"):
+                                        with t.label(
+                                            class_name="flex items-start gap-2 bg-background/30 p-1.5 rounded hover:bg-background/50 cursor-pointer transition-colors"
+                                        ):
                                             t.sci_pro_checkbox(
                                                 checked=is_checked,
-                                                on_change=lambda _e, pid=point_id: self._on_toggle(category_slug, pid)
+                                                on_change=lambda _e, pid=point_id: self._on_toggle(
+                                                    category_slug, pid
+                                                ),
                                             )
                                             t.span(sp.text, class_name="text-sm leading-snug")
 
@@ -77,7 +102,7 @@ class SciProCategoryPanel(Component):
                     placeholder="Specific observations...",
                     value=notes,
                     on_blur=lambda e: self._on_comment(category_slug, e.target.value),
-                    class_name="text-xs"
+                    class_name="text-xs",
                 )
 
     def _on_toggle(self, category_slug: str, point_id: str) -> None:

@@ -193,6 +193,7 @@ class ReviewState:
     def export_json(self) -> str:
         """Export the current session as a JSON string."""
         import json
+
         session = self.to_session()
         data = session_to_dict(session)
         return json.dumps(data, indent=2)

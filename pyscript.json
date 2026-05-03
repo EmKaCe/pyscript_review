@@ -91,9 +91,9 @@
   "packages": [
     "pydantic",
     "pyyaml",
-    "static/annotated_types-0.7.0-py3-none-any.whl",
-    "static/typing_extensions-4.15.0rc1-py3-none-any.whl",
-    "static/puepy-0.6.5-py3-none-any.whl"
+    "./static/annotated_types-0.7.0-py3-none-any.whl",
+    "./static/typing_extensions-4.15.0rc1-py3-none-any.whl",
+    "./static/puepy-0.6.5-py3-none-any.whl"
   ],
   "js_modules": {
     "main": {

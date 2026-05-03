@@ -26,10 +26,13 @@ class SciProEvaluationOutput(Component):
             return
         try:
             from js import window
+
             window.navigator.clipboard.writeText(text)
             self.state["copied"] = True
             self._timer_manager.clear_all()
-            self._timer_manager.set_timeout(lambda: self.state.update({"copied": False}) or self.page.redraw_tag(self), 2000)
+            self._timer_manager.set_timeout(
+                lambda: self.state.update({"copied": False}) or self.page.redraw_tag(self), 2000
+            )
             self.page.redraw_tag(self)
         except Exception:
             pass
@@ -50,7 +53,9 @@ class SciProEvaluationOutput(Component):
                     t.sci_pro_card_title("Evaluation Report", class_name="text-base")
                     with t.div(class_name="flex items-center gap-2"):
                         if report_text:
-                            with t.sci_pro_button(variant="outline", size="sm", on_click=self._on_copy):
+                            with t.sci_pro_button(
+                                variant="outline", size="sm", on_click=self._on_copy
+                            ):
                                 if copied:
                                     t.i(class_name="i-lucide-check size-3.5 mr-1 text-green-600")
                                     t("Copied")
@@ -67,7 +72,7 @@ class SciProEvaluationOutput(Component):
                     t.sci_pro_textarea(
                         value=report_text,
                         readonly=True,
-                        class_name="min-h-64 resize-y font-mono text-sm leading-relaxed"
+                        class_name="min-h-64 resize-y font-mono text-sm leading-relaxed",
                     )
                 else:
                     with t.div(class_name="flex flex-col items-center gap-2 py-8 text-center"):

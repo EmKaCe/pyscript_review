@@ -65,6 +65,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../guides/grading.html">Grading System Guide</a></li>
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../guides/deployment.html">Deployment Guide</a></li>
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../architecture.html">Architecture</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../user-guide.html">User Guide</a></li>
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../yaml-content.html">YAML Content Management</a></li>
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../contributing.html">Contributing to SciPro Review</a></li>
 </ul>
@@ -320,310 +321,311 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="193">    <span class="k">def</span><span class="w"> </span><span class="nf">export_json</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span data-line="194"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Export the current session as a JSON string.&quot;&quot;&quot;</span>
 </span><span data-line="195">        <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-</span><span data-line="196">        <span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_session</span><span class="p">()</span>
-</span><span data-line="197">        <span class="n">data</span> <span class="o">=</span> <span class="n">session_to_dict</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
-</span><span data-line="198">        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+</span><span data-line="196">
+</span><span data-line="197">        <span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_session</span><span class="p">()</span>
+</span><span data-line="198">        <span class="n">data</span> <span class="o">=</span> <span class="n">session_to_dict</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+</span><span data-line="199">        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
 
-</span><span data-line="199">
-</span><span data-line="200">    <span class="c1"># -- Snapshot helpers ------------------------------------------------------</span>
-</span><span data-line="201">
-</span><span data-line="202">    <span class="k">def</span><span class="w"> </span><span class="nf">_snapshot</span><span class="p">(</span>
-</span><span data-line="203">        <span class="bp">self</span><span class="p">,</span>
-</span><span data-line="204">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-</span><span data-line="205"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a deep-copied, serialized snapshot of mutable review data.</span>
-</span><span data-line="206">
-</span><span data-line="207"><span class="sd">        Snapshot covers category_selections (serialized to dicts) and</span>
-</span><span data-line="208"><span class="sd">        grading_inputs (dict of float). Both are plain JSON-safe values.</span>
-</span><span data-line="209">
-</span><span data-line="210"><span class="sd">        Returns:</span>
-</span><span data-line="211"><span class="sd">            A dict with keys &#39;category_selections&#39; and &#39;grading_inputs&#39;.</span>
-</span><span data-line="212"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="213">        <span class="n">selections</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span data-line="214">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">cs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span data-line="215">            <span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-</span><span data-line="216">                <span class="s2">&quot;checked_items&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">checked_items</span><span class="p">),</span>
-</span><span data-line="217">                <span class="s2">&quot;notes&quot;</span><span class="p">:</span> <span class="n">cs</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
-</span><span data-line="218">            <span class="p">}</span>
-</span><span data-line="219">        <span class="k">return</span> <span class="p">{</span>
-</span><span data-line="220">            <span class="s2">&quot;category_selections&quot;</span><span class="p">:</span> <span class="n">selections</span><span class="p">,</span>
-</span><span data-line="221">            <span class="s2">&quot;grading_inputs&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">),</span>
-</span><span data-line="222">        <span class="p">}</span>
-</span><span data-line="223">
-</span><span data-line="224">    <span class="k">def</span><span class="w"> </span><span class="nf">_restore_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="225"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Restore mutable review state from a snapshot dict.</span>
-</span><span data-line="226">
-</span><span data-line="227"><span class="sd">        Args:</span>
-</span><span data-line="228"><span class="sd">            snapshot: Dict with &#39;category_selections&#39; and &#39;grading_inputs&#39; keys.</span>
-</span><span data-line="229"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="230">        <span class="n">selections</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CategorySelections</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span data-line="231">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">snapshot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;category_selections&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span data-line="232">            <span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span>
-</span><span data-line="233">                <span class="n">checked_items</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;checked_items&quot;</span><span class="p">,</span> <span class="p">[])),</span>
-</span><span data-line="234">                <span class="n">notes</span><span class="o">=</span><span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;notes&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-</span><span data-line="235">            <span class="p">)</span>
-</span><span data-line="236">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;category_selections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">selections</span>
-</span><span data-line="237">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">,</span> <span class="p">{}))</span>
-</span><span data-line="238">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-</span><span data-line="239">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-</span><span data-line="240">
-</span><span data-line="241">    <span class="c1"># -- Undo / redo ----------------------------------------------------------</span>
-</span><span data-line="242">
+</span><span data-line="200">
+</span><span data-line="201">    <span class="c1"># -- Snapshot helpers ------------------------------------------------------</span>
+</span><span data-line="202">
+</span><span data-line="203">    <span class="k">def</span><span class="w"> </span><span class="nf">_snapshot</span><span class="p">(</span>
+</span><span data-line="204">        <span class="bp">self</span><span class="p">,</span>
+</span><span data-line="205">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+</span><span data-line="206"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a deep-copied, serialized snapshot of mutable review data.</span>
+</span><span data-line="207">
+</span><span data-line="208"><span class="sd">        Snapshot covers category_selections (serialized to dicts) and</span>
+</span><span data-line="209"><span class="sd">        grading_inputs (dict of float). Both are plain JSON-safe values.</span>
+</span><span data-line="210">
+</span><span data-line="211"><span class="sd">        Returns:</span>
+</span><span data-line="212"><span class="sd">            A dict with keys &#39;category_selections&#39; and &#39;grading_inputs&#39;.</span>
+</span><span data-line="213"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="214">        <span class="n">selections</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span data-line="215">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">cs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="216">            <span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="217">                <span class="s2">&quot;checked_items&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">checked_items</span><span class="p">),</span>
+</span><span data-line="218">                <span class="s2">&quot;notes&quot;</span><span class="p">:</span> <span class="n">cs</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
+</span><span data-line="219">            <span class="p">}</span>
+</span><span data-line="220">        <span class="k">return</span> <span class="p">{</span>
+</span><span data-line="221">            <span class="s2">&quot;category_selections&quot;</span><span class="p">:</span> <span class="n">selections</span><span class="p">,</span>
+</span><span data-line="222">            <span class="s2">&quot;grading_inputs&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">),</span>
+</span><span data-line="223">        <span class="p">}</span>
+</span><span data-line="224">
+</span><span data-line="225">    <span class="k">def</span><span class="w"> </span><span class="nf">_restore_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="226"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Restore mutable review state from a snapshot dict.</span>
+</span><span data-line="227">
+</span><span data-line="228"><span class="sd">        Args:</span>
+</span><span data-line="229"><span class="sd">            snapshot: Dict with &#39;category_selections&#39; and &#39;grading_inputs&#39; keys.</span>
+</span><span data-line="230"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="231">        <span class="n">selections</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CategorySelections</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span data-line="232">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">snapshot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;category_selections&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="233">            <span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span>
+</span><span data-line="234">                <span class="n">checked_items</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;checked_items&quot;</span><span class="p">,</span> <span class="p">[])),</span>
+</span><span data-line="235">                <span class="n">notes</span><span class="o">=</span><span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;notes&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+</span><span data-line="236">            <span class="p">)</span>
+</span><span data-line="237">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;category_selections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">selections</span>
+</span><span data-line="238">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+</span><span data-line="239">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span data-line="240">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span data-line="241">
+</span><span data-line="242">    <span class="c1"># -- Undo / redo ----------------------------------------------------------</span>
+</span><span data-line="243">
 <div class="viewcode-block" id="ReviewState.push_undo">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.push_undo">[docs]</a>
-</span><span data-line="243">    <span class="k">def</span><span class="w"> </span><span class="nf">push_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="244"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Push current review state snapshot onto the undo stack.</span>
-</span><span data-line="245">
-</span><span data-line="246"><span class="sd">        The redo stack is cleared (new action invalidates redo history).</span>
-</span><span data-line="247"><span class="sd">        When the undo stack exceeds _MAX_UNDO (50), the oldest entry is</span>
-</span><span data-line="248"><span class="sd">        evicted.</span>
-</span><span data-line="249"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="250">        <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span><span class="p">())</span>
-</span><span data-line="251">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MAX_UNDO</span><span class="p">:</span>
-</span><span data-line="252">            <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span data-line="253">        <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-</span><span data-line="254">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-</span><span data-line="255">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
+</span><span data-line="244">    <span class="k">def</span><span class="w"> </span><span class="nf">push_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="245"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Push current review state snapshot onto the undo stack.</span>
+</span><span data-line="246">
+</span><span data-line="247"><span class="sd">        The redo stack is cleared (new action invalidates redo history).</span>
+</span><span data-line="248"><span class="sd">        When the undo stack exceeds _MAX_UNDO (50), the oldest entry is</span>
+</span><span data-line="249"><span class="sd">        evicted.</span>
+</span><span data-line="250"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="251">        <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span><span class="p">())</span>
+</span><span data-line="252">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MAX_UNDO</span><span class="p">:</span>
+</span><span data-line="253">            <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span data-line="254">        <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</span><span data-line="255">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span data-line="256">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-</span><span data-line="256">
+</span><span data-line="257">
 <div class="viewcode-block" id="ReviewState.undo">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.undo">[docs]</a>
-</span><span data-line="257">    <span class="k">def</span><span class="w"> </span><span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="258"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Revert the last mutable action.</span>
-</span><span data-line="259">
-</span><span data-line="260"><span class="sd">        The current state is pushed onto the redo stack, then the most</span>
-</span><span data-line="261"><span class="sd">        recent undo snapshot is restored.</span>
-</span><span data-line="262"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="263">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">:</span>
-</span><span data-line="264">            <span class="k">return</span>
-</span><span data-line="265">        <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span><span class="p">())</span>
-</span><span data-line="266">        <span class="n">snapshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-</span><span data-line="267">        <span class="bp">self</span><span class="o">.</span><span class="n">_restore_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-</span><span data-line="268">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-</span><span data-line="269">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+</span><span data-line="258">    <span class="k">def</span><span class="w"> </span><span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="259"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Revert the last mutable action.</span>
+</span><span data-line="260">
+</span><span data-line="261"><span class="sd">        The current state is pushed onto the redo stack, then the most</span>
+</span><span data-line="262"><span class="sd">        recent undo snapshot is restored.</span>
+</span><span data-line="263"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="264">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">:</span>
+</span><span data-line="265">            <span class="k">return</span>
+</span><span data-line="266">        <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span><span class="p">())</span>
+</span><span data-line="267">        <span class="n">snapshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span data-line="268">        <span class="bp">self</span><span class="o">.</span><span class="n">_restore_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+</span><span data-line="269">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span data-line="270">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
 
-</span><span data-line="270">
+</span><span data-line="271">
 <div class="viewcode-block" id="ReviewState.redo">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.redo">[docs]</a>
-</span><span data-line="271">    <span class="k">def</span><span class="w"> </span><span class="nf">redo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="272"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Re-apply the most recently undone action.</span>
-</span><span data-line="273">
-</span><span data-line="274"><span class="sd">        The current state is pushed onto the undo stack, then the most</span>
-</span><span data-line="275"><span class="sd">        recent redo snapshot is restored.</span>
-</span><span data-line="276"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="277">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="p">:</span>
-</span><span data-line="278">            <span class="k">return</span>
-</span><span data-line="279">        <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span><span class="p">())</span>
-</span><span data-line="280">        <span class="n">snapshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-</span><span data-line="281">        <span class="bp">self</span><span class="o">.</span><span class="n">_restore_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
-</span><span data-line="282">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-</span><span data-line="283">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+</span><span data-line="272">    <span class="k">def</span><span class="w"> </span><span class="nf">redo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="273"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Re-apply the most recently undone action.</span>
+</span><span data-line="274">
+</span><span data-line="275"><span class="sd">        The current state is pushed onto the undo stack, then the most</span>
+</span><span data-line="276"><span class="sd">        recent redo snapshot is restored.</span>
+</span><span data-line="277"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="278">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="p">:</span>
+</span><span data-line="279">            <span class="k">return</span>
+</span><span data-line="280">        <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_snapshot</span><span class="p">())</span>
+</span><span data-line="281">        <span class="n">snapshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span data-line="282">        <span class="bp">self</span><span class="o">.</span><span class="n">_restore_snapshot</span><span class="p">(</span><span class="n">snapshot</span><span class="p">)</span>
+</span><span data-line="283">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span data-line="284">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
 
-</span><span data-line="284">
+</span><span data-line="285">
 <div class="viewcode-block" id="ReviewState.clear_history">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.clear_history">[docs]</a>
-</span><span data-line="285">    <span class="k">def</span><span class="w"> </span><span class="nf">clear_history</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="286"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear both undo and redo stacks.&quot;&quot;&quot;</span>
-</span><span data-line="287">        <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-</span><span data-line="288">        <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-</span><span data-line="289">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span data-line="290">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
+</span><span data-line="286">    <span class="k">def</span><span class="w"> </span><span class="nf">clear_history</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="287"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear both undo and redo stacks.&quot;&quot;&quot;</span>
+</span><span data-line="288">        <span class="bp">self</span><span class="o">.</span><span class="n">_undo_stack</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</span><span data-line="289">        <span class="bp">self</span><span class="o">.</span><span class="n">_redo_stack</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</span><span data-line="290">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_undo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span data-line="291">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;can_redo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-</span><span data-line="291">
-</span><span data-line="292">    <span class="c1"># -- Checkbox toggling ----------------------------------------------------</span>
-</span><span data-line="293">
+</span><span data-line="292">
+</span><span data-line="293">    <span class="c1"># -- Checkbox toggling ----------------------------------------------------</span>
+</span><span data-line="294">
 <div class="viewcode-block" id="ReviewState.toggle_checkbox">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.toggle_checkbox">[docs]</a>
-</span><span data-line="294">    <span class="k">def</span><span class="w"> </span><span class="nf">toggle_checkbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_slug</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">point_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="295"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Toggle a checked item for a category.</span>
-</span><span data-line="296">
-</span><span data-line="297"><span class="sd">        If the item is already checked, it is removed. Otherwise it is added.</span>
-</span><span data-line="298"><span class="sd">        If the category does not yet exist in selections, it is created.</span>
-</span><span data-line="299">
-</span><span data-line="300"><span class="sd">        Args:</span>
-</span><span data-line="301"><span class="sd">            category_slug: Slug identifying the rubric category (e.g. &#39;code_quality&#39;).</span>
-</span><span data-line="302"><span class="sd">            point_id: Scoped sub-point identifier, format &#39;{slug}::{sentiment}::{text}&#39;.</span>
-</span><span data-line="303"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="304">        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo</span><span class="p">()</span>
-</span><span data-line="305">        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category_slug</span><span class="p">)</span>
-</span><span data-line="306">        <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="307">            <span class="n">current</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span><span class="n">checked_items</span><span class="o">=</span><span class="p">[],</span> <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span data-line="308">
-</span><span data-line="309">        <span class="n">checked</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">checked_items</span><span class="p">)</span>
-</span><span data-line="310">        <span class="k">if</span> <span class="n">point_id</span> <span class="ow">in</span> <span class="n">checked</span><span class="p">:</span>
-</span><span data-line="311">            <span class="n">checked</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">point_id</span><span class="p">)</span>
-</span><span data-line="312">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="313">            <span class="n">checked</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point_id</span><span class="p">)</span>
-</span><span data-line="314">
-</span><span data-line="315">        <span class="n">new_selections</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="p">)</span>
-</span><span data-line="316">        <span class="n">new_selections</span><span class="p">[</span><span class="n">category_slug</span><span class="p">]</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span>
-</span><span data-line="317">            <span class="n">checked_items</span><span class="o">=</span><span class="n">checked</span><span class="p">,</span>
-</span><span data-line="318">            <span class="n">notes</span><span class="o">=</span><span class="n">current</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
-</span><span data-line="319">        <span class="p">)</span>
-</span><span data-line="320">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;category_selections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_selections</span></div>
+</span><span data-line="295">    <span class="k">def</span><span class="w"> </span><span class="nf">toggle_checkbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_slug</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">point_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="296"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Toggle a checked item for a category.</span>
+</span><span data-line="297">
+</span><span data-line="298"><span class="sd">        If the item is already checked, it is removed. Otherwise it is added.</span>
+</span><span data-line="299"><span class="sd">        If the category does not yet exist in selections, it is created.</span>
+</span><span data-line="300">
+</span><span data-line="301"><span class="sd">        Args:</span>
+</span><span data-line="302"><span class="sd">            category_slug: Slug identifying the rubric category (e.g. &#39;code_quality&#39;).</span>
+</span><span data-line="303"><span class="sd">            point_id: Scoped sub-point identifier, format &#39;{slug}::{sentiment}::{text}&#39;.</span>
+</span><span data-line="304"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="305">        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo</span><span class="p">()</span>
+</span><span data-line="306">        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category_slug</span><span class="p">)</span>
+</span><span data-line="307">        <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="308">            <span class="n">current</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span><span class="n">checked_items</span><span class="o">=</span><span class="p">[],</span> <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span data-line="309">
+</span><span data-line="310">        <span class="n">checked</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">checked_items</span><span class="p">)</span>
+</span><span data-line="311">        <span class="k">if</span> <span class="n">point_id</span> <span class="ow">in</span> <span class="n">checked</span><span class="p">:</span>
+</span><span data-line="312">            <span class="n">checked</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">point_id</span><span class="p">)</span>
+</span><span data-line="313">        <span class="k">else</span><span class="p">:</span>
+</span><span data-line="314">            <span class="n">checked</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point_id</span><span class="p">)</span>
+</span><span data-line="315">
+</span><span data-line="316">        <span class="n">new_selections</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="p">)</span>
+</span><span data-line="317">        <span class="n">new_selections</span><span class="p">[</span><span class="n">category_slug</span><span class="p">]</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span>
+</span><span data-line="318">            <span class="n">checked_items</span><span class="o">=</span><span class="n">checked</span><span class="p">,</span>
+</span><span data-line="319">            <span class="n">notes</span><span class="o">=</span><span class="n">current</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
+</span><span data-line="320">        <span class="p">)</span>
+</span><span data-line="321">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;category_selections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_selections</span></div>
 
-</span><span data-line="321">
+</span><span data-line="322">
 <div class="viewcode-block" id="ReviewState.set_comment">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.set_comment">[docs]</a>
-</span><span data-line="322">    <span class="k">def</span><span class="w"> </span><span class="nf">set_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_slug</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="323"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update additional notes for a category.</span>
-</span><span data-line="324">
-</span><span data-line="325"><span class="sd">        Args:</span>
-</span><span data-line="326"><span class="sd">            category_slug: Slug identifying the rubric category.</span>
-</span><span data-line="327"><span class="sd">            text: Comment text to store.</span>
-</span><span data-line="328"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="329">        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo</span><span class="p">()</span>
-</span><span data-line="330">        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category_slug</span><span class="p">)</span>
-</span><span data-line="331">        <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="332">            <span class="n">current</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span><span class="n">checked_items</span><span class="o">=</span><span class="p">[],</span> <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span data-line="333">        <span class="n">new_selections</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="p">)</span>
-</span><span data-line="334">        <span class="n">new_selections</span><span class="p">[</span><span class="n">category_slug</span><span class="p">]</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span>
-</span><span data-line="335">            <span class="n">checked_items</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">checked_items</span><span class="p">),</span>
-</span><span data-line="336">            <span class="n">notes</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
-</span><span data-line="337">        <span class="p">)</span>
-</span><span data-line="338">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;category_selections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_selections</span></div>
+</span><span data-line="323">    <span class="k">def</span><span class="w"> </span><span class="nf">set_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_slug</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="324"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Update additional notes for a category.</span>
+</span><span data-line="325">
+</span><span data-line="326"><span class="sd">        Args:</span>
+</span><span data-line="327"><span class="sd">            category_slug: Slug identifying the rubric category.</span>
+</span><span data-line="328"><span class="sd">            text: Comment text to store.</span>
+</span><span data-line="329"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="330">        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo</span><span class="p">()</span>
+</span><span data-line="331">        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">category_slug</span><span class="p">)</span>
+</span><span data-line="332">        <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="333">            <span class="n">current</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span><span class="n">checked_items</span><span class="o">=</span><span class="p">[],</span> <span class="n">notes</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span data-line="334">        <span class="n">new_selections</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="p">)</span>
+</span><span data-line="335">        <span class="n">new_selections</span><span class="p">[</span><span class="n">category_slug</span><span class="p">]</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span>
+</span><span data-line="336">            <span class="n">checked_items</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">checked_items</span><span class="p">),</span>
+</span><span data-line="337">            <span class="n">notes</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
+</span><span data-line="338">        <span class="p">)</span>
+</span><span data-line="339">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;category_selections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_selections</span></div>
 
-</span><span data-line="339">
-</span><span data-line="340">    <span class="c1"># -- Grading inputs -------------------------------------------------------</span>
-</span><span data-line="341">
+</span><span data-line="340">
+</span><span data-line="341">    <span class="c1"># -- Grading inputs -------------------------------------------------------</span>
+</span><span data-line="342">
 <div class="viewcode-block" id="ReviewState.set_grading_input">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.set_grading_input">[docs]</a>
-</span><span data-line="342">    <span class="k">def</span><span class="w"> </span><span class="nf">set_grading_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimension</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="343"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the raw score for a grading dimension.</span>
-</span><span data-line="344">
-</span><span data-line="345"><span class="sd">        Args:</span>
-</span><span data-line="346"><span class="sd">            dimension: Dimension key (e.g. &#39;code_quality_design&#39;).</span>
-</span><span data-line="347"><span class="sd">            value: Raw score value to set.</span>
-</span><span data-line="348"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="349">        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo</span><span class="p">()</span>
-</span><span data-line="350">        <span class="n">inputs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">)</span>
-</span><span data-line="351">        <span class="n">inputs</span><span class="p">[</span><span class="n">dimension</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-</span><span data-line="352">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span></div>
+</span><span data-line="343">    <span class="k">def</span><span class="w"> </span><span class="nf">set_grading_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimension</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="344"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the raw score for a grading dimension.</span>
+</span><span data-line="345">
+</span><span data-line="346"><span class="sd">        Args:</span>
+</span><span data-line="347"><span class="sd">            dimension: Dimension key (e.g. &#39;code_quality_design&#39;).</span>
+</span><span data-line="348"><span class="sd">            value: Raw score value to set.</span>
+</span><span data-line="349"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="350">        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo</span><span class="p">()</span>
+</span><span data-line="351">        <span class="n">inputs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">)</span>
+</span><span data-line="352">        <span class="n">inputs</span><span class="p">[</span><span class="n">dimension</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</span><span data-line="353">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span></div>
 
-</span><span data-line="353">
+</span><span data-line="354">
 <div class="viewcode-block" id="ReviewState.clear_grading_inputs">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.clear_grading_inputs">[docs]</a>
-</span><span data-line="354">    <span class="k">def</span><span class="w"> </span><span class="nf">clear_grading_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="355"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset all grading dimension scores to zero.&quot;&quot;&quot;</span>
-</span><span data-line="356">        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo</span><span class="p">()</span>
-</span><span data-line="357">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">_DIMENSION_KEYS</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
+</span><span data-line="355">    <span class="k">def</span><span class="w"> </span><span class="nf">clear_grading_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="356"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset all grading dimension scores to zero.&quot;&quot;&quot;</span>
+</span><span data-line="357">        <span class="bp">self</span><span class="o">.</span><span class="n">push_undo</span><span class="p">()</span>
+</span><span data-line="358">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">_DIMENSION_KEYS</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
 
-</span><span data-line="358">
-</span><span data-line="359">    <span class="c1"># -- Session-level helpers ------------------------------------------------</span>
-</span><span data-line="360">
+</span><span data-line="359">
+</span><span data-line="360">    <span class="c1"># -- Session-level helpers ------------------------------------------------</span>
+</span><span data-line="361">
 <div class="viewcode-block" id="ReviewState.to_session">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.to_session">[docs]</a>
-</span><span data-line="361">    <span class="k">def</span><span class="w"> </span><span class="nf">to_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewSession</span><span class="p">:</span>
-</span><span data-line="362"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a ReviewSession dataclass from the current state.</span>
-</span><span data-line="363">
-</span><span data-line="364"><span class="sd">        Returns:</span>
-</span><span data-line="365"><span class="sd">            A ReviewSession populated from the reactive state.</span>
-</span><span data-line="366"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="367">        <span class="k">return</span> <span class="n">ReviewSession</span><span class="p">(</span>
-</span><span data-line="368">            <span class="n">student_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="p">,</span>
-</span><span data-line="369">            <span class="n">assignment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assignment_id</span><span class="p">,</span>
-</span><span data-line="370">            <span class="n">category_selections</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="p">,</span>
-</span><span data-line="371">            <span class="n">grading_inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">,</span>
-</span><span data-line="372">            <span class="n">generated_text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">generated_text</span><span class="p">,</span>
-</span><span data-line="373">            <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
-</span><span data-line="374">                <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
-</span><span data-line="375">            <span class="p">},</span>
-</span><span data-line="376">        <span class="p">)</span></div>
+</span><span data-line="362">    <span class="k">def</span><span class="w"> </span><span class="nf">to_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReviewSession</span><span class="p">:</span>
+</span><span data-line="363"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a ReviewSession dataclass from the current state.</span>
+</span><span data-line="364">
+</span><span data-line="365"><span class="sd">        Returns:</span>
+</span><span data-line="366"><span class="sd">            A ReviewSession populated from the reactive state.</span>
+</span><span data-line="367"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="368">        <span class="k">return</span> <span class="n">ReviewSession</span><span class="p">(</span>
+</span><span data-line="369">            <span class="n">student_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">student_id</span><span class="p">,</span>
+</span><span data-line="370">            <span class="n">assignment_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assignment_id</span><span class="p">,</span>
+</span><span data-line="371">            <span class="n">category_selections</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">category_selections</span><span class="p">,</span>
+</span><span data-line="372">            <span class="n">grading_inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">,</span>
+</span><span data-line="373">            <span class="n">generated_text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">generated_text</span><span class="p">,</span>
+</span><span data-line="374">            <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+</span><span data-line="375">                <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+</span><span data-line="376">            <span class="p">},</span>
+</span><span data-line="377">        <span class="p">)</span></div>
 
-</span><span data-line="377">
+</span><span data-line="378">
 <div class="viewcode-block" id="ReviewState.load_from_session">
 <a class="viewcode-back" href="../../api/state.html#src.state.ReviewState.load_from_session">[docs]</a>
-</span><span data-line="378">    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">ReviewSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="379"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Restore state from a ReviewSession instance.</span>
-</span><span data-line="380">
-</span><span data-line="381"><span class="sd">        Args:</span>
-</span><span data-line="382"><span class="sd">            session: The ReviewSession to restore state from.</span>
-</span><span data-line="383"><span class="sd">        &quot;&quot;&quot;</span>
-</span><span data-line="384">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;student_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">student_id</span>
-</span><span data-line="385">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;assignment_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">assignment_id</span>
-</span><span data-line="386">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;category_selections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">category_selections</span><span class="p">)</span>
-</span><span data-line="387">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">)</span>
-</span><span data-line="388">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;generated_text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">generated_text</span>
-</span><span data-line="389">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+</span><span data-line="379">    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">ReviewSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="380"><span class="w">        </span><span class="sd">&quot;&quot;&quot;Restore state from a ReviewSession instance.</span>
+</span><span data-line="381">
+</span><span data-line="382"><span class="sd">        Args:</span>
+</span><span data-line="383"><span class="sd">            session: The ReviewSession to restore state from.</span>
+</span><span data-line="384"><span class="sd">        &quot;&quot;&quot;</span>
+</span><span data-line="385">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;student_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">student_id</span>
+</span><span data-line="386">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;assignment_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">assignment_id</span>
+</span><span data-line="387">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;category_selections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">category_selections</span><span class="p">)</span>
+</span><span data-line="388">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">)</span>
+</span><span data-line="389">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;generated_text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">generated_text</span>
+</span><span data-line="390">        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
 </div>
 
-</span><span data-line="390">
 </span><span data-line="391">
-</span><span data-line="392"><span class="c1"># ---------------------------------------------------------------------------</span>
-</span><span data-line="393"><span class="c1"># Stand-alone serialization helpers</span>
-</span><span data-line="394"><span class="c1"># ---------------------------------------------------------------------------</span>
-</span><span data-line="395">
+</span><span data-line="392">
+</span><span data-line="393"><span class="c1"># ---------------------------------------------------------------------------</span>
+</span><span data-line="394"><span class="c1"># Stand-alone serialization helpers</span>
+</span><span data-line="395"><span class="c1"># ---------------------------------------------------------------------------</span>
 </span><span data-line="396">
+</span><span data-line="397">
 <div class="viewcode-block" id="session_to_dict">
 <a class="viewcode-back" href="../../api/state.html#src.state.session_to_dict">[docs]</a>
-</span><span data-line="397"><span class="k">def</span><span class="w"> </span><span class="nf">session_to_dict</span><span class="p">(</span><span class="n">session</span><span class="p">:</span> <span class="n">ReviewSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-</span><span data-line="398"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a ReviewSession dataclass to a plain serializable dict.</span>
-</span><span data-line="399">
-</span><span data-line="400"><span class="sd">    Ensures CategorySelections dataclass instances are converted to plain</span>
-</span><span data-line="401"><span class="sd">    dicts so the result is safe for IndexedDB or JSON serialization.</span>
-</span><span data-line="402">
-</span><span data-line="403"><span class="sd">    Args:</span>
-</span><span data-line="404"><span class="sd">        session: The ReviewSession to serialize.</span>
-</span><span data-line="405">
-</span><span data-line="406"><span class="sd">    Returns:</span>
-</span><span data-line="407"><span class="sd">        A plain dict representation without dataclass instances.</span>
-</span><span data-line="408"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="409">    <span class="n">selections</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span data-line="410">    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">category_selections</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span data-line="411">        <span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-</span><span data-line="412">            <span class="s2">&quot;checked_items&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">checked_items</span><span class="p">),</span>
-</span><span data-line="413">            <span class="s2">&quot;notes&quot;</span><span class="p">:</span> <span class="n">cs</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
-</span><span data-line="414">        <span class="p">}</span>
-</span><span data-line="415">    <span class="k">return</span> <span class="p">{</span>
-</span><span data-line="416">        <span class="s2">&quot;student_id&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">student_id</span><span class="p">,</span>
-</span><span data-line="417">        <span class="s2">&quot;assignment_id&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">assignment_id</span><span class="p">,</span>
-</span><span data-line="418">        <span class="s2">&quot;category_selections&quot;</span><span class="p">:</span> <span class="n">selections</span><span class="p">,</span>
-</span><span data-line="419">        <span class="s2">&quot;grading_inputs&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">),</span>
-</span><span data-line="420">        <span class="s2">&quot;generated_text&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">generated_text</span><span class="p">,</span>
-</span><span data-line="421">        <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">metadata</span><span class="p">),</span>
-</span><span data-line="422">    <span class="p">}</span></div>
+</span><span data-line="398"><span class="k">def</span><span class="w"> </span><span class="nf">session_to_dict</span><span class="p">(</span><span class="n">session</span><span class="p">:</span> <span class="n">ReviewSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+</span><span data-line="399"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a ReviewSession dataclass to a plain serializable dict.</span>
+</span><span data-line="400">
+</span><span data-line="401"><span class="sd">    Ensures CategorySelections dataclass instances are converted to plain</span>
+</span><span data-line="402"><span class="sd">    dicts so the result is safe for IndexedDB or JSON serialization.</span>
+</span><span data-line="403">
+</span><span data-line="404"><span class="sd">    Args:</span>
+</span><span data-line="405"><span class="sd">        session: The ReviewSession to serialize.</span>
+</span><span data-line="406">
+</span><span data-line="407"><span class="sd">    Returns:</span>
+</span><span data-line="408"><span class="sd">        A plain dict representation without dataclass instances.</span>
+</span><span data-line="409"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="410">    <span class="n">selections</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span data-line="411">    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">cs</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">category_selections</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="412">        <span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="413">            <span class="s2">&quot;checked_items&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">checked_items</span><span class="p">),</span>
+</span><span data-line="414">            <span class="s2">&quot;notes&quot;</span><span class="p">:</span> <span class="n">cs</span><span class="o">.</span><span class="n">notes</span><span class="p">,</span>
+</span><span data-line="415">        <span class="p">}</span>
+</span><span data-line="416">    <span class="k">return</span> <span class="p">{</span>
+</span><span data-line="417">        <span class="s2">&quot;student_id&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">student_id</span><span class="p">,</span>
+</span><span data-line="418">        <span class="s2">&quot;assignment_id&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">assignment_id</span><span class="p">,</span>
+</span><span data-line="419">        <span class="s2">&quot;category_selections&quot;</span><span class="p">:</span> <span class="n">selections</span><span class="p">,</span>
+</span><span data-line="420">        <span class="s2">&quot;grading_inputs&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">grading_inputs</span><span class="p">),</span>
+</span><span data-line="421">        <span class="s2">&quot;generated_text&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">generated_text</span><span class="p">,</span>
+</span><span data-line="422">        <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">metadata</span><span class="p">),</span>
+</span><span data-line="423">    <span class="p">}</span></div>
 
-</span><span data-line="423">
 </span><span data-line="424">
+</span><span data-line="425">
 <div class="viewcode-block" id="dict_to_session">
 <a class="viewcode-back" href="../../api/state.html#src.state.dict_to_session">[docs]</a>
-</span><span data-line="425"><span class="k">def</span><span class="w"> </span><span class="nf">dict_to_session</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ReviewSession</span><span class="p">:</span>
-</span><span data-line="426"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Rehydrate a plain dict back to a ReviewSession dataclass.</span>
-</span><span data-line="427">
-</span><span data-line="428"><span class="sd">    Handles nested category_selections dicts by converting them back to</span>
-</span><span data-line="429"><span class="sd">    CategorySelections dataclass instances.</span>
-</span><span data-line="430">
-</span><span data-line="431"><span class="sd">    Args:</span>
-</span><span data-line="432"><span class="sd">        data: A plain dict (typically from IndexedDB or JSON deserialization).</span>
-</span><span data-line="433">
-</span><span data-line="434"><span class="sd">    Returns:</span>
-</span><span data-line="435"><span class="sd">        A fully rehydrated ReviewSession.</span>
-</span><span data-line="436"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="437">    <span class="n">selections</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CategorySelections</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span data-line="438">    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;category_selections&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span data-line="439">        <span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span>
-</span><span data-line="440">            <span class="n">checked_items</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;checked_items&quot;</span><span class="p">,</span> <span class="p">[])),</span>
-</span><span data-line="441">            <span class="n">notes</span><span class="o">=</span><span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;notes&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-</span><span data-line="442">        <span class="p">)</span>
-</span><span data-line="443">    <span class="k">return</span> <span class="n">ReviewSession</span><span class="p">(</span>
-</span><span data-line="444">        <span class="n">student_id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;student_id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-</span><span data-line="445">        <span class="n">assignment_id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assignment_id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-</span><span data-line="446">        <span class="n">category_selections</span><span class="o">=</span><span class="n">selections</span><span class="p">,</span>
-</span><span data-line="447">        <span class="n">grading_inputs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">,</span> <span class="p">{})),</span>
-</span><span data-line="448">        <span class="n">generated_text</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;generated_text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-</span><span data-line="449">        <span class="n">metadata</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="p">{})),</span>
-</span><span data-line="450">    <span class="p">)</span></div>
+</span><span data-line="426"><span class="k">def</span><span class="w"> </span><span class="nf">dict_to_session</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ReviewSession</span><span class="p">:</span>
+</span><span data-line="427"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Rehydrate a plain dict back to a ReviewSession dataclass.</span>
+</span><span data-line="428">
+</span><span data-line="429"><span class="sd">    Handles nested category_selections dicts by converting them back to</span>
+</span><span data-line="430"><span class="sd">    CategorySelections dataclass instances.</span>
+</span><span data-line="431">
+</span><span data-line="432"><span class="sd">    Args:</span>
+</span><span data-line="433"><span class="sd">        data: A plain dict (typically from IndexedDB or JSON deserialization).</span>
+</span><span data-line="434">
+</span><span data-line="435"><span class="sd">    Returns:</span>
+</span><span data-line="436"><span class="sd">        A fully rehydrated ReviewSession.</span>
+</span><span data-line="437"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="438">    <span class="n">selections</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">CategorySelections</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span data-line="439">    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;category_selections&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="440">        <span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">CategorySelections</span><span class="p">(</span>
+</span><span data-line="441">            <span class="n">checked_items</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;checked_items&quot;</span><span class="p">,</span> <span class="p">[])),</span>
+</span><span data-line="442">            <span class="n">notes</span><span class="o">=</span><span class="n">val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;notes&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+</span><span data-line="443">        <span class="p">)</span>
+</span><span data-line="444">    <span class="k">return</span> <span class="n">ReviewSession</span><span class="p">(</span>
+</span><span data-line="445">        <span class="n">student_id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;student_id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+</span><span data-line="446">        <span class="n">assignment_id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assignment_id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+</span><span data-line="447">        <span class="n">category_selections</span><span class="o">=</span><span class="n">selections</span><span class="p">,</span>
+</span><span data-line="448">        <span class="n">grading_inputs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;grading_inputs&quot;</span><span class="p">,</span> <span class="p">{})),</span>
+</span><span data-line="449">        <span class="n">generated_text</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;generated_text&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+</span><span data-line="450">        <span class="n">metadata</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="p">{})),</span>
+</span><span data-line="451">    <span class="p">)</span></div>
 
-</span><span data-line="451">
 </span><span data-line="452">
+</span><span data-line="453">
 <div class="viewcode-block" id="create_default_state">
 <a class="viewcode-back" href="../../api/state.html#src.state.create_default_state">[docs]</a>
-</span><span data-line="453"><span class="k">def</span><span class="w"> </span><span class="nf">create_default_state</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">ReactiveDict</span><span class="p">:</span>
-</span><span data-line="454"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a fresh ReactiveDict populated with DEFAULT_STATE.</span>
-</span><span data-line="455">
-</span><span data-line="456"><span class="sd">    Returns:</span>
-</span><span data-line="457"><span class="sd">        A new ReactiveDict ready for binding to a PuePy Application.</span>
-</span><span data-line="458"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="459">    <span class="k">return</span> <span class="n">ReactiveDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">DEFAULT_STATE</span><span class="p">))</span></div>
+</span><span data-line="454"><span class="k">def</span><span class="w"> </span><span class="nf">create_default_state</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">ReactiveDict</span><span class="p">:</span>
+</span><span data-line="455"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a fresh ReactiveDict populated with DEFAULT_STATE.</span>
+</span><span data-line="456">
+</span><span data-line="457"><span class="sd">    Returns:</span>
+</span><span data-line="458"><span class="sd">        A new ReactiveDict ready for binding to a PuePy Application.</span>
+</span><span data-line="459"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="460">    <span class="k">return</span> <span class="n">ReactiveDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">DEFAULT_STATE</span><span class="p">))</span></div>
 
 </span></pre></div>
         </article><button class="back-to-top" type="button">
