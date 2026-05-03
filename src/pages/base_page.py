@@ -258,5 +258,5 @@ class BasePage(Page):
             ("house", "Home", "#/"),
             ("file-text", "Review", "#/review"),
             ("sliders-horizontal", "Settings", "#/settings"),
-            ("book-open", "Docs", "/docs-static/index.html"),
+            ("book-open", "Docs", "docs-static/index.html"),
         ]

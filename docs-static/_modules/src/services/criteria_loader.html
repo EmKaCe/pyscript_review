@@ -65,6 +65,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../../guides/grading.html">Grading System Guide</a></li>
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../../guides/deployment.html">Deployment Guide</a></li>
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../../architecture.html">Architecture</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../user-guide.html">User Guide</a></li>
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../../yaml-content.html">YAML Content Management</a></li>
 <li class="toctree-l1 _expand"><a class="reference internal" href="../../../contributing.html">Contributing to SciPro Review</a></li>
 </ul>
@@ -424,25 +425,25 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="287">        <span class="k">if</span> <span class="n">assignment</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">assignment_id</span> <span class="ow">and</span> <span class="n">assignment</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
 </span><span data-line="288">            <span class="c1"># 1. Load general.yaml as base</span>
 </span><span data-line="289">            <span class="n">general_data</span> <span class="o">=</span> <span class="n">_read_yaml</span><span class="p">(</span><span class="n">criteria_dir</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/general.yaml&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-</span><span data-line="290">            
+</span><span data-line="290">
 </span><span data-line="291">            <span class="c1"># 2. Load assignment specific file</span>
 </span><span data-line="292">            <span class="n">crit_rel</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">assignment</span><span class="o">.</span><span class="n">criteria_file</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
 </span><span data-line="293">            <span class="n">assignment_data</span> <span class="o">=</span> <span class="n">_read_yaml</span><span class="p">(</span><span class="n">criteria_dir</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">crit_rel</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-</span><span data-line="294">            
+</span><span data-line="294">
 </span><span data-line="295">            <span class="c1"># 3. Merge data</span>
 </span><span data-line="296">            <span class="n">merged_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
 </span><span data-line="297">                <span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="p">{},</span>
 </span><span data-line="298">                <span class="s2">&quot;assignment_specific&quot;</span><span class="p">:</span> <span class="p">[]</span>
 </span><span data-line="299">            <span class="p">}</span>
-</span><span data-line="300">            
+</span><span data-line="300">
 </span><span data-line="301">            <span class="c1"># Merge general sections (dicts)</span>
 </span><span data-line="302">            <span class="n">merged_data</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">general_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="p">{}))</span>
 </span><span data-line="303">            <span class="n">merged_data</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">assignment_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="p">{}))</span>
-</span><span data-line="304">            
+</span><span data-line="304">
 </span><span data-line="305">            <span class="c1"># Merge assignment_specific sections (lists)</span>
 </span><span data-line="306">            <span class="n">merged_data</span><span class="p">[</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">general_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">,</span> <span class="p">[]))</span>
 </span><span data-line="307">            <span class="n">merged_data</span><span class="p">[</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">assignment_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">,</span> <span class="p">[]))</span>
-</span><span data-line="308">            
+</span><span data-line="308">
 </span><span data-line="309">            <span class="k">return</span> <span class="n">parse_criteria_yaml</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">assignment</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">assignment</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </span><span data-line="310">    <span class="k">return</span> <span class="kc">None</span></div>
 

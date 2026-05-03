@@ -16,37 +16,32 @@ from src.models.criteria import (
     SubPoint,
 )
 
-# Default paths for YAML data files (relative to server root).
-DEFAULT_ASSIGNMENTS_PATH = "static/data/assignments.yaml"
-DEFAULT_CRITERIA_DIR = "static/data/criteria/"
+# Default paths for YAML data files in the PyScript virtual filesystem.
+DEFAULT_ASSIGNMENTS_PATH = "data/assignments.yaml"
+DEFAULT_CRITERIA_DIR = "data/criteria/"
 
 
 def _read_yaml(path: str) -> dict[str, Any] | None:
-    """Read and parse a YAML file using Pyodide (browser) or local file (test).
+    """Read and parse a YAML file using standard open().
 
     Args:
-        path: Path to the YAML file (relative to server root for browser,
-            or filesystem path for testing).
+        path: Path to the YAML file.
 
     Returns:
         Parsed YAML dict, or None if the file cannot be read.
     """
-    import sys
-
-    if "pyodide" in sys.modules:
-        try:
-            from pyodide.http import open_url  # type: ignore[import-untyped]
-
-            url = open_url(path)
-            return yaml.safe_load(url.read())
-        except Exception:
-            return None
-
+    # 1. Try the path as is (VFS in browser, or relative path in tests)
     try:
         with open(path, encoding="utf-8") as f:
             return yaml.safe_load(f)
     except (FileNotFoundError, OSError):
-        return None
+        # 2. Fallback for local tests where files are in static/
+        try:
+            fallback_path = f"static/{path}"
+            with open(fallback_path, encoding="utf-8") as f:
+                return yaml.safe_load(f)
+        except (FileNotFoundError, OSError):
+            return None
 
 
 def _parse_sentiment_items(

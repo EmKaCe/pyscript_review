@@ -48,7 +48,7 @@ class SciProModeToggle(Component):
             path = "/settings"
         elif mode == "docs":
             if window:
-                window.location.href = "/docs-static/index.html"
+                window.location.href = "docs-static/index.html"
             return
         elif mode == "home":
             path = "/"
