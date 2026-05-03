@@ -76,7 +76,7 @@ class BasePage(Page):
             route = self._route
             if not route.startswith("/"):
                 route = "/" + route
-            
+
             clean_href = href.replace("#", "")
             if not clean_href.startswith("/"):
                 clean_href = "/" + clean_href
@@ -131,18 +131,19 @@ class BasePage(Page):
         """Scroll to the clicked criteria category in the main content."""
         if event is None or window is None:
             return
-        
+
         try:
             from js import document  # type: ignore[import-untyped]
-            
+
             # Find the anchor element even if a child was clicked
             el = event.target
             for _ in range(5):
-                if el is None: break
+                if el is None:
+                    break
                 if getattr(el, "tagName", "") == "A":
                     break
                 el = getattr(el, "parentElement", None)
-            
+
             if el:
                 slug = el.getAttribute("data-slug")
                 if slug:

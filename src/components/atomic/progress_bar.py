@@ -50,7 +50,7 @@ class SciProProgressBar(Component):
         percentage = min(max(value / max_val * 100.0, 0.0), 100.0)
 
         bar_color = "bg-primary"
-        
+
         wrapper_classes: list[str] = ["flex", "flex-col", "gap-1.5", "w-full"]
 
         if show_label and label:

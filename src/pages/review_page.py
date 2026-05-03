@@ -80,7 +80,7 @@ class ReviewPage(BasePage):
             async def _load():
                 try:
                     from src.services.criteria_loader import load_criteria_bundle
-                    loaded_bundle = await load_criteria_bundle(assignment_id)
+                    loaded_bundle = load_criteria_bundle(assignment_id)
                     self.application.state["criteria_bundle"] = loaded_bundle
                 except Exception as e:
                     logger.error("Failed to load criteria: %s", e)
@@ -176,7 +176,7 @@ class ReviewPage(BasePage):
         val = event.detail["value"]
         rs = ReviewState(self.application.state)
         rs.set_grading_input(dim, val)
-        
+
         # Trigger recalculation immediately so the sidebar updates correctly
         from src.services.grade_calculator import calculate_grade
         from src.services.grading_config import DEFAULT_GRADING_CONFIG
@@ -185,7 +185,7 @@ class ReviewPage(BasePage):
             self.application.state["grade_result"] = res
         except Exception:
             pass
-            
+
         asyncio.ensure_future(self._auto_save())
 
     def _on_generate_text(self, _e=None) -> None:
@@ -202,11 +202,11 @@ class ReviewPage(BasePage):
             return
         try:
             from src.state import ReviewState, session_to_dict
-            
+
             rs = ReviewState(self.application.state)
             session = rs.to_session()
             grade_result = self.application.state.get("grade_result")
-            
+
             # Ensure grade result is in dict format
             if hasattr(grade_result, "model_dump"):
                 grade_result_dict = grade_result.model_dump()
@@ -215,7 +215,7 @@ class ReviewPage(BasePage):
 
             # Get serializable session data
             session_data = session_to_dict(session)
-            
+
             record = make_review_record(
                 student_id=session.student_id,
                 assignment_id=session.assignment_id,
@@ -225,11 +225,11 @@ class ReviewPage(BasePage):
                 generated_text=session.generated_text,
                 existing_id=self.application.state.get("current_review_id", "") or ""
             )
-            
+
             storage = get_storage()
             await storage.open_db()
             await storage.save_review(record)
-            
+
             self.application.state["notification"] = "Review saved to database"
         except Exception as e:
             logger.error("Save error: %s", e)

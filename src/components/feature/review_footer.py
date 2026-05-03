@@ -69,7 +69,7 @@ class SciProReviewFooter(Component):
                     on_click=self._on_export,
                     class_name="hidden sm:inline-flex",
                 )
-                
+
                 on_save = self.props_values.get("on_save")
                 t.sci_pro_button(
                     variant="primary",
@@ -95,9 +95,9 @@ class SciProReviewFooter(Component):
     def _on_export(self, _e) -> None:
         rs = ReviewState(self.application.state)
         json_data = rs.export_json()
-        
+
         # Simple download trigger via JS
-        from js import document, URL, Blob  # type: ignore[import-untyped]
+        from js import URL, Blob, document  # type: ignore[import-untyped]
         blob = Blob.new([json_data], { "type": "application/json" })
         url = URL.createObjectURL(blob)
         a = document.createElement("a")

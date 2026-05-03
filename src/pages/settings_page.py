@@ -66,12 +66,12 @@ class SettingsPage(BasePage):
     def _render_appearance_section(self) -> None:
         """Theme mode selector with visual cards."""
         current_theme = self.application.state.get("theme", "light")
-        
+
         with t.section():
             with t.div(class_name="flex items-center gap-2 mb-4"):
                 t.sci_pro_icon(name="palette", size="sm", class_name="text-muted-foreground")
                 t.h2("Appearance", class_name="text-lg font-semibold")
-            
+
             with t.div(class_name="grid grid-cols-1 sm:grid-cols-3 gap-4"):
                 # Light Theme Card
                 self._render_theme_card("light", "sun", "Light", current_theme == "light")
@@ -83,7 +83,7 @@ class SettingsPage(BasePage):
     def _render_theme_card(self, theme_id: str, icon: str, label: str, is_active: bool) -> None:
         """Render a clickable card for a specific theme."""
         active_cls = " ring-2 ring-primary border-primary bg-primary/5" if is_active else " hover:border-primary/50"
-        
+
         with t.div(
             class_name=f"relative cursor-pointer transition-all duration-200 flex flex-col items-center justify-center p-6 border rounded-xl gap-3 {active_cls}",
             on_click=lambda _e, t=theme_id: self._on_theme_change(t)
@@ -109,7 +109,7 @@ class SettingsPage(BasePage):
                     with t.div(class_name="flex items-center gap-3"):
                         mode = self.application.state.get("mode", "teacher")
                         label = mode.capitalize() if mode else "Unknown"
-                        
+
                         if mode == "teacher":
                             badge_variant = "default"
                             desc = "Full grading with rubric and scores"

@@ -287,25 +287,25 @@ def get_criteria_for_assignment(
         if assignment.id == assignment_id and assignment.enabled:
             # 1. Load general.yaml as base
             general_data = _read_yaml(criteria_dir.rstrip("/") + "/general.yaml") or {}
-            
+
             # 2. Load assignment specific file
             crit_rel = Path(assignment.criteria_file).name
             assignment_data = _read_yaml(criteria_dir.rstrip("/") + "/" + crit_rel) or {}
-            
+
             # 3. Merge data
             merged_data: dict[str, Any] = {
                 "general": {},
                 "assignment_specific": []
             }
-            
+
             # Merge general sections (dicts)
             merged_data["general"].update(general_data.get("general", {}))
             merged_data["general"].update(assignment_data.get("general", {}))
-            
+
             # Merge assignment_specific sections (lists)
             merged_data["assignment_specific"].extend(general_data.get("assignment_specific", []))
             merged_data["assignment_specific"].extend(assignment_data.get("assignment_specific", []))
-            
+
             return parse_criteria_yaml(merged_data, assignment.id, assignment.name)
     return None
 

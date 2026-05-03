@@ -11,7 +11,6 @@ from .mode_toggle import SciProModeToggle
 from .new_review_card import SciProNewReviewCard
 from .popover import SciProPopover
 from .review_footer import SciProReviewFooter
-from .review_footer import SciProReviewFooter
 from .sidebar_sheet import SciProSidebarSheet
 from .tabs import (
     SciProTabs,

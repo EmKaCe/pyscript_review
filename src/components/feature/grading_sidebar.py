@@ -10,7 +10,7 @@ from puepy import Component, t
 
 from src.services.grade_calculator import calculate_grade
 from src.services.grading_config import DEFAULT_GRADING_CONFIG, weight_percentage
-from src.utils.grade_colors import get_grade_color, sidebar_grade_color_config
+from src.utils.grade_colors import sidebar_grade_color_config
 
 
 @t.component()

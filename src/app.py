@@ -48,9 +48,6 @@ from src.components.atomic import (  # noqa: F401
     SciProTextarea,
     SciProTooltip,
 )
-
-# Import feature composite components.
-from src.components.feature.criteria_list import SciProCriteriaList
 from src.components.feature import (  # noqa: F401
     SciProDropdownMenu,
     SciProEvaluationOutput,
@@ -68,6 +65,7 @@ from src.components.feature import (  # noqa: F401
     show_toast,
 )
 
+# Import feature composite components.
 # Import pages.
 from src.pages.about_page import AboutPage
 from src.pages.home_page import HomePage
@@ -180,7 +178,7 @@ def _setup_keyboard_shortcuts(app_instance: SciProReviewApp) -> None:
     def _mode_toggle() -> None:
         """Handle Alt+Shift+G — toggle teacher/student mode."""
         from puepy.runtime import window
-        
+
         # Restrict mode toggle to settings page only
         hash_val = getattr(window.location, "hash", "")
         if hash_val != "#/settings":
