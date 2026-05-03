@@ -16,7 +16,6 @@ class SciProReviewFooter(Component):
 
     props = [
         Prop("on_save", "Save button click handler", object, None),
-        Prop("on_generate", "Generate button click handler", object, None),
     ]
 
     def populate(self) -> None:
@@ -54,8 +53,12 @@ class SciProReviewFooter(Component):
                 )
 
             # Center: Progress (Absolute center on desktop, flex-1 on mobile)
-            with t.div(class_name="hidden md:flex flex-col gap-1 items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64"):
-                with t.div(class_name="flex items-center justify-between w-full text-[10px] font-bold uppercase tracking-wider text-muted-foreground"):
+            with t.div(
+                class_name="hidden md:flex flex-col gap-1 items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64"
+            ):
+                with t.div(
+                    class_name="flex items-center justify-between w-full text-[10px] font-bold uppercase tracking-wider text-muted-foreground"
+                ):
                     t("Completion")
                     t(f"{filled}/{total} Categories")
                 t.sci_pro_progress_bar(value=percentage, class_name="h-1.5 w-full")
@@ -93,17 +96,12 @@ class SciProReviewFooter(Component):
             self.page.redraw()
 
     def _on_export(self, _e) -> None:
-        rs = ReviewState(self.application.state)
-        json_data = rs.export_json()
+        from src.browser.files import download_json
+        from src.state import session_to_dict
 
-        # Simple download trigger via JS
-        from js import URL, Blob, document  # type: ignore[import-untyped]
-        blob = Blob.new([json_data], { "type": "application/json" })
-        url = URL.createObjectURL(blob)
-        a = document.createElement("a")
-        a.href = url
-        a.download = f"review_{rs.student_id or 'export'}.json"
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(url)
+        rs = ReviewState(self.application.state)
+        data = session_to_dict(rs.to_session())
+        filename = f"review_{rs.student_id or 'export'}.json"
+
+        download_json(data, filename)
+        self.application.state["notification"] = f"Exported {filename}"

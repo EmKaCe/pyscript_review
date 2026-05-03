@@ -20,6 +20,7 @@ from pyodide.ffi import create_proxy
 
 from src.pages.base_page import BasePage
 from src.services.grading_config import DEFAULT_GRADING_CONFIG
+from src.services.text_generator import generate_evaluation_text
 from src.state import ReviewState, session_to_dict
 
 logger = logging.getLogger(__name__)
@@ -43,7 +44,7 @@ class ReviewPage(BasePage):
         "active_tab",
         "is_mobile",
         "grading_inputs",
-        "grade_result"
+        "grade_result",
     ]
 
     def bind(self) -> None:
@@ -77,30 +78,36 @@ class ReviewPage(BasePage):
         assignment_id = self.application.state.get("assignment_id")
 
         if assignment_id and not bundle:
+
             async def _load():
                 try:
                     from src.services.criteria_loader import load_criteria_bundle
+
                     loaded_bundle = load_criteria_bundle(assignment_id)
                     self.application.state["criteria_bundle"] = loaded_bundle
                 except Exception as e:
                     logger.error("Failed to load criteria: %s", e)
                     raise Redirect("/") from None
+
             asyncio.ensure_future(_load())
 
         # Restore session from IndexedDB if available
         if get_storage:
+
             async def _restore():
                 try:
                     storage = get_storage()
                     data = await storage.load_current_session()
                     if data:
                         from src.state import dict_to_session
+
                         session = dict_to_session(data)
                         rs = ReviewState(self.application.state)
                         rs.load_from_session(session)
                         self.application.state["notification"] = "Previous session restored."
                 except Exception as e:
                     logger.debug("Storage load error: %s", e)
+
             asyncio.ensure_future(_restore())
 
     def populate_content(self) -> None:
@@ -121,11 +128,18 @@ class ReviewPage(BasePage):
 
         # 1. Assignment Info Bar
         if student_id:
-            with t.div(class_name="mb-6 flex items-center gap-3 bg-muted/30 px-4 py-2 rounded-lg border border-border/50"):
-                t.span("Student:", class_name="text-xs text-muted-foreground uppercase font-semibold")
+            with t.div(
+                class_name="mb-6 flex items-center gap-3 bg-muted/30 px-4 py-2 rounded-lg border border-border/50"
+            ):
+                t.span(
+                    "Student:", class_name="text-xs text-muted-foreground uppercase font-semibold"
+                )
                 t.span(student_id, class_name="text-sm font-medium font-mono")
                 t.span("·", class_name="text-muted-foreground")
-                t.span("Assignment:", class_name="text-xs text-muted-foreground uppercase font-semibold")
+                t.span(
+                    "Assignment:",
+                    class_name="text-xs text-muted-foreground uppercase font-semibold",
+                )
                 t.span(bundle.assignment_name, class_name="text-sm font-medium")
 
         # 2. Main Workspace Layout
@@ -163,10 +177,7 @@ class ReviewPage(BasePage):
                         t.sci_pro_grading_sidebar(on_grading_change=self._on_grading_change)
 
         # 3. Sticky Footer
-        t.sci_pro_review_footer(
-            on_save=self._on_save,
-            on_generate=self._on_generate_text
-        )
+        t.sci_pro_review_footer(on_save=self._on_save)
 
     def _on_tab_change(self, event) -> None:
         self.application.state["active_tab"] = event.detail["value"]
@@ -179,7 +190,7 @@ class ReviewPage(BasePage):
 
         # Trigger recalculation immediately so the sidebar updates correctly
         from src.services.grade_calculator import calculate_grade
-        from src.services.grading_config import DEFAULT_GRADING_CONFIG
+
         try:
             res = calculate_grade(self.application.state["grading_inputs"], DEFAULT_GRADING_CONFIG)
             self.application.state["grade_result"] = res
@@ -190,9 +201,13 @@ class ReviewPage(BasePage):
 
     def _on_generate_text(self, _e=None) -> None:
         """Call text generation service and update state."""
-        from src.services.text_generator import generate_evaluation_text
+        criteria_bundle = self.application.state.get("criteria_bundle")
+        if not criteria_bundle:
+            self.application.state["notification"] = "Error: Criteria not loaded"
+            return
+
         rs = ReviewState(self.application.state)
-        text = generate_evaluation_text(rs.to_session(), DEFAULT_GRADING_CONFIG)
+        text = generate_evaluation_text(rs.to_session(), criteria_bundle)
         self.application.state["generated_text"] = text
         self.application.state["notification"] = "Report generated"
 
@@ -223,7 +238,7 @@ class ReviewPage(BasePage):
                 grading_inputs=session.grading_inputs,
                 grade_result=grade_result_dict,
                 generated_text=session.generated_text,
-                existing_id=self.application.state.get("current_review_id", "") or ""
+                existing_id=self.application.state.get("current_review_id", "") or "",
             )
 
             storage = get_storage()

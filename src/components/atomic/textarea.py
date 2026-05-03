@@ -52,6 +52,7 @@ class SciProTextarea(Component):
         Prop("error", "Error state styling", bool, False),
         Prop("error_message", "Error text to display", str, "Invalid input"),
         Prop("resize", "Resize behavior: none, vertical, horizontal, both", str, "vertical"),
+        Prop("value", "Initial or display value for the textarea", str, None),
     ]
 
     def __init__(self, *args, **kwargs):  # type: ignore[no-untyped-def]
@@ -76,6 +77,7 @@ class SciProTextarea(Component):
         error: bool = self.props_values.get("error", False)
         error_message: str = self.props_values.get("error_message", "Invalid input")
         resize: str = self.props_values.get("resize", "vertical")
+        value: str | None = self.props_values.get("value")
 
         classes: list[str] = list(_TEXTAREA_BASE)
 
@@ -96,7 +98,11 @@ class SciProTextarea(Component):
         resize_cls: str = _RESIZE_CLASSES.get(resize, "resize-y")
         classes.append(resize_cls)
 
-        textarea_attrs: dict[str, object] = {"class_name": classes}
+        # Merge extra classes from component attrs (e.g., class_name="min-h-64 ...")
+        extra_classes = self.attrs.get("class_name", "")
+        textarea_attrs: dict[str, object] = {
+            "class_name": classes + [extra_classes] if extra_classes else classes,
+        }
 
         if placeholder:
             textarea_attrs["placeholder"] = placeholder
@@ -114,6 +120,13 @@ class SciProTextarea(Component):
 
         if bind:
             textarea_attrs.update(self._bind_attrs(bind))
+        elif value is not None:
+            textarea_attrs["value"] = value
+
+        # Pass through any extra attrs (e.g., on_blur, data-*, aria-*)
+        for k, v in self.attrs.items():
+            if k not in textarea_attrs and k != "class_name":
+                textarea_attrs[k] = v
 
         if label:
             with t.label(class_name="label block text-sm font-medium text-foreground mb-1.5"):
@@ -122,7 +135,9 @@ class SciProTextarea(Component):
         t.textarea(**textarea_attrs)
 
         if max_length is not None:
-            current_len: int = len(self.application.state.get(bind, "")) if bind else 0
+            current_len: int = len(self.application.state.get(bind, "")) if bind else (
+                len(value) if value else 0
+            )
             indicator_classes: list[str] = ["text-xs", "mt-1", "text-right"]
             if current_len >= max_length:
                 indicator_classes.append("text-destructive")
