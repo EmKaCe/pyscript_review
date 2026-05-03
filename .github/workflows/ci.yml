@@ -95,7 +95,7 @@ jobs:
           cp -r src _site/
           # Deploy documentation to docs-static path
           mkdir -p _site/docs-static
-          cp -r docs/_build/* _site/docs-static/
+          cp -r docs-static/* _site/docs-static/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
