@@ -42,8 +42,8 @@ coverage.xml
 # PyScript filesystem
 pyscript.fs
 
-# Static wheel files
-static/*.whl
+# Static wheel files (tracked for PyScript runtime and CI)
+# static/*.whl
 
 # Jupyter Notebook
 .ipynb_checkpoints

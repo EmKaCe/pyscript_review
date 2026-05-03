@@ -190,6 +190,7 @@ From PuePy docs (guide/in-depth-components.md):
 - **BasecoatBridge:** Call `window.basecoat.initAll()` in `on_ready` after page transitions to re-initialize Basecoat JS components. MUST be called on every page.
 - **Persistence:** Use IndexedDB via JS interop for reviews; `pyscript.storage` (localStorage) has a 5MB limit and is insufficient.
 - **Icons:** Use Lucide static icons via CSS (jsdelivr) to keep raw SVGs and HTML to a minimum.
+- **Wheels:** Required `.whl` files in `static/` ARE tracked in Git as they are required for the PyScript runtime and CI testing.
 
 ## ANTI-PATTERNS
 
