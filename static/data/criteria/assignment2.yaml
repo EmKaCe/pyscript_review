@@ -1,0 +1,11 @@
+general:
+  codeFormatting:
+    title: Invalid Value
+    additional_notes: false
+    positive: []
+    neutral: []
+    negative:
+    - main_point: ''
+      sub_points:
+      - text: Your value for the speed of light is incorrect!
+assignment_specific: []

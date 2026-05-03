@@ -1,0 +1,79 @@
+# Architecture
+
+SciPro is a peer-review and grading system for a university Python programming course at Hochschule Bonn-Rhein-Sieg. It treats Jupyter notebooks as executable academic manuscripts. This document explains the system's design, covering the architectural areas that shape how teachers evaluate student work.
+
+## 1. Technology Stack
+
+SciPro is built as a client-side Single Page Application (SPA) using:
+- **PyScript (2026.3.1)**: Runs Python 3.13 directly in the browser via Pyodide.
+- **PuePy (0.6.5)**: A reactive frontend framework for Python, inspired by Vue and Svelte.
+- **Basecoat CSS (0.3.11)**: A lightweight, accessible CSS framework providing modern UI components.
+- **IndexedDB**: For high-capacity, client-side data persistence.
+
+## 2. Data Flow
+
+### Criteria Loading
+
+Assignments and rubrics are defined in YAML files stored in `static/data/`. The criteria loader (see `src/services/criteria_loader.py`) fetches these at runtime. This allows rubrics to be updated by simply editing YAML files and deploying them to static hosting—no application rebuild is required.
+
+### Grading Flow
+
+The teacher selects an assignment and enters a student identifier to begin. Each checkbox toggle or comment change updates the global reactive state (see `src/state.py`). The application uses a "Two-State Model":
+1. **Application State**: Shared app-wide `ReactiveDict`. Survives navigation. Used for all business data (selections, grades, sessions).
+2. **Local State**: Component-scoped `ReactiveDict`. Used for ephemeral UI state (active tabs, dropdown open/close).
+
+Mutations to the application state trigger auto-persistence to IndexedDB for crash recovery and update the derived grading results in real-time.
+
+### Review Management Flow
+
+Saved reviews are stored in IndexedDB and managed via the `ReviewRecord` model. The review list page fetches these records, allowing for filtering by semester, searching by student ID, and sorting. Export operations serialize the entire review collection into a JSON object for sharing or archival.
+
+## 3. Reactive State Management
+
+SciPro utilizes PuePy's reactive system to ensure a responsive UI without complex event wiring.
+
+### The Two-State Model
+
+- **Shared State**: Defined in `src/state.py` within the `DEFAULT_STATE` dictionary. Every key used globally must be declared here.
+- **Redraw Mechanism**: Components register keys they are interested in via `redraw_on_app_state_changes`. When a key changes, PuePy automatically redraws the component.
+
+### DOM Preservation
+
+To maintain focus and scroll position during reactive redraws, components use the `ref` attribute. This tells PuePy's underlying morphdom engine to patch the existing DOM element rather than replacing it.
+
+## 4. IndexedDB Integration
+
+Local storage (5MB limit) is insufficient for large review sets. SciPro uses IndexedDB via a JavaScript bridge (`src/browser/storage.py` and `src/browser/BasecoatBridge`).
+
+- **Object Stores**: A single `reviews` store holds both the current active session (using a `__current__` sentinel) and all saved review records.
+- **Serialization**: Data is serialized to JSON before storage, allowing Python objects and Pydantic models to be persisted reliably across browser sessions.
+
+## 5. Grading System
+
+### Weighted Dimensions
+
+Grading is based on five weighted dimensions (Code Quality, Execution, Requirements, Scientific Programming, and Creativity). The weights are calibrated so that a perfect score across all dimensions equals exactly 100%.
+
+### German Grade Scale
+
+Percentages map to the German 1.0-5.0 academic scale using 11 distinct bands (e.g., 95% = 1.0, 50% = 4.0). This mapping is handled by `src/services/grade_calculator.py`. US letter equivalents are provided for reference but are not canonical.
+
+## 6. Component Architecture
+
+SciPro follows a hierarchical component structure:
+
+1. **Atomic Components (`src/components/atomic/`)**: Low-level primitives built with Basecoat CSS (Buttons, Inputs, Icons). These use the `t.*()` builder pattern for instantiation.
+2. **Feature Components (`src/components/feature/`)**: Composed UI sections that implement domain-specific logic, such as the `GradeSidebar` or `CriteriaCategory`.
+3. **Pages (`src/pages/`)**: Top-level components registered with the PuePy Router.
+
+### Basecoat JS Initialization
+
+Basecoat components (like modals and dropdowns) require JavaScript initialization. Because PuePy redraws can destroy and recreate DOM elements, the `BasecoatBridge` re-initializes these components after every page transition or significant redraw via the `on_ready` lifecycle hook.
+
+## 7. YAML Content Management
+
+Assignment rubrics are managed in YAML files. The loader merges `general.yaml` (shared criteria) with assignment-specific files. This ensures consistency in grading standards (e.g., code formatting) across different tasks.
+
+---
+
+For developer setup, see [Contributing](./contributing.md). For rubric configuration details, see [YAML Content Management](./yaml-content.md).

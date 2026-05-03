@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Models API - SciPro Review</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Services API" href="services.html" /><link rel="prev" title="Contributing to SciPro Review" href="../contributing.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9cf7cb20" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="Models API"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      <img class="light-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <strong>SciPro Review</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="/.html">App Home</a></li><li class="link"><a href="/%23/review.html">Review</a></li><li class="link"><a href="/%23/settings.html">Settings</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="2"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/getting-started.html">Getting Started with SciPro Review</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/grading.html">Grading System Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/deployment.html">Deployment Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../user-guide.html">User Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../yaml-content.html">YAML Content Management</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../contributing.html">Contributing to SciPro Review</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Models API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="services.html">Services API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="browser.html">Browser Interop API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="state.html">State Management API</a></li>
+</ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#src.models.criteria.AssignmentConfig"><code class="docutils literal notranslate"><span class="pre">AssignmentConfig</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.criteria.AssignmentConfig.criteria_file"><code class="docutils literal notranslate">criteria_file</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.AssignmentConfig.enabled"><code class="docutils literal notranslate">enabled</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.AssignmentConfig.id"><code class="docutils literal notranslate">id</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.AssignmentConfig.max_points"><code class="docutils literal notranslate">max_points</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.AssignmentConfig.model_config"><code class="docutils literal notranslate">model_config</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.AssignmentConfig.name"><code class="docutils literal notranslate">name</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.criteria.Category"><code class="docutils literal notranslate"><span class="pre">Category</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.criteria.Category.main_points"><code class="docutils literal notranslate">main_points</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.Category.model_config"><code class="docutils literal notranslate">model_config</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.Category.name"><code class="docutils literal notranslate">name</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.Category.slug"><code class="docutils literal notranslate">slug</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.Category.weight"><code class="docutils literal notranslate">weight</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.criteria.CriteriaBundle"><code class="docutils literal notranslate"><span class="pre">CriteriaBundle</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.criteria.CriteriaBundle.assignment_id"><code class="docutils literal notranslate">assignment_id</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.CriteriaBundle.assignment_name"><code class="docutils literal notranslate">assignment_name</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.CriteriaBundle.categories"><code class="docutils literal notranslate">categories</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.CriteriaBundle.model_config"><code class="docutils literal notranslate">model_config</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.criteria.MainPoint"><code class="docutils literal notranslate"><span class="pre">MainPoint</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.criteria.MainPoint.model_config"><code class="docutils literal notranslate">model_config</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.MainPoint.sentiment"><code class="docutils literal notranslate">sentiment</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.MainPoint.sub_points"><code class="docutils literal notranslate">sub_points</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.MainPoint.text"><code class="docutils literal notranslate">text</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.criteria.Sentiment"><code class="docutils literal notranslate"><span class="pre">Sentiment</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.criteria.Sentiment.NEGATIVE"><code class="docutils literal notranslate">NEGATIVE</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.Sentiment.NEUTRAL"><code class="docutils literal notranslate">NEUTRAL</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.Sentiment.POSITIVE"><code class="docutils literal notranslate">POSITIVE</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.criteria.SubPoint"><code class="docutils literal notranslate"><span class="pre">SubPoint</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.criteria.SubPoint.id"><code class="docutils literal notranslate">id</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.SubPoint.model_config"><code class="docutils literal notranslate">model_config</span></code></a></li>
+<li><a class="reference internal" href="#src.models.criteria.SubPoint.text"><code class="docutils literal notranslate">text</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.session.CategorySelections"><code class="docutils literal notranslate"><span class="pre">CategorySelections</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.session.CategorySelections.checked_items"><code class="docutils literal notranslate">checked_items</span></code></a></li>
+<li><a class="reference internal" href="#src.models.session.CategorySelections.notes"><code class="docutils literal notranslate">notes</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.session.ReviewSession"><code class="docutils literal notranslate"><span class="pre">ReviewSession</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.session.ReviewSession.assignment_id"><code class="docutils literal notranslate">assignment_id</span></code></a></li>
+<li><a class="reference internal" href="#src.models.session.ReviewSession.category_selections"><code class="docutils literal notranslate">category_selections</span></code></a></li>
+<li><a class="reference internal" href="#src.models.session.ReviewSession.generated_text"><code class="docutils literal notranslate">generated_text</span></code></a></li>
+<li><a class="reference internal" href="#src.models.session.ReviewSession.grading_inputs"><code class="docutils literal notranslate">grading_inputs</span></code></a></li>
+<li><a class="reference internal" href="#src.models.session.ReviewSession.metadata"><code class="docutils literal notranslate">metadata</span></code></a></li>
+<li><a class="reference internal" href="#src.models.session.ReviewSession.student_id"><code class="docutils literal notranslate">student_id</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.grading.GERMAN_GRADE_BOUNDARIES"><code class="docutils literal notranslate"><span class="pre">GERMAN_GRADE_BOUNDARIES</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeBoundary"><code class="docutils literal notranslate"><span class="pre">GradeBoundary</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.grading.GradeBoundary.grade"><code class="docutils literal notranslate">grade</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeBoundary.min_percentage"><code class="docutils literal notranslate">min_percentage</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.grading.GradeDimension"><code class="docutils literal notranslate"><span class="pre">GradeDimension</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.grading.GradeDimension.max_points"><code class="docutils literal notranslate">max_points</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeDimension.name"><code class="docutils literal notranslate">name</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeDimension.weight"><code class="docutils literal notranslate">weight</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.grading.GradeResult"><code class="docutils literal notranslate"><span class="pre">GradeResult</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.grading.GradeResult.grade"><code class="docutils literal notranslate">grade</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeResult.near_fence"><code class="docutils literal notranslate">near_fence</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeResult.per_dimension"><code class="docutils literal notranslate">per_dimension</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeResult.percentage"><code class="docutils literal notranslate">percentage</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeResult.points_above_current_grade"><code class="docutils literal notranslate">points_above_current_grade</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeResult.points_to_next_grade"><code class="docutils literal notranslate">points_to_next_grade</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.GradeResult.us_equivalent"><code class="docutils literal notranslate">us_equivalent</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.grading.GradingConfig"><code class="docutils literal notranslate"><span class="pre">GradingConfig</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.grading.GradingConfig.dimensions"><code class="docutils literal notranslate">dimensions</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.grading.GradingInputs"><code class="docutils literal notranslate"><span class="pre">GradingInputs</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.grading.GradingInputs.scores"><code class="docutils literal notranslate">scores</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.grading.PerDimensionResult"><code class="docutils literal notranslate"><span class="pre">PerDimensionResult</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.grading.PerDimensionResult.max_points"><code class="docutils literal notranslate">max_points</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.PerDimensionResult.name"><code class="docutils literal notranslate">name</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.PerDimensionResult.percentage"><code class="docutils literal notranslate">percentage</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.PerDimensionResult.score"><code class="docutils literal notranslate">score</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.PerDimensionResult.weight"><code class="docutils literal notranslate">weight</span></code></a></li>
+<li><a class="reference internal" href="#src.models.grading.PerDimensionResult.weighted_score"><code class="docutils literal notranslate">weighted_score</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.db.CurrentSessionRecord"><code class="docutils literal notranslate"><span class="pre">CurrentSessionRecord</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.db.CurrentSessionRecord.data"><code class="docutils literal notranslate">data</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.CurrentSessionRecord.id"><code class="docutils literal notranslate">id</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.db.DbExport"><code class="docutils literal notranslate"><span class="pre">DbExport</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.db.DbExport.exported_at"><code class="docutils literal notranslate">exported_at</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.DbExport.reviews"><code class="docutils literal notranslate">reviews</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.DbExport.version"><code class="docutils literal notranslate">version</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord"><code class="docutils literal notranslate"><span class="pre">ReviewRecord</span></code></a><ul>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.assignment_id"><code class="docutils literal notranslate">assignment_id</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.category_selections"><code class="docutils literal notranslate">category_selections</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.created_at"><code class="docutils literal notranslate">created_at</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.generated_text"><code class="docutils literal notranslate">generated_text</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.grade_result"><code class="docutils literal notranslate">grade_result</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.grading_inputs"><code class="docutils literal notranslate">grading_inputs</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.id"><code class="docutils literal notranslate">id</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.semester"><code class="docutils literal notranslate">semester</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.student_id"><code class="docutils literal notranslate">student_id</span></code></a></li>
+<li><a class="reference internal" href="#src.models.db.ReviewRecord.updated_at"><code class="docutils literal notranslate">updated_at</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">SciPro Review</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Models API</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="module-src.models.criteria">
+<span id="models-api"></span><h1>Models API<a class="headerlink" href="#module-src.models.criteria" title="Link to this heading">¶</a></h1>
+<p>Pydantic models for criteria YAML parsing and validation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.criteria.AssignmentConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.criteria.</span></span><span class="sig-name descname"><span class="pre">AssignmentConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criteria_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">24</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/criteria.html#AssignmentConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.criteria.AssignmentConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Configuration for a single assignment.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><cite>self</cite> is explicitly positional-only to allow <cite>self</cite> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.AssignmentConfig.criteria_file">
+<span class="sig-name descname"><span class="pre">criteria_file</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.AssignmentConfig.criteria_file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.AssignmentConfig.enabled">
+<span class="sig-name descname"><span class="pre">enabled</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#src.models.criteria.AssignmentConfig.enabled" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.AssignmentConfig.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.AssignmentConfig.id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.AssignmentConfig.max_points">
+<span class="sig-name descname"><span class="pre">max_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#src.models.criteria.AssignmentConfig.max_points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.AssignmentConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#src.models.criteria.AssignmentConfig.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.AssignmentConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.AssignmentConfig.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.criteria.Category">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.criteria.</span></span><span class="sig-name descname"><span class="pre">Category</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.criteria.MainPoint" title="src.models.criteria.MainPoint"><span class="pre">MainPoint</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/criteria.html#Category"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.criteria.Category" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>A rubric category containing graded main points.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><cite>self</cite> is explicitly positional-only to allow <cite>self</cite> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.Category.main_points">
+<span class="sig-name descname"><span class="pre">main_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.criteria.MainPoint" title="src.models.criteria.MainPoint"><span class="pre">MainPoint</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.criteria.Category.main_points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.Category.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#src.models.criteria.Category.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.Category.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.Category.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.Category.slug">
+<span class="sig-name descname"><span class="pre">slug</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.Category.slug" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.Category.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#src.models.criteria.Category.weight" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.criteria.CriteriaBundle">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.criteria.</span></span><span class="sig-name descname"><span class="pre">CriteriaBundle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.criteria.Category" title="src.models.criteria.Category"><span class="pre">Category</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/criteria.html#CriteriaBundle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.criteria.CriteriaBundle" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Complete rubric criteria bundle for an assignment.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><cite>self</cite> is explicitly positional-only to allow <cite>self</cite> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.CriteriaBundle.assignment_id">
+<span class="sig-name descname"><span class="pre">assignment_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.CriteriaBundle.assignment_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.CriteriaBundle.assignment_name">
+<span class="sig-name descname"><span class="pre">assignment_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.CriteriaBundle.assignment_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.CriteriaBundle.categories">
+<span class="sig-name descname"><span class="pre">categories</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.criteria.Category" title="src.models.criteria.Category"><span class="pre">Category</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.criteria.CriteriaBundle.categories" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.CriteriaBundle.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#src.models.criteria.CriteriaBundle.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.criteria.MainPoint">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.criteria.</span></span><span class="sig-name descname"><span class="pre">MainPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sentiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.models.criteria.Sentiment" title="src.models.criteria.Sentiment"><span class="pre">Sentiment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.criteria.SubPoint" title="src.models.criteria.SubPoint"><span class="pre">SubPoint</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/criteria.html#MainPoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.criteria.MainPoint" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>A main rubric point grouping related sub-points.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><cite>self</cite> is explicitly positional-only to allow <cite>self</cite> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.MainPoint.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#src.models.criteria.MainPoint.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.MainPoint.sentiment">
+<span class="sig-name descname"><span class="pre">sentiment</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#src.models.criteria.Sentiment" title="src.models.criteria.Sentiment"><span class="pre">Sentiment</span></a></span><a class="headerlink" href="#src.models.criteria.MainPoint.sentiment" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.MainPoint.sub_points">
+<span class="sig-name descname"><span class="pre">sub_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.criteria.SubPoint" title="src.models.criteria.SubPoint"><span class="pre">SubPoint</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.criteria.MainPoint.sub_points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.MainPoint.text">
+<span class="sig-name descname"><span class="pre">text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.MainPoint.text" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.criteria.Sentiment">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.criteria.</span></span><span class="sig-name descname"><span class="pre">Sentiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/criteria.html#Sentiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.criteria.Sentiment" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">StrEnum</span></code></p>
+<p>Sentiment direction of a rubric point.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.Sentiment.NEGATIVE">
+<span class="sig-name descname"><span class="pre">NEGATIVE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'negative'</span></span><a class="headerlink" href="#src.models.criteria.Sentiment.NEGATIVE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.Sentiment.NEUTRAL">
+<span class="sig-name descname"><span class="pre">NEUTRAL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'neutral'</span></span><a class="headerlink" href="#src.models.criteria.Sentiment.NEUTRAL" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.Sentiment.POSITIVE">
+<span class="sig-name descname"><span class="pre">POSITIVE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'positive'</span></span><a class="headerlink" href="#src.models.criteria.Sentiment.POSITIVE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.criteria.SubPoint">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.criteria.</span></span><span class="sig-name descname"><span class="pre">SubPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/criteria.html#SubPoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.criteria.SubPoint" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>A single selectable sub-point under a main rubric point.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><cite>self</cite> is explicitly positional-only to allow <cite>self</cite> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.SubPoint.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#src.models.criteria.SubPoint.id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.SubPoint.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></span><a class="headerlink" href="#src.models.criteria.SubPoint.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.criteria.SubPoint.text">
+<span class="sig-name descname"><span class="pre">text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.criteria.SubPoint.text" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-src.models.session">Dataclasses for hot-path review session state.</p>
+<p>These models are used with ReactiveDict in the PuePy two-state architecture.
+Dataclasses are preferred over Pydantic here for performance in hot-path state.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.session.CategorySelections">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.session.</span></span><span class="sig-name descname"><span class="pre">CategorySelections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checked_items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/session.html#CategorySelections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.session.CategorySelections" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Selection state for a single rubric category.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.session.CategorySelections.checked_items">
+<span class="sig-name descname"><span class="pre">checked_items</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.session.CategorySelections.checked_items" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.session.CategorySelections.notes">
+<span class="sig-name descname"><span class="pre">notes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#src.models.session.CategorySelections.notes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.session.ReviewSession">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.session.</span></span><span class="sig-name descname"><span class="pre">ReviewSession</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">student_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_selections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~src.models.session.CategorySelections]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grading_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">float]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/session.html#ReviewSession"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.session.ReviewSession" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Complete review session representing an in-progress or saved review.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.session.ReviewSession.assignment_id">
+<span class="sig-name descname"><span class="pre">assignment_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#src.models.session.ReviewSession.assignment_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.session.ReviewSession.category_selections">
+<span class="sig-name descname"><span class="pre">category_selections</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#src.models.session.CategorySelections" title="src.models.session.CategorySelections"><span class="pre">CategorySelections</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.session.ReviewSession.category_selections" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.session.ReviewSession.generated_text">
+<span class="sig-name descname"><span class="pre">generated_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#src.models.session.ReviewSession.generated_text" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.session.ReviewSession.grading_inputs">
+<span class="sig-name descname"><span class="pre">grading_inputs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.session.ReviewSession.grading_inputs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.session.ReviewSession.metadata">
+<span class="sig-name descname"><span class="pre">metadata</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.session.ReviewSession.metadata" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.session.ReviewSession.student_id">
+<span class="sig-name descname"><span class="pre">student_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#src.models.session.ReviewSession.student_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-src.models.grading">Dataclasses for grade calculation and German grading scale.</p>
+<p>Contains the 11-step German grade boundary table and data models
+for grading dimensions, inputs, and results.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="src.models.grading.GERMAN_GRADE_BOUNDARIES">
+<span class="sig-prename descclassname"><span class="pre">src.models.grading.</span></span><span class="sig-name descname"><span class="pre">GERMAN_GRADE_BOUNDARIES</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.grading.GradeBoundary" title="src.models.grading.GradeBoundary"><span class="pre">GradeBoundary</span></a><span class="p"><span class="pre">]</span></span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[GradeBoundary(min_percentage=95.0,</span> <span class="pre">grade=1.0),</span> <span class="pre">GradeBoundary(min_percentage=90.0,</span> <span class="pre">grade=1.3),</span> <span class="pre">GradeBoundary(min_percentage=85.0,</span> <span class="pre">grade=1.7),</span> <span class="pre">GradeBoundary(min_percentage=80.0,</span> <span class="pre">grade=2.0),</span> <span class="pre">GradeBoundary(min_percentage=75.0,</span> <span class="pre">grade=2.3),</span> <span class="pre">GradeBoundary(min_percentage=70.0,</span> <span class="pre">grade=2.7),</span> <span class="pre">GradeBoundary(min_percentage=65.0,</span> <span class="pre">grade=3.0),</span> <span class="pre">GradeBoundary(min_percentage=60.0,</span> <span class="pre">grade=3.3),</span> <span class="pre">GradeBoundary(min_percentage=55.0,</span> <span class="pre">grade=3.7),</span> <span class="pre">GradeBoundary(min_percentage=50.0,</span> <span class="pre">grade=4.0),</span> <span class="pre">GradeBoundary(min_percentage=0.0,</span> <span class="pre">grade=5.0)]</span></span><a class="headerlink" href="#src.models.grading.GERMAN_GRADE_BOUNDARIES" title="Link to this definition">¶</a></dt>
+<dd><p>11-step German grade boundaries. Sorted descending by min_percentage.</p>
+<p>95+  -&gt; 1.0  (excellent)
+90   -&gt; 1.3  (very good)
+85   -&gt; 1.7  (very good)
+80   -&gt; 2.0  (good)
+75   -&gt; 2.3  (good)
+70   -&gt; 2.7  (good)
+65   -&gt; 3.0  (above average)
+60   -&gt; 3.3  (average)
+55   -&gt; 3.7  (below average)
+50   -&gt; 4.0  (sufficient)
+&lt;50  -&gt; 5.0  (insufficient / fail)</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.grading.GradeBoundary">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.grading.</span></span><span class="sig-name descname"><span class="pre">GradeBoundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_percentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/grading.html#GradeBoundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.grading.GradeBoundary" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A single boundary in the German grading scale.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeBoundary.grade">
+<span class="sig-name descname"><span class="pre">grade</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#src.models.grading.GradeBoundary.grade" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeBoundary.min_percentage">
+<span class="sig-name descname"><span class="pre">min_percentage</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#src.models.grading.GradeBoundary.min_percentage" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.grading.GradeDimension">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.grading.</span></span><span class="sig-name descname"><span class="pre">GradeDimension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/grading.html#GradeDimension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.grading.GradeDimension" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A single dimension from the grading configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeDimension.max_points">
+<span class="sig-name descname"><span class="pre">max_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#src.models.grading.GradeDimension.max_points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeDimension.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.grading.GradeDimension.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeDimension.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#src.models.grading.GradeDimension.weight" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.grading.GradeResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.grading.</span></span><span class="sig-name descname"><span class="pre">GradeResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">percentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">near_fence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_dimension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.grading.PerDimensionResult" title="src.models.grading.PerDimensionResult"><span class="pre">PerDimensionResult</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">us_equivalent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'F'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points_to_next_grade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points_above_current_grade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/grading.html#GradeResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.grading.GradeResult" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Computed grade breakdown returned by the calculator.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeResult.grade">
+<span class="sig-name descname"><span class="pre">grade</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#src.models.grading.GradeResult.grade" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeResult.near_fence">
+<span class="sig-name descname"><span class="pre">near_fence</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#src.models.grading.GradeResult.near_fence" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeResult.per_dimension">
+<span class="sig-name descname"><span class="pre">per_dimension</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.grading.PerDimensionResult" title="src.models.grading.PerDimensionResult"><span class="pre">PerDimensionResult</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.grading.GradeResult.per_dimension" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeResult.percentage">
+<span class="sig-name descname"><span class="pre">percentage</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#src.models.grading.GradeResult.percentage" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeResult.points_above_current_grade">
+<span class="sig-name descname"><span class="pre">points_above_current_grade</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#src.models.grading.GradeResult.points_above_current_grade" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeResult.points_to_next_grade">
+<span class="sig-name descname"><span class="pre">points_to_next_grade</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#src.models.grading.GradeResult.points_to_next_grade" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradeResult.us_equivalent">
+<span class="sig-name descname"><span class="pre">us_equivalent</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'F'</span></span><a class="headerlink" href="#src.models.grading.GradeResult.us_equivalent" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.grading.GradingConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.grading.</span></span><span class="sig-name descname"><span class="pre">GradingConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimensions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.grading.GradeDimension" title="src.models.grading.GradeDimension"><span class="pre">GradeDimension</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/grading.html#GradingConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.grading.GradingConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Full grading configuration with ordered dimensions.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradingConfig.dimensions">
+<span class="sig-name descname"><span class="pre">dimensions</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.grading.GradeDimension" title="src.models.grading.GradeDimension"><span class="pre">GradeDimension</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.grading.GradingConfig.dimensions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.grading.GradingInputs">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.grading.</span></span><span class="sig-name descname"><span class="pre">GradingInputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/grading.html#GradingInputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.grading.GradingInputs" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Raw scores entered by the grader for each dimension.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.GradingInputs.scores">
+<span class="sig-name descname"><span class="pre">scores</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.grading.GradingInputs.scores" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.grading.PerDimensionResult">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.grading.</span></span><span class="sig-name descname"><span class="pre">PerDimensionResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weighted_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/grading.html#PerDimensionResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.grading.PerDimensionResult" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Breakdown for a single grading dimension.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.PerDimensionResult.max_points">
+<span class="sig-name descname"><span class="pre">max_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#src.models.grading.PerDimensionResult.max_points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.PerDimensionResult.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.grading.PerDimensionResult.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.PerDimensionResult.percentage">
+<span class="sig-name descname"><span class="pre">percentage</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#src.models.grading.PerDimensionResult.percentage" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.PerDimensionResult.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#src.models.grading.PerDimensionResult.score" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.PerDimensionResult.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#src.models.grading.PerDimensionResult.weight" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.grading.PerDimensionResult.weighted_score">
+<span class="sig-name descname"><span class="pre">weighted_score</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#src.models.grading.PerDimensionResult.weighted_score" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-src.models.db">Dataclasses for IndexedDB serialization and export.</p>
+<p>These models define the shape of data persisted in the browser’s IndexedDB
+storage and JSON export files.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.db.CurrentSessionRecord">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.db.</span></span><span class="sig-name descname"><span class="pre">CurrentSessionRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'__current__'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/db.html#CurrentSessionRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.db.CurrentSessionRecord" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Special record for the auto-saved in-progress session.</p>
+<p>This record uses a fixed sentinel key <code class="docutils literal notranslate"><span class="pre">__current__</span></code> in IndexedDB
+so the review list never shows half-finished drafts.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.CurrentSessionRecord.data">
+<span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></span><a class="headerlink" href="#src.models.db.CurrentSessionRecord.data" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.CurrentSessionRecord.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'__current__'</span></span><a class="headerlink" href="#src.models.db.CurrentSessionRecord.id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.db.DbExport">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.db.</span></span><span class="sig-name descname"><span class="pre">DbExport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exported_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reviews</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/db.html#DbExport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.db.DbExport" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Structure of a bulk export containing all persisted reviews.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.DbExport.exported_at">
+<span class="sig-name descname"><span class="pre">exported_at</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.db.DbExport.exported_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.DbExport.reviews">
+<span class="sig-name descname"><span class="pre">reviews</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.models.db.DbExport.reviews" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.DbExport.version">
+<span class="sig-name descname"><span class="pre">version</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#src.models.db.DbExport.version" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.models.db.</span></span><span class="sig-name descname"><span class="pre">ReviewRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">student_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">semester</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_selections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grading_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grade_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updated_at</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/models/db.html#ReviewRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.db.ReviewRecord" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A persisted review record saved in IndexedDB.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.assignment_id">
+<span class="sig-name descname"><span class="pre">assignment_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.assignment_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.category_selections">
+<span class="sig-name descname"><span class="pre">category_selections</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.category_selections" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.created_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.generated_text">
+<span class="sig-name descname"><span class="pre">generated_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.generated_text" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.grade_result">
+<span class="sig-name descname"><span class="pre">grade_result</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.grade_result" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.grading_inputs">
+<span class="sig-name descname"><span class="pre">grading_inputs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.grading_inputs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.semester">
+<span class="sig-name descname"><span class="pre">semester</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.semester" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.student_id">
+<span class="sig-name descname"><span class="pre">student_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.student_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.db.ReviewRecord.updated_at">
+<span class="sig-name descname"><span class="pre">updated_at</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.models.db.ReviewRecord.updated_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="../contributing.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Contributing to SciPro Review</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="services.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Services API</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2026, SciPro Team</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+<a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+  <iconify-icon icon="simple-icons:github"></iconify-icon>
+</a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/shibuya.js?v=cac61aee"></script></body>
+</html>

@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "astral-sh.ruff",
+        "ms-pyright.pyright",
+        "bradlc.vscode-tailwindcss",
+        "ritwickdey.LiveServer",
+        "charliermarsh.ruff"
+    ]
+}

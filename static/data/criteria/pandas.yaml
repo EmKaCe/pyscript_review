@@ -1,0 +1,72 @@
+general:
+  Pandas:
+    title: Pandas
+    additional_notes: true
+    positive:
+    - main_point: Overall Pandas feedback
+      sub_points:
+      - text: Effective use of Pandas and its built-in functions
+      - text: Good analysis of the correlation results
+      - text: Correlation analysis - Well done
+      - text: Plotting - Good, concise coding for the plot generation
+      - text: Plotting - Nicely made plots containing all key elements
+      - text: Plotting - Very nicely done!
+    neutral:
+    - main_point: The following functions might have been good to use in your solution
+      sub_points:
+      - text: '`reset_index`'
+      - text: '`loc` to easily operate over the columns'
+      - text: '`sort_values` (Country name) would have been logical to after data
+          cleaning, but fine.='
+    negative:
+    - main_point: Reading Data Into Pandas
+      sub_points:
+      - text: Delimiter (`sep`) - Incorrectly specified the separator used within
+          the CSV-formatted file.
+      - text: Function creation - Creating a function to read in the data is not necessary
+          and adds unnecessary complexity to the code.
+      - text: Header (`header`) - Incorrectly specified the header line.
+      - text: Header (`header`) - Incorrectly specified the header line.
+      - text: Incorrectly read in the data.
+      - text: New Object - Creating a new object that is string of the input file
+          is uneeded - not concise coding.
+      - text: Renaming file - Renaming the source data file is generally not a good
+          practice.
+    - main_point: Data Modification & Assignment Issue
+      sub_points:
+      - text: 'Assignment Failure: You called a modification method (`drop`, `dropna`,
+          `reset_index`, etc.) but failed to save the result by assigning it back
+          (`df = df.method(...)`) or using the `inplace=True` argument. The change
+          was lost.'
+    - main_point: Data Cleaning & Preparation
+      sub_points:
+      - text: Cleaning not done - You failed to drop duplicated rows.
+      - text: Cleaning not done - You failed to drop rows with empty/missing cells.
+      - text: Missing Value Handling - Missing values were not handled (dropped or
+          transformed) prior to analysis/correlation.
+    - main_point: Indexing, Slicing, and Merging
+      sub_points:
+      - text: Merging - The merge operation used was incorrect.
+      - text: Sorting - The data was not sorted, or the sorting was incorrect/not
+          saved.
+    - main_point: Correlation Analysis
+      sub_points:
+      - text: '`corr` - Did not use Pandas'' built-in correlation function when required.'
+      - text: Absolute value - You needed to take the absolute value of some correlation
+          results for analysis.
+      - text: Identification - Incorrectly identified the features that are most correlated.
+      - text: Interpretation - Lack of interpreting what the correlation values mean
+          (context is missing).
+      - text: Interpretation - Incorrectly interpreted the correlation results.
+    - main_point: Output, Persistence, and Presentation
+      sub_points:
+      - text: Not saved - The final processed data was not saved to a file.
+      - text: Presentation - Data should have been formatted or presented in a clear
+          Pandas table (e.g., using `to_string()` or styling) for better readability.
+      - text: Saving index - Saving the default numerical index was unnecessary for
+          the resulting data file.
+    - main_point: Pandas Plotting
+      sub_points:
+      - text: The data was not plotted using the Pandas' built-in methods, which was
+          a requirement for the assignment.
+assignment_specific: []

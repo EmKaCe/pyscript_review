@@ -1,0 +1,15 @@
+general:
+  SciPy:
+    title: SciPy Library
+    additional_notes: true
+    positive:
+    - main_point: ''
+      sub_points:
+      - text: Good job on using SciPy optimize function
+    neutral: []
+    negative:
+    - main_point: ''
+      sub_points:
+      - text: You needed to use SciPy's optimize function to find the optimal value
+          of the variable.
+assignment_specific: []

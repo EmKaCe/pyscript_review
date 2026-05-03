@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="./">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>YAML Content Management - SciPro Review</title><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Contributing to SciPro Review" href="contributing.html" /><link rel="prev" title="Architecture" href="architecture.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link media="print" rel="stylesheet" type="text/css" href="_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=9cf7cb20" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="YAML Content Management"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="index.html">
+      <img class="light-logo" src="_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <img class="dark-logo" src="_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <strong>SciPro Review</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="/.html">App Home</a></li><li class="link"><a href="/%23/review.html">Review</a></li><li class="link"><a href="/%23/settings.html">Settings</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="2"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides:</span></p>
+<ul class="current">
+<li class="toctree-l1 _expand"><a class="reference internal" href="guides/getting-started.html">Getting Started with SciPro Review</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="guides/grading.html">Grading System Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="guides/deployment.html">Deployment Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">YAML Content Management</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="contributing.html">Contributing to SciPro Review</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="api/models.html">Models API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="api/services.html">Services API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="api/browser.html">Browser Interop API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="api/state.html">State Management API</a></li>
+</ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#file-layout">File Layout</a></li>
+<li><a class="reference internal" href="#data-models">Data Models</a></li>
+<li><a class="reference internal" href="#configuring-assignments">Configuring Assignments</a></li>
+<li><a class="reference internal" href="#criteria-structure">Criteria Structure</a></li>
+<li><a class="reference internal" href="#merge-logic">Merge Logic</a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">SciPro Review</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">YAML Content Management</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="yaml-content-management">
+<h1>YAML Content Management<a class="headerlink" href="#yaml-content-management" title="Link to this heading">¶</a></h1>
+<p>This page explains how assignments and rubric criteria are defined, loaded, and managed. Understanding this is essential for professors and TAs who need to add or modify rubric content.</p>
+<section id="file-layout">
+<h2>File Layout<a class="headerlink" href="#file-layout" title="Link to this heading">¶</a></h2>
+<p>Assignments and criteria are served as static files in the <code class="docutils literal notranslate"><span class="pre">static/data/</span></code> directory:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">static/data/
+</span><span data-line="2">├── assignments.yaml          # Master registry of all assignments
+</span><span data-line="3">└── criteria/
+</span><span data-line="4">    ├── general.yaml          # Shared rubric (loaded for every assignment)
+</span><span data-line="5">    ├── user_function.yaml    # Assignment-specific rubric
+</span><span data-line="6">    ├── pandas.yaml
+</span><span data-line="7">    └── ...                   # Individual YAML per assignment
+</span></pre></div>
+</div>
+</section>
+<section id="data-models">
+<h2>Data Models<a class="headerlink" href="#data-models" title="Link to this heading">¶</a></h2>
+<p>The structure of the YAML files is defined by Pydantic models in <code class="docutils literal notranslate"><span class="pre">src/models/criteria.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span><span class="w"> </span><span class="nc">SubPoint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span data-line="2">    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>                <span class="c1"># Display text for the checkbox</span>
+</span><span data-line="3">    <span class="n">comment</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>    <span class="c1"># Show a custom comment textarea when selected</span>
+</span><span data-line="4">    <span class="n">point_deduction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Show a numeric deduction input</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="k">class</span><span class="w"> </span><span class="nc">MainPoint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span data-line="7">    <span class="n">main_point</span><span class="p">:</span> <span class="nb">str</span>          <span class="c1"># Heading for a group of sub-points</span>
+</span><span data-line="8">    <span class="n">sub_points</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SubPoint</span><span class="p">]</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="k">class</span><span class="w"> </span><span class="nc">Category</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span data-line="11">    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># Human-readable category name</span>
+</span><span data-line="12">    <span class="n">additional_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span data-line="13">    <span class="n">positive</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MainPoint</span><span class="p">]</span>
+</span><span data-line="14">    <span class="n">neutral</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MainPoint</span><span class="p">]</span>
+</span><span data-line="15">    <span class="n">negative</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MainPoint</span><span class="p">]</span>
+</span><span data-line="16">
+</span><span data-line="17"><span class="k">class</span><span class="w"> </span><span class="nc">AssignmentConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span><span data-line="18">    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>                  <span class="c1"># Unique identifier (kebab-case)</span>
+</span><span data-line="19">    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># Display title in the UI</span>
+</span><span data-line="20">    <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>     <span class="c1"># Visibility flag</span>
+</span><span data-line="21">    <span class="n">criteria_files</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="c1"># List of paths to criteria YAMLs</span>
+</span></pre></div>
+</div>
+</section>
+<section id="configuring-assignments">
+<h2>Configuring Assignments<a class="headerlink" href="#configuring-assignments" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">assignments.yaml</span></code> file acts as the registry. To add a new assignment, create an entry:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy_arrays</span>
+</span><span data-line="2"><span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;NumPy</span><span class="nv"> </span><span class="s">Array</span><span class="nv"> </span><span class="s">Basics&quot;</span>
+</span><span data-line="3"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span data-line="4"><span class="w">  </span><span class="nt">criteria_files</span><span class="p">:</span>
+</span><span data-line="5"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data/criteria/numpy_arrays.yaml</span>
+</span></pre></div>
+</div>
+</section>
+<section id="criteria-structure">
+<h2>Criteria Structure<a class="headerlink" href="#criteria-structure" title="Link to this heading">¶</a></h2>
+<p>Each criteria YAML file defines categories with three sentiment directions:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">positive</span></code></strong>: Praise-worthy items.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">neutral</span></code></strong>: Suggestions for improvement.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">negative</span></code></strong>: Deductions and errors.</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nt">general</span><span class="p">:</span>
+</span><span data-line="2"><span class="w">  </span><span class="nt">codingStyle</span><span class="p">:</span>
+</span><span data-line="3"><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Coding</span><span class="nv"> </span><span class="s">Style&quot;</span>
+</span><span data-line="4"><span class="w">    </span><span class="nt">additional_notes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span data-line="5"><span class="w">    </span><span class="nt">positive</span><span class="p">:</span>
+</span><span data-line="6"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">main_point</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Naming&quot;</span>
+</span><span data-line="7"><span class="w">        </span><span class="nt">sub_points</span><span class="p">:</span>
+</span><span data-line="8"><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Excellent</span><span class="nv"> </span><span class="s">use</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">snake_case</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">variables&quot;</span>
+</span><span data-line="9"><span class="w">    </span><span class="nt">negative</span><span class="p">:</span>
+</span><span data-line="10"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">main_point</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Formatting&quot;</span>
+</span><span data-line="11"><span class="w">        </span><span class="nt">sub_points</span><span class="p">:</span>
+</span><span data-line="12"><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hardcoded</span><span class="nv"> </span><span class="s">paths</span><span class="nv"> </span><span class="s">detected&quot;</span>
+</span><span data-line="13"><span class="w">            </span><span class="nt">point_deduction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></pre></div>
+</div>
+</section>
+<section id="merge-logic">
+<h2>Merge Logic<a class="headerlink" href="#merge-logic" title="Link to this heading">¶</a></h2>
+<p>When an assignment is selected, the <code class="docutils literal notranslate"><span class="pre">CriteriaLoader</span></code> service:</p>
+<ol class="arabic simple">
+<li><p>Loads <code class="docutils literal notranslate"><span class="pre">general.yaml</span></code> (providing baseline criteria like Code Formatting).</p></li>
+<li><p>Loads all files listed in <code class="docutils literal notranslate"><span class="pre">criteria_files</span></code>.</p></li>
+<li><p>Merges the categories. If a category key exists in both, the assignment-specific one takes precedence.</p></li>
+</ol>
+<hr class="docutils" />
+<p>For technical details on how these models are used in grading, see <a class="reference internal" href="architecture.html"><span class="std std-doc">Architecture</span></a>.
+hitecture.md). For developer setup, see <a class="reference internal" href="contributing.html"><span class="std std-doc">Contributing</span></a>.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="architecture.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Architecture</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="contributing.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Contributing to SciPro Review</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2026, SciPro Team</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+<a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+  <iconify-icon icon="simple-icons:github"></iconify-icon>
+</a></div>
+    </div>
+  </div>
+</footer>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script src="_static/shibuya.js?v=cac61aee"></script></body>
+</html>

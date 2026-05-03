@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Browser Interop API - SciPro Review</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="State Management API" href="state.html" /><link rel="prev" title="Services API" href="services.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9cf7cb20" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="Browser Interop API"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      <img class="light-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <strong>SciPro Review</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="/.html">App Home</a></li><li class="link"><a href="/%23/review.html">Review</a></li><li class="link"><a href="/%23/settings.html">Settings</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="2"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/getting-started.html">Getting Started with SciPro Review</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/grading.html">Grading System Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/deployment.html">Deployment Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../user-guide.html">User Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../yaml-content.html">YAML Content Management</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../contributing.html">Contributing to SciPro Review</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 _expand"><a class="reference internal" href="models.html">Models API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="services.html">Services API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Browser Interop API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="state.html">State Management API</a></li>
+</ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage"><code class="docutils literal notranslate"><span class="pre">BrowserStorage</span></code></a><ul>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.clear_all_reviews"><code class="docutils literal notranslate">clear_all_reviews()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.clear_current_session"><code class="docutils literal notranslate">clear_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.delete_review"><code class="docutils literal notranslate">delete_review()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.export_all"><code class="docutils literal notranslate">export_all()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.import_all"><code class="docutils literal notranslate">import_all()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.list_reviews"><code class="docutils literal notranslate">list_reviews()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.list_semesters"><code class="docutils literal notranslate">list_semesters()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.load_current_session"><code class="docutils literal notranslate">load_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.load_review"><code class="docutils literal notranslate">load_review()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.open_db"><code class="docutils literal notranslate">open_db()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.save_current_session"><code class="docutils literal notranslate">save_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.BrowserStorage.save_review"><code class="docutils literal notranslate">save_review()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage"><code class="docutils literal notranslate"><span class="pre">MemoryStorage</span></code></a><ul>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.clear_all_reviews"><code class="docutils literal notranslate">clear_all_reviews()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.clear_current_session"><code class="docutils literal notranslate">clear_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.delete_review"><code class="docutils literal notranslate">delete_review()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.export_all"><code class="docutils literal notranslate">export_all()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.import_all"><code class="docutils literal notranslate">import_all()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.list_reviews"><code class="docutils literal notranslate">list_reviews()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.list_semesters"><code class="docutils literal notranslate">list_semesters()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.load_current_session"><code class="docutils literal notranslate">load_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.load_review"><code class="docutils literal notranslate">load_review()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.open_db"><code class="docutils literal notranslate">open_db()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.save_current_session"><code class="docutils literal notranslate">save_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.MemoryStorage.save_review"><code class="docutils literal notranslate">save_review()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend"><code class="docutils literal notranslate"><span class="pre">StorageBackend</span></code></a><ul>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.clear_all_reviews"><code class="docutils literal notranslate">clear_all_reviews()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.clear_current_session"><code class="docutils literal notranslate">clear_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.delete_review"><code class="docutils literal notranslate">delete_review()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.export_all"><code class="docutils literal notranslate">export_all()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.import_all"><code class="docutils literal notranslate">import_all()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.list_reviews"><code class="docutils literal notranslate">list_reviews()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.list_semesters"><code class="docutils literal notranslate">list_semesters()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.load_current_session"><code class="docutils literal notranslate">load_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.load_review"><code class="docutils literal notranslate">load_review()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.open_db"><code class="docutils literal notranslate">open_db()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.save_current_session"><code class="docutils literal notranslate">save_current_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.StorageBackend.save_review"><code class="docutils literal notranslate">save_review()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.browser.storage.get_storage"><code class="docutils literal notranslate"><span class="pre">get_storage()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.make_review_record"><code class="docutils literal notranslate"><span class="pre">make_review_record()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.storage.reset_storage"><code class="docutils literal notranslate"><span class="pre">reset_storage()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.files.download_blob"><code class="docutils literal notranslate"><span class="pre">download_blob()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.files.download_json"><code class="docutils literal notranslate"><span class="pre">download_json()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.files.download_text"><code class="docutils literal notranslate"><span class="pre">download_text()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.shortcuts.format_shortcut"><code class="docutils literal notranslate"><span class="pre">format_shortcut()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.shortcuts.get_shortcuts"><code class="docutils literal notranslate"><span class="pre">get_shortcuts()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.shortcuts.register_default_shortcuts"><code class="docutils literal notranslate"><span class="pre">register_default_shortcuts()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.shortcuts.register_shortcut"><code class="docutils literal notranslate"><span class="pre">register_shortcut()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.shortcuts.unregister_shortcut"><code class="docutils literal notranslate"><span class="pre">unregister_shortcut()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.theme_controller.apply_theme"><code class="docutils literal notranslate"><span class="pre">apply_theme()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.theme_controller.get_system_theme"><code class="docutils literal notranslate"><span class="pre">get_system_theme()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.theme_controller.get_theme"><code class="docutils literal notranslate"><span class="pre">get_theme()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.theme_controller.initialize"><code class="docutils literal notranslate"><span class="pre">initialize()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.theme_controller.set_theme"><code class="docutils literal notranslate"><span class="pre">set_theme()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.theme_controller.toggle_theme"><code class="docutils literal notranslate"><span class="pre">toggle_theme()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.responsive.is_mobile"><code class="docutils literal notranslate"><span class="pre">is_mobile()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.responsive.on_breakpoint_change"><code class="docutils literal notranslate"><span class="pre">on_breakpoint_change()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.responsive.remove_breakpoint_listener"><code class="docutils literal notranslate"><span class="pre">remove_breakpoint_listener()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.basecoat_bridge.init_basecoat"><code class="docutils literal notranslate"><span class="pre">init_basecoat()</span></code></a></li>
+<li><a class="reference internal" href="#src.browser.basecoat_bridge.init_component"><code class="docutils literal notranslate"><span class="pre">init_component()</span></code></a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">SciPro Review</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Browser Interop API</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="module-src.browser.storage">
+<span id="browser-interop-api"></span><h1>Browser Interop API<a class="headerlink" href="#module-src.browser.storage" title="Link to this heading">¶</a></h1>
+<p>IndexedDB persistence layer for review sessions and records.</p>
+<dl class="simple">
+<dt>Provides a dual-mode storage backend:</dt><dd><ul class="simple">
+<li><p>Browser mode: Uses IndexedDB via PyScript’s <code class="docutils literal notranslate"><span class="pre">js</span></code> module for persistent
+storage in the browser. All operations are async (awaitable).</p></li>
+<li><p>Local fallback: Uses <code class="docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code> in-memory store for
+pytest and non-browser environments. All operations are synchronous.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The module auto-detects the runtime environment. When <code class="docutils literal notranslate"><span class="pre">indexedDB</span></code> is
+available from the <code class="docutils literal notranslate"><span class="pre">js</span></code> module, browser mode is used; otherwise, the
+in-memory fallback is activated.</p>
+<dl class="simple">
+<dt>This module mirrors the Svelte review app’s <code class="docutils literal notranslate"><span class="pre">db.ts</span></code> IndexedDB schema:</dt><dd><ul class="simple">
+<li><p>Single object store <code class="docutils literal notranslate"><span class="pre">&quot;reviews&quot;</span></code> with <code class="docutils literal notranslate"><span class="pre">keyPath:</span> <span class="pre">&quot;id&quot;</span></code></p></li>
+<li><p>Index on <code class="docutils literal notranslate"><span class="pre">&quot;semester&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;student_id&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;updated_at&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__current__</span></code> sentinel key for crash-recovery auto-save</p></li>
+<li><p>Auto-generated IDs for saved reviews</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.browser.storage.</span></span><span class="sig-name descname"><span class="pre">BrowserStorage</span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.browser.storage.StorageBackend" title="src.browser.storage.StorageBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">StorageBackend</span></code></a></p>
+<p>IndexedDB storage backend for PyScript browser environments.</p>
+<p>Uses PyScript’s <code class="docutils literal notranslate"><span class="pre">js</span></code> module to access the browser’s IndexedDB API.
+All operations are async and return Promises that must be awaited.</p>
+<p>Creates a <code class="docutils literal notranslate"><span class="pre">create_proxy</span></code> wrapper for all Python callbacks passed to
+raw JS APIs, as required by Pyodide.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.clear_all_reviews">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear_all_reviews</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.clear_all_reviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.clear_all_reviews" title="Link to this definition">¶</a></dt>
+<dd><p>Clear all records from the IndexedDB object store.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.clear_current_session">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear_current_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.clear_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.clear_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Delete the current in-progress session from IndexedDB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.delete_review">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">delete_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.delete_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.delete_review" title="Link to this definition">¶</a></dt>
+<dd><p>Delete a review record by ID from IndexedDB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.export_all">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">export_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.db.DbExport" title="src.models.db.DbExport"><span class="pre">DbExport</span></a></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.export_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.export_all" title="Link to this definition">¶</a></dt>
+<dd><p>Export all reviews from IndexedDB as a DbExport.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.import_all">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">import_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.db.DbExport" title="src.models.db.DbExport"><span class="pre">DbExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.import_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.import_all" title="Link to this definition">¶</a></dt>
+<dd><p>Import reviews into IndexedDB from a DbExport.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.list_reviews">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">list_reviews</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semester</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.list_reviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.list_reviews" title="Link to this definition">¶</a></dt>
+<dd><p>List reviews from IndexedDB, optionally filtered by semester.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.list_semesters">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">list_semesters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.list_semesters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.list_semesters" title="Link to this definition">¶</a></dt>
+<dd><p>List unique semesters from IndexedDB reviews.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.load_current_session">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_current_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.load_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.load_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Load the current session data dict from IndexedDB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.load_review">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.load_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.load_review" title="Link to this definition">¶</a></dt>
+<dd><p>Load a review record by ID from IndexedDB.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.open_db">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.open_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.open_db" title="Link to this definition">¶</a></dt>
+<dd><p>Open or create the IndexedDB database.</p>
+<p>Creates the <code class="docutils literal notranslate"><span class="pre">reviews</span></code> object store with indexes on
+<code class="docutils literal notranslate"><span class="pre">semester</span></code>, <code class="docutils literal notranslate"><span class="pre">student_id</span></code>, and <code class="docutils literal notranslate"><span class="pre">updated_at</span></code> if it doesn’t
+exist yet.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.save_current_session">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">save_current_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.save_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.save_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Save a crash-recovery session under the <code class="docutils literal notranslate"><span class="pre">__current__</span></code> key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.BrowserStorage.save_review">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">save_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#BrowserStorage.save_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.BrowserStorage.save_review" title="Link to this definition">¶</a></dt>
+<dd><p>Save a review record to IndexedDB.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">record.id</span></code> is empty, a unique ID is generated.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.browser.storage.</span></span><span class="sig-name descname"><span class="pre">MemoryStorage</span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.browser.storage.StorageBackend" title="src.browser.storage.StorageBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">StorageBackend</span></code></a></p>
+<p>In-memory storage backend using OrderedDict for pytest and local dev.</p>
+<p>All operations are <strong>synchronous</strong> — awaiting them simply returns the
+result immediately. This allows test code to use <code class="docutils literal notranslate"><span class="pre">await</span></code> for parity
+with the browser backend without requiring an event loop.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.clear_all_reviews">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear_all_reviews</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.clear_all_reviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.clear_all_reviews" title="Link to this definition">¶</a></dt>
+<dd><p>Delete all stored records.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.clear_current_session">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear_current_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.clear_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.clear_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Delete the <code class="docutils literal notranslate"><span class="pre">__current__</span></code> sentinel record.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.delete_review">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">delete_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.delete_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.delete_review" title="Link to this definition">¶</a></dt>
+<dd><p>Delete a review by ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.export_all">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">export_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.db.DbExport" title="src.models.db.DbExport"><span class="pre">DbExport</span></a></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.export_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.export_all" title="Link to this definition">¶</a></dt>
+<dd><p>Export all non-sentinel reviews.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.import_all">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">import_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.db.DbExport" title="src.models.db.DbExport"><span class="pre">DbExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.import_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.import_all" title="Link to this definition">¶</a></dt>
+<dd><p>Import reviews from a DbExport instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.list_reviews">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">list_reviews</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semester</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.list_reviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.list_reviews" title="Link to this definition">¶</a></dt>
+<dd><p>List reviews, optionally filtered by semester, sorted newest first.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.list_semesters">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">list_semesters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.list_semesters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.list_semesters" title="Link to this definition">¶</a></dt>
+<dd><p>List unique semesters from stored reviews.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.load_current_session">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_current_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.load_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.load_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Load the <code class="docutils literal notranslate"><span class="pre">__current__</span></code> sentinel record.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.load_review">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.load_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.load_review" title="Link to this definition">¶</a></dt>
+<dd><p>Load a review by ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.open_db">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.open_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.open_db" title="Link to this definition">¶</a></dt>
+<dd><p>No-op: in-memory store needs no initialisation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.save_current_session">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">save_current_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.save_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.save_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Save session to the <code class="docutils literal notranslate"><span class="pre">__current__</span></code> sentinel key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.MemoryStorage.save_review">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">save_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#MemoryStorage.save_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.MemoryStorage.save_review" title="Link to this definition">¶</a></dt>
+<dd><p>Save a review, generating an ID if needed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.browser.storage.</span></span><span class="sig-name descname"><span class="pre">StorageBackend</span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for review persistence backends.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.clear_all_reviews">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear_all_reviews</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.clear_all_reviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.clear_all_reviews" title="Link to this definition">¶</a></dt>
+<dd><p>Delete all review records including the <code class="docutils literal notranslate"><span class="pre">__current__</span></code> sentinel.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.clear_current_session">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear_current_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.clear_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.clear_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Delete the current in-progress session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.delete_review">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">delete_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.delete_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.delete_review" title="Link to this definition">¶</a></dt>
+<dd><p>Delete a review record by ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>review_id</strong> – The unique identifier of the review.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the record was deleted, <code class="docutils literal notranslate"><span class="pre">False</span></code> if not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.export_all">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">export_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.db.DbExport" title="src.models.db.DbExport"><span class="pre">DbExport</span></a></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.export_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.export_all" title="Link to this definition">¶</a></dt>
+<dd><p>Export all reviews as a DbExport-compatible dict.</p>
+<p>Excludes the <code class="docutils literal notranslate"><span class="pre">__current__</span></code> sentinel record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DbExport instance with all review records.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.import_all">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">import_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.db.DbExport" title="src.models.db.DbExport"><span class="pre">DbExport</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.import_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.import_all" title="Link to this definition">¶</a></dt>
+<dd><p>Import reviews from a DbExport instance.</p>
+<p>Records with the <code class="docutils literal notranslate"><span class="pre">__current__</span></code> ID are skipped. Each record is
+written individually; failures are counted as skipped rather
+than aborting the import.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – DbExport instance with reviews to import.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict with <code class="docutils literal notranslate"><span class="pre">&quot;imported&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;skipped&quot;</span></code> counts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.list_reviews">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">list_reviews</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semester</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.list_reviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.list_reviews" title="Link to this definition">¶</a></dt>
+<dd><p>List stored reviews, optionally filtered by semester.</p>
+<p>Results are sorted by <code class="docutils literal notranslate"><span class="pre">updated_at</span></code> descending (most recent first).
+The <code class="docutils literal notranslate"><span class="pre">__current__</span></code> sentinel record is always excluded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>semester</strong> – Optional semester filter (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;2026SS&quot;</span></code>).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of ReviewRecord instances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.list_semesters">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">list_semesters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.list_semesters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.list_semesters" title="Link to this definition">¶</a></dt>
+<dd><p>List all semesters that have stored reviews.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;unknown&quot;</span></code> semester is excluded. Results are sorted in
+reverse chronological order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of semester strings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.load_current_session">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_current_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.load_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.load_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Load the current in-progress session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The serialised session state dict, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.load_review">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">load_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">review_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.load_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.load_review" title="Link to this definition">¶</a></dt>
+<dd><p>Load a review record by ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>review_id</strong> – The unique identifier of the review.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The ReviewRecord if found, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.open_db">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">open_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.open_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.open_db" title="Link to this definition">¶</a></dt>
+<dd><p>Open or initialise the storage backend.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.save_current_session">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">save_current_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.save_current_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.save_current_session" title="Link to this definition">¶</a></dt>
+<dd><p>Save the current in-progress session (crash recovery).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Serialised session state dict.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.browser.storage.StorageBackend.save_review">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">save_review</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#StorageBackend.save_review"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.StorageBackend.save_review" title="Link to this definition">¶</a></dt>
+<dd><p>Save a review record, generating an ID if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> – A ReviewRecord dataclass instance. If <code class="docutils literal notranslate"><span class="pre">record.id</span></code> is
+empty, a unique ID will be generated.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The ID under which the review was stored.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.storage.get_storage">
+<span class="sig-prename descclassname"><span class="pre">src.browser.storage.</span></span><span class="sig-name descname"><span class="pre">get_storage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.browser.storage.StorageBackend" title="src.browser.storage.StorageBackend"><span class="pre">StorageBackend</span></a></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#get_storage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.get_storage" title="Link to this definition">¶</a></dt>
+<dd><p>Return the appropriate storage backend for the current environment.</p>
+<p>In a PyScript/browser environment, returns a <code class="docutils literal notranslate"><span class="pre">BrowserStorage</span></code> instance
+that uses IndexedDB.  In a local/pytest environment, returns a
+<code class="docutils literal notranslate"><span class="pre">MemoryStorage</span></code> instance that uses an in-memory OrderedDict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A StorageBackend instance (singleton per process).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.storage.make_review_record">
+<span class="sig-prename descclassname"><span class="pre">src.browser.storage.</span></span><span class="sig-name descname"><span class="pre">make_review_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">student_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_selections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grading_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grade_result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generated_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.db.ReviewRecord" title="src.models.db.ReviewRecord"><span class="pre">ReviewRecord</span></a></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#make_review_record"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.make_review_record" title="Link to this definition">¶</a></dt>
+<dd><p>Build a ReviewRecord from session data.</p>
+<p>Derives <code class="docutils literal notranslate"><span class="pre">semester</span></code> from the student ID and generates timestamps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>student_id</strong> – Student identifier (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;2026SS_42&quot;</span></code>).</p></li>
+<li><p><strong>assignment_id</strong> – Assignment identifier.</p></li>
+<li><p><strong>category_selections</strong> – Serialised category selections.</p></li>
+<li><p><strong>grading_inputs</strong> – Serialised grading inputs.</p></li>
+<li><p><strong>grade_result</strong> – Serialised grade result.</p></li>
+<li><p><strong>generated_text</strong> – Generated evaluation text (default empty).</p></li>
+<li><p><strong>existing_id</strong> – If set, overwrite an existing record with this ID.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A ReviewRecord ready for <code class="docutils literal notranslate"><span class="pre">save_review()</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.storage.reset_storage">
+<span class="sig-prename descclassname"><span class="pre">src.browser.storage.</span></span><span class="sig-name descname"><span class="pre">reset_storage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/storage.html#reset_storage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.storage.reset_storage" title="Link to this definition">¶</a></dt>
+<dd><p>Reset the singleton storage instance (useful for testing).</p>
+</dd></dl>
+
+<p id="module-src.browser.files">Client-side file download utilities for PyScript browser environments.</p>
+<p>Provides three download functions that trigger file downloads entirely in
+the browser — no server requests involved:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">download_json(data,</span> <span class="pre">filename)</span></code> — serialise a Python object as a JSON file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">download_text(text,</span> <span class="pre">filename)</span></code> — download plain text content</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">download_blob(blob,</span> <span class="pre">filename)</span></code> — download an existing JS <code class="docutils literal notranslate"><span class="pre">Blob</span></code> object</p></li>
+</ul>
+<p>All functions are no-ops when the <code class="docutils literal notranslate"><span class="pre">js</span></code> module is unavailable (pytest, SSR).
+In that case a warning is printed to stderr.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.files.download_blob">
+<span class="sig-prename descclassname"><span class="pre">src.browser.files.</span></span><span class="sig-name descname"><span class="pre">download_blob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blob</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/files.html#download_blob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.files.download_blob" title="Link to this definition">¶</a></dt>
+<dd><p>Download a JS Blob object as a file in the browser.</p>
+<p>Creates a temporary <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> element, sets its <code class="docutils literal notranslate"><span class="pre">href</span></code> to an object URL
+and its <code class="docutils literal notranslate"><span class="pre">download</span></code> attribute to <code class="docutils literal notranslate"><span class="pre">filename</span></code>, clicks it programmatically,
+then revokes the object URL to prevent memory leaks.</p>
+<p>No-op when running outside a browser (pytest, SSR).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blob</strong> – A JavaScript <code class="docutils literal notranslate"><span class="pre">Blob</span></code> object (e.g. created via <code class="docutils literal notranslate"><span class="pre">js.Blob.new(...)</span></code>).</p></li>
+<li><p><strong>filename</strong> – The desired download filename, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;review.json&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">blob</span></code> is not a Blob-like object (has no <code class="docutils literal notranslate"><span class="pre">size</span></code> or
+    <code class="docutils literal notranslate"><span class="pre">type</span></code> attributes detected). Only raised in browser mode.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.files.download_json">
+<span class="sig-prename descclassname"><span class="pre">src.browser.files.</span></span><span class="sig-name descname"><span class="pre">download_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/files.html#download_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.files.download_json" title="Link to this definition">¶</a></dt>
+<dd><p>Download a Python object as a formatted JSON file in the browser.</p>
+<p>Serialises <code class="docutils literal notranslate"><span class="pre">data</span></code> with <code class="docutils literal notranslate"><span class="pre">indent=2</span></code> and <code class="docutils literal notranslate"><span class="pre">ensure_ascii=False</span></code> for
+human-readable output, wraps it in a <code class="docutils literal notranslate"><span class="pre">Blob</span></code>, and triggers the download.</p>
+<p>No-op when running outside a browser (pytest, SSR).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The Python object to serialise (must be JSON-serialisable).</p></li>
+<li><p><strong>filename</strong> – The desired download filename, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;export.json&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">data</span></code> is not JSON-serialisable (propagated from
+    <code class="docutils literal notranslate"><span class="pre">json.dumps</span></code>). Only raised in browser mode.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.files.download_text">
+<span class="sig-prename descclassname"><span class="pre">src.browser.files.</span></span><span class="sig-name descname"><span class="pre">download_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/files.html#download_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.files.download_text" title="Link to this definition">¶</a></dt>
+<dd><p>Download a string as a text file in the browser.</p>
+<p>Wraps <code class="docutils literal notranslate"><span class="pre">text</span></code> in a <code class="docutils literal notranslate"><span class="pre">Blob</span></code> with MIME type <code class="docutils literal notranslate"><span class="pre">&quot;text/plain;charset=utf-8&quot;</span></code>
+and triggers the download via <code class="docutils literal notranslate"><span class="pre">download_blob</span></code>.</p>
+<p>No-op when running outside a browser (pytest, SSR).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – The text content to download.</p></li>
+<li><p><strong>filename</strong> – The desired download filename, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;notes.txt&quot;</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-src.browser.shortcuts">Keyboard shortcuts system for SciPro Review App.</p>
+<p>Provides <code class="docutils literal notranslate"><span class="pre">register_shortcut</span></code>, <code class="docutils literal notranslate"><span class="pre">unregister_shortcut</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">register_default_shortcuts</span></code> for global keydown handling.</p>
+<p>All handlers use <code class="docutils literal notranslate"><span class="pre">create_proxy</span></code> and call <code class="docutils literal notranslate"><span class="pre">event.preventDefault()</span></code>.
+In non-Pyodide environments (pytest) all operations are safe no-ops.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.shortcuts.format_shortcut">
+<span class="sig-prename descclassname"><span class="pre">src.browser.shortcuts.</span></span><span class="sig-name descname"><span class="pre">format_shortcut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/browser/shortcuts.html#format_shortcut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.shortcuts.format_shortcut" title="Link to this definition">¶</a></dt>
+<dd><p>Pretty-print a key combination as “Ctrl + Shift + Z”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keys</strong> – Ordered list of modifier / key identifiers.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Human-readable shortcut string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.shortcuts.get_shortcuts">
+<span class="sig-prename descclassname"><span class="pre">src.browser.shortcuts.</span></span><span class="sig-name descname"><span class="pre">get_shortcuts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/browser/shortcuts.html#get_shortcuts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.shortcuts.get_shortcuts" title="Link to this definition">¶</a></dt>
+<dd><p>Return a snapshot of all registered shortcut definitions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.shortcuts.register_default_shortcuts">
+<span class="sig-prename descclassname"><span class="pre">src.browser.shortcuts.</span></span><span class="sig-name descname"><span class="pre">register_default_shortcuts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/shortcuts.html#register_default_shortcuts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.shortcuts.register_default_shortcuts" title="Link to this definition">¶</a></dt>
+<dd><p>Register all six default shortcuts with the provided callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callbacks</strong> – Mapping of action names to zero-argument callables.
+Expected keys: <code class="docutils literal notranslate"><span class="pre">&quot;save_session&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;undo&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;redo_shift_z&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;redo_y&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;mode_toggle&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;escape&quot;</span></code>.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>The six defaults are:</dt><dd><ul class="simple">
+<li><p>Ctrl+S (save_session)</p></li>
+<li><p>Ctrl+Z (undo)</p></li>
+<li><p>Ctrl+Shift+Z (redo_shift_z)</p></li>
+<li><p>Ctrl+Y (redo_y)</p></li>
+<li><p>Alt+Shift+G (mode_toggle)</p></li>
+<li><p>Escape (escape)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.shortcuts.register_shortcut">
+<span class="sig-prename descclassname"><span class="pre">src.browser.shortcuts.</span></span><span class="sig-name descname"><span class="pre">register_shortcut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/shortcuts.html#register_shortcut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.shortcuts.register_shortcut" title="Link to this definition">¶</a></dt>
+<dd><p>Register a global keyboard shortcut.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – Shortcut string, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;ctrl+s&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;alt+shift+g&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;escape&quot;</span></code>.</p></li>
+<li><p><strong>callback</strong> – Zero-argument callable invoked when the shortcut is
+pressed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <em>key</em> is not a recognized shortcut pattern.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.shortcuts.unregister_shortcut">
+<span class="sig-prename descclassname"><span class="pre">src.browser.shortcuts.</span></span><span class="sig-name descname"><span class="pre">unregister_shortcut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/shortcuts.html#unregister_shortcut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.shortcuts.unregister_shortcut" title="Link to this definition">¶</a></dt>
+<dd><p>Remove a previously registered keyboard shortcut.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> – Shortcut string previously passed to
+<code class="docutils literal notranslate"><span class="pre">register_shortcut</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-src.browser.theme_controller">Theme controller for SciPro Review App.</p>
+<p>Provides module-level functions for toggling light/dark/system theme modes.
+Toggles the <code class="docutils literal notranslate"><span class="pre">.dark</span></code> class on <code class="docutils literal notranslate"><span class="pre">&lt;html&gt;</span></code> and persists choice to localStorage.</p>
+<dl class="simple">
+<dt>Functions:</dt><dd><p>toggle_theme: Cycle theme: light -&gt; dark -&gt; system -&gt; light.
+get_theme: Return the current theme mode (“light”, “dark”, “system”).
+set_theme: Set and apply a specific theme mode.
+apply_theme: Apply the current theme to the DOM.
+initialize: Load saved theme and apply. Call at app boot.</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.theme_controller.apply_theme">
+<span class="sig-prename descclassname"><span class="pre">src.browser.theme_controller.</span></span><span class="sig-name descname"><span class="pre">apply_theme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/theme_controller.html#apply_theme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.theme_controller.apply_theme" title="Link to this definition">¶</a></dt>
+<dd><p>Apply theme by toggling <code class="docutils literal notranslate"><span class="pre">.dark</span></code> class on <code class="docutils literal notranslate"><span class="pre">&lt;html&gt;</span></code> element.</p>
+<p>For “system” mode, resolves to the current OS preference before applying.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> – “light”, “dark”, or “system”.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If mode is not a valid theme.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.theme_controller.get_system_theme">
+<span class="sig-prename descclassname"><span class="pre">src.browser.theme_controller.</span></span><span class="sig-name descname"><span class="pre">get_system_theme</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/browser/theme_controller.html#get_system_theme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.theme_controller.get_system_theme" title="Link to this definition">¶</a></dt>
+<dd><p>Detect OS-level color scheme preference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“dark” if the OS prefers dark mode, “light” otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.theme_controller.get_theme">
+<span class="sig-prename descclassname"><span class="pre">src.browser.theme_controller.</span></span><span class="sig-name descname"><span class="pre">get_theme</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/browser/theme_controller.html#get_theme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.theme_controller.get_theme" title="Link to this definition">¶</a></dt>
+<dd><p>Return the current theme mode.</p>
+<p>Checks localStorage first, then falls back to in-memory store,
+and finally defaults to “system”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>One of “light”, “dark”, “system”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.theme_controller.initialize">
+<span class="sig-prename descclassname"><span class="pre">src.browser.theme_controller.</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/theme_controller.html#initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.theme_controller.initialize" title="Link to this definition">¶</a></dt>
+<dd><p>Load saved theme and apply it. Call at app boot.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.theme_controller.set_theme">
+<span class="sig-prename descclassname"><span class="pre">src.browser.theme_controller.</span></span><span class="sig-name descname"><span class="pre">set_theme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/theme_controller.html#set_theme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.theme_controller.set_theme" title="Link to this definition">¶</a></dt>
+<dd><p>Set and apply a specific theme mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> – “light”, “dark”, or “system”.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If mode is not a valid theme.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.theme_controller.toggle_theme">
+<span class="sig-prename descclassname"><span class="pre">src.browser.theme_controller.</span></span><span class="sig-name descname"><span class="pre">toggle_theme</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/browser/theme_controller.html#toggle_theme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.theme_controller.toggle_theme" title="Link to this definition">¶</a></dt>
+<dd><p>Cycle the theme: light -&gt; dark -&gt; system -&gt; light.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The new theme mode after toggling.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-src.browser.responsive">Responsive breakpoint detection via matchMedia.</p>
+<p>Provides mobile/desktop breakpoint detection using
+<code class="docutils literal notranslate"><span class="pre">window.matchMedia</span></code> with <code class="docutils literal notranslate"><span class="pre">create_proxy</span></code> for JS interop.</p>
+<p>All functions are no-ops when running outside a browser
+(pytest, SSR).</p>
+<p>Breakpoint: desktop starts at 1024px (mobile is ≤1023px).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.responsive.is_mobile">
+<span class="sig-prename descclassname"><span class="pre">src.browser.responsive.</span></span><span class="sig-name descname"><span class="pre">is_mobile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/src/browser/responsive.html#is_mobile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.responsive.is_mobile" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether the viewport is currently at mobile width.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if viewport width is ≤1023px, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.
+Always returns <code class="docutils literal notranslate"><span class="pre">False</span></code> when running outside a browser.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.responsive.on_breakpoint_change">
+<span class="sig-prename descclassname"><span class="pre">src.browser.responsive.</span></span><span class="sig-name descname"><span class="pre">on_breakpoint_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/responsive.html#on_breakpoint_change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.responsive.on_breakpoint_change" title="Link to this definition">¶</a></dt>
+<dd><p>Register a callback invoked when the mobile breakpoint changes.</p>
+<p>The callback receives a single <code class="docutils literal notranslate"><span class="pre">bool</span></code> argument: <code class="docutils literal notranslate"><span class="pre">True</span></code> for
+mobile (viewport width ≤ 1023px), <code class="docutils literal notranslate"><span class="pre">False</span></code> for desktop.</p>
+<p>Uses <code class="docutils literal notranslate"><span class="pre">pyodide.ffi.create_proxy</span></code> to wrap the callback for JS
+<code class="docutils literal notranslate"><span class="pre">addEventListener</span></code>. The proxy is stored and cleaned up when
+<code class="docutils literal notranslate"><span class="pre">remove_breakpoint_listener</span></code> is called.</p>
+<p>No-op when running outside a browser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – Function taking one <code class="docutils literal notranslate"><span class="pre">bool</span></code> parameter, called on
+breakpoint transition.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the callback has already been registered.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.responsive.remove_breakpoint_listener">
+<span class="sig-prename descclassname"><span class="pre">src.browser.responsive.</span></span><span class="sig-name descname"><span class="pre">remove_breakpoint_listener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/responsive.html#remove_breakpoint_listener"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.responsive.remove_breakpoint_listener" title="Link to this definition">¶</a></dt>
+<dd><p>Unregister a previously registered breakpoint change callback.</p>
+<p>Removes the listener from <code class="docutils literal notranslate"><span class="pre">matchMedia</span></code> and destroys the
+<code class="docutils literal notranslate"><span class="pre">create_proxy</span></code> wrapper.</p>
+<p>No-op when running outside a browser.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – The same function reference passed to
+<code class="docutils literal notranslate"><span class="pre">on_breakpoint_change</span></code>.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the callback was not registered.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-src.browser.basecoat_bridge">Basecoat JS bridge for SciPro Review App.</p>
+<p>Re-initializes Basecoat JavaScript components after PuePy redraws.
+PuePy uses morphdom to patch the DOM, which can destroy Basecoat’s
+JS event listeners and internal state. This module provides functions
+to re-trigger Basecoat initialization for newly rendered elements.</p>
+<dl class="simple">
+<dt>WHEN TO CALL:</dt><dd><ul class="simple">
+<li><p>After PuePy page transitions that render Basecoat JS components
+(e.g., in Page.on_ready() or after navigation)</p></li>
+<li><p>After dynamic DOM insertion of Basecoat elements
+(e.g., programmatically adding a tab panel or dropdown)</p></li>
+<li><p>Do NOT call on every redraw — only after page transitions or
+targeted component creation</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.basecoat_bridge.init_basecoat">
+<span class="sig-prename descclassname"><span class="pre">src.browser.basecoat_bridge.</span></span><span class="sig-name descname"><span class="pre">init_basecoat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/basecoat_bridge.html#init_basecoat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.basecoat_bridge.init_basecoat" title="Link to this definition">¶</a></dt>
+<dd><p>Re-initialize ALL Basecoat JS components.</p>
+<p>Calls <code class="docutils literal notranslate"><span class="pre">window.basecoat.initAll()</span></code> which clears initialization
+flags for every registered component and re-runs their init
+functions across the entire document. Use after PuePy page
+transitions that render multiple Basecoat components at once.</p>
+<p>No-op when running outside a browser (pytest, SSR).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.browser.basecoat_bridge.init_component">
+<span class="sig-prename descclassname"><span class="pre">src.browser.basecoat_bridge.</span></span><span class="sig-name descname"><span class="pre">init_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/browser/basecoat_bridge.html#init_component"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.browser.basecoat_bridge.init_component" title="Link to this definition">¶</a></dt>
+<dd><p>Re-initialize a single Basecoat JS component type.</p>
+<p>Calls <code class="docutils literal notranslate"><span class="pre">window.basecoat.init(name)</span></code> which clears the initialization
+flag for the named component and re-runs its init function on all
+matching elements. Use for targeted re-init after inserting a
+specific component into the DOM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – Basecoat component name. Must be one of:
+<code class="docutils literal notranslate"><span class="pre">tabs</span></code>, <code class="docutils literal notranslate"><span class="pre">select</span></code>, <code class="docutils literal notranslate"><span class="pre">dropdown-menu</span></code>,
+<code class="docutils literal notranslate"><span class="pre">popover</span></code>, <code class="docutils literal notranslate"><span class="pre">toast</span></code>, <code class="docutils literal notranslate"><span class="pre">sidebar</span></code>.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If name is not a recognized Basecoat component.</p>
+</dd>
+</dl>
+<p>No-op when running outside a browser (pytest, SSR).</p>
+</dd></dl>
+
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="services.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Services API</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="state.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">State Management API</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2026, SciPro Team</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+<a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+  <iconify-icon icon="simple-icons:github"></iconify-icon>
+</a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/shibuya.js?v=cac61aee"></script></body>
+</html>

@@ -1,0 +1,23 @@
+general:
+  validValues:
+    title: Valid values
+    additional_notes: true
+    positive:
+    - main_point: ''
+      sub_points:
+      - text: Good job on checking whether the distance is negative.
+    neutral: []
+    negative:
+    - main_point: ''
+      sub_points:
+      - text: You did not check for negative values for the distance.
+  wrongNumbers:
+    title: Wrong Numbers
+    additional_notes: false
+    positive: []
+    neutral: []
+    negative:
+    - main_point: ''
+      sub_points:
+      - text: The mass of the sun and/or the earth is wrong!
+assignment_specific: []

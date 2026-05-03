@@ -1,0 +1,66 @@
+general:
+  Pandas:
+    title: Pandas
+    additional_notes: true
+    positive:
+    - main_point: Overall Pandas feedback
+      sub_points:
+      - text: Good use of Pandas
+      - text: Good use of the Pandas functions
+      - text: Good use of typing library
+      - text: Correlation calculation - well done
+      - text: Correlation analysis/interpretation - well done
+      - text: Plotting - good, concise coding for the plot generation
+      - text: Plotting - nicely done
+      - text: Plotting - very nicely done!
+    neutral:
+    - main_point: The following functions might have been good to use in your solution
+      sub_points:
+      - text: '`reset_index`'
+      - text: '`loc` to easily operate over the columns'
+      - text: '`sort_values` (Country name) would have been logical to after data
+          cleaning, but fine'
+    negative:
+    - main_point: Reading Data Into Pandas
+      sub_points:
+      - text: Delimiter (i.e., `sep`) - incorrectly specified the separator used within
+          the CSV-formatted file
+      - text: Header (i.e., `header`) - incorrectly specified the header line
+      - text: Incorrectly read in the data
+    - main_point: Merging Data
+      sub_points:
+      - text: Merging was not done correctly
+      - text: Saving index - this really isn't needed since it doesn't add pertinent
+          information to the resulting data
+    - main_point: Cleaning Data
+      sub_points:
+      - text: data cleaning not done - you did not drop duplicated rows and/or rows
+          with empty cells
+      - text: '`drop`- you did not drop the columns labelled `year`, `Generosity`'
+      - text: '`drop`- you did not save the results (e.g., using `inplace` or assigning
+          it to a new object)'
+      - text: '`drop_duplicates` - you did not save the results (e.g., using `inplace`
+          or assigning it to a new object)'
+      - text: '`dropna` - you did not save the results (e.g., using `inplace` or assigning
+          it to a new object)'
+    - main_point: Saving Data
+      sub_points:
+      - text: Not saved - the final data was not saved
+      - text: Saving index - this really isn't needed since it doesn't add pertinent
+          information to the resulting data
+    - main_point: User-defined Function for Plotting
+      sub_points:
+      - text: Not created - a function was not created as requested in the assignment
+    - main_point: Pandas Plotting
+      sub_points:
+      - text: The data was not plotted using the Pandas' library - importing other
+          libraries for plotting was not allowed
+      - text: Graphs includes plotting Happiness with itself (see instructions)
+    - main_point: Correlation Analysis
+      sub_points:
+      - text: '`corr` - did not use Pandas'' built-in correlation function'
+      - text: Identification - incorrectly identified the features that are most correlated
+      - text: Interpretation - there is a lack of interpreting what the correlation
+          values mean
+      - text: Interpretation - incorrectly interpreted the correlation results
+assignment_specific: []

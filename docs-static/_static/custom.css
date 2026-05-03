@@ -1,0 +1,178 @@
+/* SciPro Review - Unified Sphinx Shibuya Theme Styles */
+
+@import url('https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5/index.css');
+
+:root {
+    --sy-f-font: 'Inter Variable', system-ui, -apple-system, sans-serif;
+    --sy-f-heading: 'Inter Variable', system-ui, sans-serif;
+    
+    /* Light Mode Variables - Precise OKLCH from app */
+    --sy-c-bg: oklch(1 0 0);
+    --sy-c-text: oklch(0.145 0 0);
+    --sy-c-border: oklch(0.922 0 0);
+    --sy-c-bg-aside: oklch(0.985 0 0); /* App's --sidebar-bg */
+    --sy-c-primary: oklch(0.205 0 0);
+    --sy-c-accent: oklch(0.97 0 0);
+    --sy-c-accent-text: oklch(0.205 0 0);
+    --sy-c-muted: oklch(0.556 0 0);
+    
+    /* Spacing */
+    --sy-s-header-height: 4rem;
+    --sy-s-aside-width: 16rem;
+}
+
+/* Dark Mode Overrides */
+[data-theme="dark"] {
+    --sy-c-bg: oklch(0.145 0 0);
+    --sy-c-text: oklch(0.985 0 0);
+    --sy-c-border: oklch(1 0 0 / 10%);
+    --sy-c-bg-aside: oklch(0.145 0 0);
+    --sy-c-primary: oklch(0.922 0 0);
+    --sy-c-accent: oklch(0.371 0 0);
+    --sy-c-accent-text: oklch(0.985 0 0);
+    --sy-c-muted: oklch(0.708 0 0);
+}
+
+/* Global Layout Fixes */
+.sy-aside {
+    width: var(--sy-s-aside-width) !important;
+    border-right: 1px solid var(--sy-c-border) !important;
+    padding: 1.5rem 0.5rem !important;
+    background-color: var(--sy-c-bg-aside) !important;
+}
+
+.sy-header {
+    height: var(--sy-s-header-height);
+    border-bottom: 1px solid var(--sy-c-border) !important;
+    background-color: var(--sy-c-bg) !important;
+    backdrop-filter: blur(12px);
+}
+
+.sy-header-inner {
+    max-width: 100% !important;
+    padding: 0 1.5rem !important;
+}
+
+/* Sidebar Navigation Items */
+.sy-aside nav a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    border-radius: 0.375rem !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    color: var(--sy-c-text) !important;
+    opacity: 0.7;
+    text-decoration: none !important;
+    margin-bottom: 0.125rem;
+}
+
+.sy-aside nav a:hover {
+    background-color: var(--sy-c-accent) !important;
+    color: var(--sy-c-accent-text) !important;
+    opacity: 1 !important;
+}
+
+.sy-aside nav a.current {
+    background-color: var(--sy-c-accent) !important;
+    color: var(--sy-c-accent-text) !important;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+}
+
+/* Sidebar Section Headers */
+.sy-aside p.caption {
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    color: var(--sy-c-muted) !important;
+    padding: 1.25rem 0.75rem 0.5rem !important;
+    letter-spacing: 0.05em;
+}
+
+/* Sidebar Icons using mask-image (Lucide-style) */
+.sy-aside nav a::before {
+    content: "";
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    background-color: currentColor;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+}
+
+/* Default Icon (File-Text) */
+.sy-aside nav a::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'%3E%3C/path%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'%3E%3C/path%3E%3Cpath d='M10 9H8'%3E%3C/path%3E%3Cpath d='M16 13H8'%3E%3C/path%3E%3Cpath d='M16 17H8'%3E%3C/path%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z'%3E%3C/path%3E%3Cpath d='M14 2v4a2 2 0 0 0 2 2h4'%3E%3C/path%3E%3Cpath d='M10 9H8'%3E%3C/path%3E%3Cpath d='M16 13H8'%3E%3C/path%3E%3Cpath d='M16 17H8'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* Specific Icons for common doc sections */
+.sy-aside nav a[href*="user-guide"]::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z'%3E%3C/path%3E%3Cpath d='M8 7h6'%3E%3C/path%3E%3Cpath d='M8 11h8'%3E%3C/path%3E%3Cpath d='M8 15h6'%3E%3C/path%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z'%3E%3C/path%3E%3Cpath d='M8 7h6'%3E%3C/path%3E%3Cpath d='M8 11h8'%3E%3C/path%3E%3Cpath d='M8 15h6'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.sy-aside nav a[href*="architecture"]::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7.5 4.27 9 5.15'%3E%3C/path%3E%3Cpath d='M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z'%3E%3C/path%3E%3Cpath d='m3.3 7 8.7 5 8.7-5'%3E%3C/path%3E%3Cpath d='M12 22V12'%3E%3C/path%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7.5 4.27 9 5.15'%3E%3C/path%3E%3Cpath d='M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z'%3E%3C/path%3E%3Cpath d='m3.3 7 8.7 5 8.7-5'%3E%3C/path%3E%3Cpath d='M12 22V12'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.sy-aside nav a[href*="api"]::before {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='16 18 22 12 16 6'%3E%3C/polyline%3E%3Cpolyline points='8 6 2 12 8 18'%3E%3C/polyline%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='16 18 22 12 16 6'%3E%3C/polyline%3E%3Cpolyline points='8 6 2 12 8 18'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* Content Area Refinements */
+.sy-content {
+    max-width: 56rem !important; /* Matches app main area better */
+    padding: 3rem !important;
+    line-height: 1.6;
+}
+
+.sy-content h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    margin-bottom: 2rem;
+    color: var(--sy-c-text);
+}
+
+.sy-content h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--sy-c-border);
+    padding-bottom: 0.5rem;
+}
+
+/* Sphinx Design Component Tweak */
+.sd-card {
+    border-radius: var(--radius-lg, 0.625rem) !important;
+    border: 1px solid var(--sy-c-border) !important;
+    background-color: var(--sy-c-bg) !important;
+    box-shadow: none !important;
+    overflow: hidden;
+}
+
+.sd-card-header {
+    background-color: var(--sy-c-bg-aside) !important;
+    border-bottom: 1px solid var(--sy-c-border) !important;
+    font-weight: 600 !important;
+    padding: 1rem !important;
+}
+
+.sd-card-body {
+    padding: 1.25rem !important;
+}
+
+
+

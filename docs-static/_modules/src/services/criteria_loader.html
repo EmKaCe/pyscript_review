@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="../../../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>src.services.criteria_loader - SciPro Review</title><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link media="print" rel="stylesheet" type="text/css" href="../../../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=9cf7cb20" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="src.services.criteria_loader"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../../../index.html">
+      <img class="light-logo" src="../../../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <img class="dark-logo" src="../../../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <strong>SciPro Review</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="/.html">App Home</a></li><li class="link"><a href="/%23/review.html">Review</a></li><li class="link"><a href="/%23/settings.html">Settings</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="2"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../guides/getting-started.html">Getting Started with SciPro Review</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../guides/grading.html">Grading System Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../guides/deployment.html">Deployment Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../architecture.html">Architecture</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../yaml-content.html">YAML Content Management</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../contributing.html">Contributing to SciPro Review</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../api/models.html">Models API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../api/services.html">Services API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../api/browser.html">Browser Interop API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../../../api/state.html">State Management API</a></li>
+</ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../../../index.html"><span itemprop="name">SciPro Review</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../../index.html"><span itemprop="name">Module code</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">src.services.criteria_loader</strong>
+        <meta itemprop="position" content="3" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <h1>Source code for src.services.criteria_loader</h1><div class="highlight"><pre>
+<span></span><span data-line="1"><span class="sd">&quot;&quot;&quot;Load assignment definitions and criteria bundles from YAML files.&quot;&quot;&quot;</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span data-line="6"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="kn">from</span><span class="w"> </span><span class="nn">src.models.criteria</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span data-line="11">    <span class="n">AssignmentConfig</span><span class="p">,</span>
+</span><span data-line="12">    <span class="n">Category</span><span class="p">,</span>
+</span><span data-line="13">    <span class="n">CriteriaBundle</span><span class="p">,</span>
+</span><span data-line="14">    <span class="n">MainPoint</span><span class="p">,</span>
+</span><span data-line="15">    <span class="n">Sentiment</span><span class="p">,</span>
+</span><span data-line="16">    <span class="n">SubPoint</span><span class="p">,</span>
+</span><span data-line="17"><span class="p">)</span>
+</span><span data-line="18">
+</span><span data-line="19"><span class="c1"># Default paths for YAML data files (relative to server root).</span>
+</span><span data-line="20"><span class="n">DEFAULT_ASSIGNMENTS_PATH</span> <span class="o">=</span> <span class="s2">&quot;static/data/assignments.yaml&quot;</span>
+</span><span data-line="21"><span class="n">DEFAULT_CRITERIA_DIR</span> <span class="o">=</span> <span class="s2">&quot;static/data/criteria/&quot;</span>
+</span><span data-line="22">
+</span><span data-line="23">
+</span><span data-line="24"><span class="k">def</span><span class="w"> </span><span class="nf">_read_yaml</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="25"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Read and parse a YAML file using Pyodide (browser) or local file (test).</span>
+</span><span data-line="26">
+</span><span data-line="27"><span class="sd">    Args:</span>
+</span><span data-line="28"><span class="sd">        path: Path to the YAML file (relative to server root for browser,</span>
+</span><span data-line="29"><span class="sd">            or filesystem path for testing).</span>
+</span><span data-line="30">
+</span><span data-line="31"><span class="sd">    Returns:</span>
+</span><span data-line="32"><span class="sd">        Parsed YAML dict, or None if the file cannot be read.</span>
+</span><span data-line="33"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="34">    <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+</span><span data-line="35">
+</span><span data-line="36">    <span class="k">if</span> <span class="s2">&quot;pyodide&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+</span><span data-line="37">        <span class="k">try</span><span class="p">:</span>
+</span><span data-line="38">            <span class="kn">from</span><span class="w"> </span><span class="nn">pyodide.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">open_url</span>  <span class="c1"># type: ignore[import-untyped]</span>
+</span><span data-line="39">
+</span><span data-line="40">            <span class="n">url</span> <span class="o">=</span> <span class="n">open_url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span data-line="41">            <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</span><span data-line="42">        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span><span data-line="43">            <span class="k">return</span> <span class="kc">None</span>
+</span><span data-line="44">
+</span><span data-line="45">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="46">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span data-line="47">            <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span data-line="48">    <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
+</span><span data-line="49">        <span class="k">return</span> <span class="kc">None</span>
+</span><span data-line="50">
+</span><span data-line="51">
+</span><span data-line="52"><span class="k">def</span><span class="w"> </span><span class="nf">_parse_sentiment_items</span><span class="p">(</span>
+</span><span data-line="53">    <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+</span><span data-line="54">    <span class="n">sentiment</span><span class="p">:</span> <span class="n">Sentiment</span><span class="p">,</span>
+</span><span data-line="55"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MainPoint</span><span class="p">]:</span>
+</span><span data-line="56"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a list of main_point/sub_points items into MainPoint objects.</span>
+</span><span data-line="57">
+</span><span data-line="58"><span class="sd">    Args:</span>
+</span><span data-line="59"><span class="sd">        items: List of dicts, each with &#39;main_point&#39; str and &#39;sub_points&#39; list.</span>
+</span><span data-line="60"><span class="sd">        sentiment: Sentiment to assign to all resulting MainPoints.</span>
+</span><span data-line="61">
+</span><span data-line="62"><span class="sd">    Returns:</span>
+</span><span data-line="63"><span class="sd">        List of MainPoint objects.</span>
+</span><span data-line="64"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="65">    <span class="n">main_points</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MainPoint</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="66">    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+</span><span data-line="67">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;main_point&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+</span><span data-line="68">            <span class="k">continue</span>
+</span><span data-line="69">        <span class="n">raw_text</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;main_point&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span data-line="70">        <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">raw_text</span><span class="p">)</span> <span class="k">if</span> <span class="n">raw_text</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+</span><span data-line="71">        <span class="n">sub_points_raw</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sub_points&quot;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span data-line="72">        <span class="n">sub_points</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="73">            <span class="n">SubPoint</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">sp</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+</span><span data-line="74">            <span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">sub_points_raw</span>
+</span><span data-line="75">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;text&quot;</span> <span class="ow">in</span> <span class="n">sp</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sp</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span>
+</span><span data-line="76">        <span class="p">]</span>
+</span><span data-line="77">        <span class="n">main_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+</span><span data-line="78">            <span class="n">MainPoint</span><span class="p">(</span>
+</span><span data-line="79">                <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span>
+</span><span data-line="80">                <span class="n">sentiment</span><span class="o">=</span><span class="n">sentiment</span><span class="p">,</span>
+</span><span data-line="81">                <span class="n">sub_points</span><span class="o">=</span><span class="n">sub_points</span><span class="p">,</span>
+</span><span data-line="82">            <span class="p">)</span>
+</span><span data-line="83">        <span class="p">)</span>
+</span><span data-line="84">    <span class="k">return</span> <span class="n">main_points</span>
+</span><span data-line="85">
+</span><span data-line="86">
+</span><span data-line="87"><span class="k">def</span><span class="w"> </span><span class="nf">_parse_single_category</span><span class="p">(</span>
+</span><span data-line="88">    <span class="n">slug</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="89">    <span class="n">cat_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+</span><span data-line="90"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Category</span><span class="p">:</span>
+</span><span data-line="91"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a single category dict into a Category model.</span>
+</span><span data-line="92">
+</span><span data-line="93"><span class="sd">    Handles categories from both the &#39;general&#39; section (keyed by slug)</span>
+</span><span data-line="94"><span class="sd">    and &#39;assignment_specific&#39; section (list with &#39;slug&#39; field).</span>
+</span><span data-line="95">
+</span><span data-line="96"><span class="sd">    Args:</span>
+</span><span data-line="97"><span class="sd">        slug: Machine-readable category identifier.</span>
+</span><span data-line="98"><span class="sd">        cat_data: Category data dict with &#39;title&#39;, &#39;positive&#39;, &#39;neutral&#39;,</span>
+</span><span data-line="99"><span class="sd">            &#39;negative&#39;.</span>
+</span><span data-line="100">
+</span><span data-line="101"><span class="sd">    Returns:</span>
+</span><span data-line="102"><span class="sd">        A Category model instance.</span>
+</span><span data-line="103"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="104">    <span class="n">title_raw</span> <span class="o">=</span> <span class="n">cat_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="n">slug</span><span class="p">)</span>
+</span><span data-line="105">    <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">title_raw</span><span class="p">)</span> <span class="k">if</span> <span class="n">title_raw</span> <span class="k">else</span> <span class="n">slug</span>
+</span><span data-line="106">    <span class="n">main_points</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">MainPoint</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="107">
+</span><span data-line="108">    <span class="k">for</span> <span class="n">sentiment_str</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;positive&quot;</span><span class="p">,</span> <span class="s2">&quot;neutral&quot;</span><span class="p">,</span> <span class="s2">&quot;negative&quot;</span><span class="p">):</span>
+</span><span data-line="109">        <span class="n">items</span> <span class="o">=</span> <span class="n">cat_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sentiment_str</span><span class="p">,</span> <span class="p">[])</span>
+</span><span data-line="110">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span><span data-line="111">            <span class="n">main_points</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_parse_sentiment_items</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">Sentiment</span><span class="p">(</span><span class="n">sentiment_str</span><span class="p">)))</span>
+</span><span data-line="112">
+</span><span data-line="113">    <span class="k">return</span> <span class="n">Category</span><span class="p">(</span>
+</span><span data-line="114">        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+</span><span data-line="115">        <span class="n">slug</span><span class="o">=</span><span class="n">slug</span><span class="p">,</span>
+</span><span data-line="116">        <span class="n">weight</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span><span data-line="117">        <span class="n">main_points</span><span class="o">=</span><span class="n">main_points</span><span class="p">,</span>
+</span><span data-line="118">    <span class="p">)</span>
+</span><span data-line="119">
+</span><span data-line="120">
+<div class="viewcode-block" id="parse_criteria_yaml">
+<a class="viewcode-back" href="../../../api/services.html#src.services.criteria_loader.parse_criteria_yaml">[docs]</a>
+</span><span data-line="121"><span class="k">def</span><span class="w"> </span><span class="nf">parse_criteria_yaml</span><span class="p">(</span>
+</span><span data-line="122">    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+</span><span data-line="123">    <span class="n">assignment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="124">    <span class="n">assignment_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="125"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CriteriaBundle</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="126"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse criteria YAML data into a CriteriaBundle.</span>
+</span><span data-line="127">
+</span><span data-line="128"><span class="sd">    Flattens the &#39;general&#39; (dict keyed by slug) and &#39;assignment_specific&#39;</span>
+</span><span data-line="129"><span class="sd">    (list) sections into a single list of Category objects.</span>
+</span><span data-line="130">
+</span><span data-line="131"><span class="sd">    Args:</span>
+</span><span data-line="132"><span class="sd">        data: Parsed YAML data dict, or None.</span>
+</span><span data-line="133"><span class="sd">        assignment_id: Unique assignment identifier.</span>
+</span><span data-line="134"><span class="sd">        assignment_name: Human-readable assignment name.</span>
+</span><span data-line="135">
+</span><span data-line="136"><span class="sd">    Returns:</span>
+</span><span data-line="137"><span class="sd">        CriteriaBundle, or None if data is None.</span>
+</span><span data-line="138"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="139">    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="140">        <span class="k">return</span> <span class="kc">None</span>
+</span><span data-line="141">
+</span><span data-line="142">    <span class="n">categories</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Category</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="143">
+</span><span data-line="144">    <span class="c1"># Parse &#39;general&#39; section (dict keyed by category slug).</span>
+</span><span data-line="145">    <span class="n">general</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">)</span>
+</span><span data-line="146">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">general</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span data-line="147">        <span class="k">for</span> <span class="n">slug</span><span class="p">,</span> <span class="n">cat_data</span> <span class="ow">in</span> <span class="n">general</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="148">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cat_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span data-line="149">                <span class="n">categories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_parse_single_category</span><span class="p">(</span><span class="n">slug</span><span class="p">,</span> <span class="n">cat_data</span><span class="p">))</span>
+</span><span data-line="150">
+</span><span data-line="151">    <span class="c1"># Parse &#39;assignment_specific&#39; section (list of category dicts).</span>
+</span><span data-line="152">    <span class="n">assignment_specific</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span data-line="153">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">assignment_specific</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span><span data-line="154">        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">cat_data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">assignment_specific</span><span class="p">):</span>
+</span><span data-line="155">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cat_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span data-line="156">                <span class="n">slug_raw</span> <span class="o">=</span> <span class="n">cat_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;slug&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span data-line="157">                <span class="n">slug</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">slug_raw</span><span class="p">)</span> <span class="k">if</span> <span class="n">slug_raw</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;specific_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span data-line="158">                <span class="n">categories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_parse_single_category</span><span class="p">(</span><span class="n">slug</span><span class="p">,</span> <span class="n">cat_data</span><span class="p">))</span>
+</span><span data-line="159">
+</span><span data-line="160">    <span class="k">return</span> <span class="n">CriteriaBundle</span><span class="p">(</span>
+</span><span data-line="161">        <span class="n">assignment_id</span><span class="o">=</span><span class="n">assignment_id</span><span class="p">,</span>
+</span><span data-line="162">        <span class="n">assignment_name</span><span class="o">=</span><span class="n">assignment_name</span><span class="p">,</span>
+</span><span data-line="163">        <span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span>
+</span><span data-line="164">    <span class="p">)</span></div>
+
+</span><span data-line="165">
+</span><span data-line="166">
+</span><span data-line="167">
+</span><span data-line="168">
+<div class="viewcode-block" id="parse_assignments_yaml">
+<a class="viewcode-back" href="../../../api/services.html#src.services.criteria_loader.parse_assignments_yaml">[docs]</a>
+</span><span data-line="169"><span class="k">def</span><span class="w"> </span><span class="nf">parse_assignments_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">AssignmentConfig</span><span class="p">]:</span>
+</span><span data-line="170"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse assignments YAML data into a list of AssignmentConfig.</span>
+</span><span data-line="171">
+</span><span data-line="172"><span class="sd">    Args:</span>
+</span><span data-line="173"><span class="sd">        data: Parsed YAML data dict, or None.</span>
+</span><span data-line="174">
+</span><span data-line="175"><span class="sd">    Returns:</span>
+</span><span data-line="176"><span class="sd">        List of AssignmentConfig objects (empty if data is None or malformed).</span>
+</span><span data-line="177"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="178">    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="179">        <span class="k">return</span> <span class="p">[]</span>
+</span><span data-line="180">
+</span><span data-line="181">    <span class="n">assignments_raw</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assignments&quot;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span data-line="182">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">assignments_raw</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span><span data-line="183">        <span class="k">return</span> <span class="p">[]</span>
+</span><span data-line="184">
+</span><span data-line="185">    <span class="n">assignments</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AssignmentConfig</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="186">    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">assignments_raw</span><span class="p">:</span>
+</span><span data-line="187">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span data-line="188">            <span class="k">continue</span>
+</span><span data-line="189">        <span class="n">raw_id</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span data-line="190">        <span class="k">if</span> <span class="ow">not</span> <span class="n">raw_id</span><span class="p">:</span>
+</span><span data-line="191">            <span class="k">continue</span>
+</span><span data-line="192">        <span class="n">criteria_files</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;criteria_files&quot;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span data-line="193">        <span class="n">assignments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+</span><span data-line="194">            <span class="n">AssignmentConfig</span><span class="p">(</span>
+</span><span data-line="195">                <span class="nb">id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">raw_id</span><span class="p">),</span>
+</span><span data-line="196">                <span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">raw_id</span><span class="p">))),</span>
+</span><span data-line="197">                <span class="n">criteria_file</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">criteria_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span data-line="198">                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">criteria_files</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">criteria_files</span>
+</span><span data-line="199">                <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span data-line="200">                <span class="n">enabled</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;enabled&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)),</span>
+</span><span data-line="201">                <span class="n">max_points</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_points&quot;</span><span class="p">,</span> <span class="mi">24</span><span class="p">)),</span>
+</span><span data-line="202">            <span class="p">)</span>
+</span><span data-line="203">        <span class="p">)</span>
+</span><span data-line="204">    <span class="k">return</span> <span class="n">assignments</span></div>
+
+</span><span data-line="205">
+</span><span data-line="206">
+<div class="viewcode-block" id="load_assignments">
+<a class="viewcode-back" href="../../../api/services.html#src.services.criteria_loader.load_assignments">[docs]</a>
+</span><span data-line="207"><span class="k">def</span><span class="w"> </span><span class="nf">load_assignments</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_ASSIGNMENTS_PATH</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">AssignmentConfig</span><span class="p">]:</span>
+</span><span data-line="208"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Load assignment definitions from a YAML file.</span>
+</span><span data-line="209">
+</span><span data-line="210"><span class="sd">    Args:</span>
+</span><span data-line="211"><span class="sd">        path: Path to the assignments YAML file.</span>
+</span><span data-line="212">
+</span><span data-line="213"><span class="sd">    Returns:</span>
+</span><span data-line="214"><span class="sd">        List of AssignmentConfig objects (empty if file not found).</span>
+</span><span data-line="215"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="216">    <span class="n">data</span> <span class="o">=</span> <span class="n">_read_yaml</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span data-line="217">    <span class="k">return</span> <span class="n">parse_assignments_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+</span><span data-line="218">
+</span><span data-line="219">
+<div class="viewcode-block" id="load_criteria_for_assignment">
+<a class="viewcode-back" href="../../../api/services.html#src.services.criteria_loader.load_criteria_for_assignment">[docs]</a>
+</span><span data-line="220"><span class="k">def</span><span class="w"> </span><span class="nf">load_criteria_for_assignment</span><span class="p">(</span>
+</span><span data-line="221">    <span class="n">criteria_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="222">    <span class="n">criteria_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CRITERIA_DIR</span><span class="p">,</span>
+</span><span data-line="223"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CriteriaBundle</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="224"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a single criteria bundle from a YAML file.</span>
+</span><span data-line="225">
+</span><span data-line="226"><span class="sd">    The assignment name is derived from the filename stem as a fallback.</span>
+</span><span data-line="227">
+</span><span data-line="228"><span class="sd">    Args:</span>
+</span><span data-line="229"><span class="sd">        criteria_file: Filename of the criteria YAML file.</span>
+</span><span data-line="230"><span class="sd">        criteria_dir: Directory containing criteria YAML files.</span>
+</span><span data-line="231">
+</span><span data-line="232"><span class="sd">    Returns:</span>
+</span><span data-line="233"><span class="sd">        CriteriaBundle, or None if the file cannot be read.</span>
+</span><span data-line="234"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="235">    <span class="n">path</span> <span class="o">=</span> <span class="n">criteria_dir</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">criteria_file</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+</span><span data-line="236">    <span class="n">data</span> <span class="o">=</span> <span class="n">_read_yaml</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span data-line="237">    <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="238">        <span class="k">return</span> <span class="kc">None</span>
+</span><span data-line="239">    <span class="n">stem</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">criteria_file</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span>
+</span><span data-line="240">    <span class="k">return</span> <span class="n">parse_criteria_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">stem</span><span class="p">,</span> <span class="n">stem</span><span class="p">)</span></div>
+
+</span><span data-line="241">
+</span><span data-line="242">
+<div class="viewcode-block" id="load_all_criteria">
+<a class="viewcode-back" href="../../../api/services.html#src.services.criteria_loader.load_all_criteria">[docs]</a>
+</span><span data-line="243"><span class="k">def</span><span class="w"> </span><span class="nf">load_all_criteria</span><span class="p">(</span>
+</span><span data-line="244">    <span class="n">assignments_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_ASSIGNMENTS_PATH</span><span class="p">,</span>
+</span><span data-line="245">    <span class="n">criteria_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CRITERIA_DIR</span><span class="p">,</span>
+</span><span data-line="246"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">CriteriaBundle</span><span class="p">]:</span>
+</span><span data-line="247"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Load criteria bundles for all enabled assignments.</span>
+</span><span data-line="248">
+</span><span data-line="249"><span class="sd">    Args:</span>
+</span><span data-line="250"><span class="sd">        assignments_path: Path to the assignments YAML file.</span>
+</span><span data-line="251"><span class="sd">        criteria_dir: Directory containing criteria YAML files.</span>
+</span><span data-line="252">
+</span><span data-line="253"><span class="sd">    Returns:</span>
+</span><span data-line="254"><span class="sd">        List of CriteriaBundle objects for enabled assignments</span>
+</span><span data-line="255"><span class="sd">        (empty list if no assignments or all disabled).</span>
+</span><span data-line="256"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="257">    <span class="n">assignments</span> <span class="o">=</span> <span class="n">load_assignments</span><span class="p">(</span><span class="n">assignments_path</span><span class="p">)</span>
+</span><span data-line="258">    <span class="n">bundles</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">CriteriaBundle</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="259">    <span class="k">for</span> <span class="n">assignment</span> <span class="ow">in</span> <span class="n">assignments</span><span class="p">:</span>
+</span><span data-line="260">        <span class="k">if</span> <span class="ow">not</span> <span class="n">assignment</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+</span><span data-line="261">            <span class="k">continue</span>
+</span><span data-line="262">        <span class="n">crit_rel</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">assignment</span><span class="o">.</span><span class="n">criteria_file</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+</span><span data-line="263">        <span class="n">data</span> <span class="o">=</span> <span class="n">_read_yaml</span><span class="p">(</span><span class="n">criteria_dir</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">crit_rel</span><span class="p">)</span>
+</span><span data-line="264">        <span class="n">bundle</span> <span class="o">=</span> <span class="n">parse_criteria_yaml</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">assignment</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">assignment</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</span><span data-line="265">        <span class="k">if</span> <span class="n">bundle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="266">            <span class="n">bundles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bundle</span><span class="p">)</span>
+</span><span data-line="267">    <span class="k">return</span> <span class="n">bundles</span></div>
+
+</span><span data-line="268">
+</span><span data-line="269">
+<div class="viewcode-block" id="get_criteria_for_assignment">
+<a class="viewcode-back" href="../../../api/services.html#src.services.criteria_loader.get_criteria_for_assignment">[docs]</a>
+</span><span data-line="270"><span class="k">def</span><span class="w"> </span><span class="nf">get_criteria_for_assignment</span><span class="p">(</span>
+</span><span data-line="271">    <span class="n">assignment_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="272">    <span class="n">assignments_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_ASSIGNMENTS_PATH</span><span class="p">,</span>
+</span><span data-line="273">    <span class="n">criteria_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CRITERIA_DIR</span><span class="p">,</span>
+</span><span data-line="274"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CriteriaBundle</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="275"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get criteria bundle for a specific assignment, merging general.yaml.</span>
+</span><span data-line="276">
+</span><span data-line="277"><span class="sd">    Args:</span>
+</span><span data-line="278"><span class="sd">        assignment_id: Assignment identifier.</span>
+</span><span data-line="279"><span class="sd">        assignments_path: Path to the assignments YAML file.</span>
+</span><span data-line="280"><span class="sd">        criteria_dir: Directory containing criteria YAML files.</span>
+</span><span data-line="281">
+</span><span data-line="282"><span class="sd">    Returns:</span>
+</span><span data-line="283"><span class="sd">        CriteriaBundle, or None if the assignment is not found or disabled.</span>
+</span><span data-line="284"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="285">    <span class="n">assignments</span> <span class="o">=</span> <span class="n">load_assignments</span><span class="p">(</span><span class="n">assignments_path</span><span class="p">)</span>
+</span><span data-line="286">    <span class="k">for</span> <span class="n">assignment</span> <span class="ow">in</span> <span class="n">assignments</span><span class="p">:</span>
+</span><span data-line="287">        <span class="k">if</span> <span class="n">assignment</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">assignment_id</span> <span class="ow">and</span> <span class="n">assignment</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+</span><span data-line="288">            <span class="c1"># 1. Load general.yaml as base</span>
+</span><span data-line="289">            <span class="n">general_data</span> <span class="o">=</span> <span class="n">_read_yaml</span><span class="p">(</span><span class="n">criteria_dir</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/general.yaml&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+</span><span data-line="290">            
+</span><span data-line="291">            <span class="c1"># 2. Load assignment specific file</span>
+</span><span data-line="292">            <span class="n">crit_rel</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">assignment</span><span class="o">.</span><span class="n">criteria_file</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+</span><span data-line="293">            <span class="n">assignment_data</span> <span class="o">=</span> <span class="n">_read_yaml</span><span class="p">(</span><span class="n">criteria_dir</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">crit_rel</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+</span><span data-line="294">            
+</span><span data-line="295">            <span class="c1"># 3. Merge data</span>
+</span><span data-line="296">            <span class="n">merged_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="297">                <span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="p">{},</span>
+</span><span data-line="298">                <span class="s2">&quot;assignment_specific&quot;</span><span class="p">:</span> <span class="p">[]</span>
+</span><span data-line="299">            <span class="p">}</span>
+</span><span data-line="300">            
+</span><span data-line="301">            <span class="c1"># Merge general sections (dicts)</span>
+</span><span data-line="302">            <span class="n">merged_data</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">general_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+</span><span data-line="303">            <span class="n">merged_data</span><span class="p">[</span><span class="s2">&quot;general&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">assignment_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;general&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+</span><span data-line="304">            
+</span><span data-line="305">            <span class="c1"># Merge assignment_specific sections (lists)</span>
+</span><span data-line="306">            <span class="n">merged_data</span><span class="p">[</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">general_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">,</span> <span class="p">[]))</span>
+</span><span data-line="307">            <span class="n">merged_data</span><span class="p">[</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">assignment_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;assignment_specific&quot;</span><span class="p">,</span> <span class="p">[]))</span>
+</span><span data-line="308">            
+</span><span data-line="309">            <span class="k">return</span> <span class="n">parse_criteria_yaml</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">assignment</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">assignment</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</span><span data-line="310">    <span class="k">return</span> <span class="kc">None</span></div>
+
+</span><span data-line="311">
+</span><span data-line="312">
+<div class="viewcode-block" id="get_assignments_from_criteria">
+<a class="viewcode-back" href="../../../api/services.html#src.services.criteria_loader.get_assignments_from_criteria">[docs]</a>
+</span><span data-line="313"><span class="k">def</span><span class="w"> </span><span class="nf">get_assignments_from_criteria</span><span class="p">(</span>
+</span><span data-line="314">    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_ASSIGNMENTS_PATH</span><span class="p">,</span>
+</span><span data-line="315"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">AssignmentConfig</span><span class="p">]:</span>
+</span><span data-line="316"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get list of enabled assignments.</span>
+</span><span data-line="317">
+</span><span data-line="318"><span class="sd">    Args:</span>
+</span><span data-line="319"><span class="sd">        path: Path to the assignments YAML file.</span>
+</span><span data-line="320">
+</span><span data-line="321"><span class="sd">    Returns:</span>
+</span><span data-line="322"><span class="sd">        List of enabled AssignmentConfig objects.</span>
+</span><span data-line="323"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="324">    <span class="n">assignments</span> <span class="o">=</span> <span class="n">load_assignments</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span data-line="325">    <span class="k">return</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">assignments</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">enabled</span><span class="p">]</span></div>
+
+</span><span data-line="326">
+</span><span data-line="327">
+</span><span data-line="328"><span class="c1"># -- Aliases for consistency with components --------------------------------</span>
+</span><span data-line="329">
+</span><span data-line="330"><span class="n">load_criteria_bundle</span> <span class="o">=</span> <span class="n">get_criteria_for_assignment</span>
+</span><span data-line="331"><span class="n">load_assignments_list</span> <span class="o">=</span> <span class="n">get_assignments_from_criteria</span>
+</span></pre></div>
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2026, SciPro Team</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+<a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+  <iconify-icon icon="simple-icons:github"></iconify-icon>
+</a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../../../_static/shibuya.js?v=cac61aee"></script></body>
+</html>

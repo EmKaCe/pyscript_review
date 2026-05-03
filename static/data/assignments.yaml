@@ -1,0 +1,81 @@
+assignments:
+- criteria_files:
+  - data/criteria/template.yaml
+  enabled: false
+  id: template
+  title: Template
+- criteria_files:
+  - data/criteria/user_function.yaml
+  enabled: true
+  id: user_function
+  title: User Function
+- criteria_files:
+  - data/criteria/significant_figures.yaml
+  enabled: true
+  id: significant_figures
+  title: Significant Figures
+- criteria_files:
+  - data/criteria/pandas.yaml
+  enabled: true
+  id: pandas
+  title: Pandas
+- criteria_files:
+  - data/criteria/plotting_data.yaml
+  enabled: true
+  id: plotting_data
+  title: Plotting Data
+- criteria_files:
+  - data/criteria/plotting_data_matplotlib.yaml
+  enabled: true
+  id: plotting_data_matplotlib
+  title: matplotlib
+- criteria_files:
+  - data/criteria/numpy_rmse.yaml
+  enabled: true
+  id: numpy_rmse
+  title: NumPy
+- criteria_files:
+  - data/criteria/scipy.yaml
+  enabled: true
+  id: scipy
+  title: SciPy
+- criteria_files:
+  - data/criteria/scipy_mountains.yaml
+  enabled: true
+  id: scipy_mountains
+  title: SciPy Mountains
+- criteria_files:
+  - data/criteria/world_happiness_2.yaml
+  enabled: true
+  id: world_happiness_2
+  title: World Happiness
+- criteria_files:
+  - data/criteria/sklearn_pytorch.yaml
+  enabled: true
+  id: sklearn_pytorch
+  title: sklearn pytorch
+- criteria_files:
+  - data/criteria/sklearn_heart_disease.yaml
+  enabled: true
+  id: sklearn_heart_disease
+  title: sklearn
+- criteria_files:
+  - data/criteria/scipy_spectrum.yaml
+  enabled: true
+  id: scipy_spectrum
+  title: SciPy Spectrum
+- criteria_files:
+  - data/criteria/nernst_assignment_1.yaml
+  enabled: true
+  id: nernst_assignment_1
+  title: Nernst Assignment 1
+- criteria_files:
+  - data/criteria/assignment2.yaml
+  enabled: true
+  id: assignment2
+  title: Assignment 2
+- criteria_files:
+  - data/criteria/assignment1.yaml
+  enabled: true
+  id: assignment1
+  title: Assignment 1

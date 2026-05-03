@@ -1,0 +1,46 @@
+general:
+  topic1:
+    title: Topic 1
+    additional_notes: true
+    positive:
+    - main_point: 1st positive feedback for topic 1
+      sub_points:
+      - text: Subpoint 1
+      - text: Subpoint 2
+      - text: Subpoint 3
+    - main_point: 2nd positive feedback for topic 1
+      sub_points:
+      - text: Point 1
+    neutral:
+    - main_point: 1st neutralS feedback for topic 1
+      sub_points:
+      - text: Subpoint 1
+    negative:
+    - main_point: 1st negative feedback for topic 1
+      sub_points:
+      - text: Subpoint 1
+      - text: Subpoint 2 with comment box
+        comment: true
+  topic2:
+    title: Topic 2
+    additional_notes: true
+    positive:
+    - main_point: 1st positive feedback for topic 2
+      sub_points:
+      - text: Subpoint 1
+      - text: Subpoint 2
+      - text: Subpoint 3
+    - main_point: 2nd positive feedback for topic 2
+      sub_points:
+      - text: Point 1
+    neutral:
+    - main_point: 1st neutral feedback for topic 2
+      sub_points:
+      - text: Subpoint 1
+    negative:
+    - main_point: 1st negative feedback for topic 2
+      sub_points:
+      - text: Subpoint 1
+      - text: Subpoint 2 with comment box
+        comment: true
+assignment_specific: []

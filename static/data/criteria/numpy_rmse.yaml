@@ -1,0 +1,85 @@
+general:
+  Pandas:
+    title: Pandas
+    additional_notes: true
+    positive:
+    - main_point: Overall Pandas feedback
+      sub_points:
+      - text: Good use of Pandas
+      - text: Good use of the Pandas functions
+    neutral: []
+    negative:
+    - main_point: Reading Data Into Pandas
+      sub_points:
+      - text: Delimiter (i.e., `sep`) - incorrectly specified the separator used within
+          the CSV-formatted file
+      - text: Header (i.e., `header`) - incorrectly specified the header line
+      - text: Incorrectly read in the data
+    - main_point: Cleaning Data
+      sub_points:
+      - text: data cleaning not done - you did not drop duplicated rows and/or rows
+          with empty cells
+      - text: '`dropna` - you did not save the results (e.g., using `inplace` or assigning
+          it to a new object)'
+  numpy:
+    title: NumPy Library
+    additional_notes: true
+    positive:
+    - main_point: The following points were well done
+      sub_points:
+      - text: 'List function: using a list for the simulated values'
+      - text: 'NumPy function: using ndarrays for the simulated values'
+      - text: 'NumPy function: using some of its built-in math functions (e.g., np.mean,
+          etc)'
+      - text: 'Both functions: RMSE correctly done'
+      - text: 'List function: RMSE correctly done'
+      - text: 'NumPy function: RMSE correctly done'
+      - text: 'Both functions: good performance'
+      - text: 'List function: good performance'
+      - text: 'NumPy function: good performance'
+    neutral:
+    - main_point: The following points would improve your NumPy solution slightly
+      sub_points:
+      - text: 'NumPy: use the community abbreviation of ''np'''
+      - text: 'NumPy function: converting the experimental float value to an ndarray'
+      - text: 'Pandas: converting the DataFrame outside of your function(s) - remember
+          to have a function that optimally does one task'
+    negative:
+    - main_point: The computed RMSE value was incorrect
+      sub_points:
+      - text: 'List function: incorrect'
+      - text: 'NumPy function: incorrect'
+      - text: The following value should have been computed - 0.02109 g/cm^3
+    - main_point: Performance problems (as computed on the evaluator's machine)
+      sub_points:
+      - text: Good performance for the List and NumPy function should be (in seconds)
+        comment: true
+      - text: 'List function: your solution has a performance of'
+        comment: true
+      - text: 'NumPy function: your solution has a performance of'
+        comment: true
+      - text: 'NumPy function: iterating over the ndarray is not needed, resulting
+          in a loss of performance'
+      - text: 'NumPy function: runs slower than the list function'
+    - main_point: 'Your NumPy function does not make use of:'
+      sub_points:
+      - text: np.mean
+      - text: np.sqrt
+      - text: np.square
+      - text: np.subtract
+    - main_point: Your NumPy function incorrectly used the following data types
+      sub_points:
+      - text: Floats
+      - text: Lists
+      - text: Pandas DataFrames
+      - text: Other data type
+        comment: true
+    - main_point: Your List function incorrectly used the following data types
+      sub_points:
+      - text: Individual float values for the theoretical/simulated data (i.e., not
+          a list of floats)
+      - text: NumPy ndarray
+      - text: Pandas DataFrames
+      - text: Other data type
+        comment: true
+assignment_specific: []

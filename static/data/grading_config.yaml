@@ -1,0 +1,21 @@
+dimensions:
+  - key: code_quality_design
+    title: Code Quality & Design
+    max_points: 6.0
+    weight: 4.0
+  - key: code_execution_results
+    title: Code Execution & Results
+    max_points: 6.0
+    weight: 4.0
+  - key: assignment_requirements
+    title: Assignment Requirements
+    max_points: 6.0
+    weight: 4.0
+  - key: scientific_programming
+    title: Scientific Programming
+    max_points: 6.0
+    weight: 4.0
+  - key: creativity
+    title: Creativity
+    max_points: 4.0
+    weight: 1.0

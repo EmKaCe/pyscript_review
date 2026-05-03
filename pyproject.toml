@@ -1,0 +1,208 @@
+[project]
+name = "pyscript_review"
+version = "2.0.0"
+description = "PyScript Review - A PyScript/PuePy webapp for peer review and grading in Python programming courses"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0.0",
+    "taskipy>=1.12.0",
+]
+
+[dependency-groups]
+dev = [
+    # Testing
+    "pytest>=8.0.0",
+    # Type checking and linting
+    "pyright>=1.1.350",
+    "ruff>=0.2.0",
+    # Documentation
+    "sphinx>=7.0.0",
+    "myst-parser>=3.0.0",
+    # Development tools
+    "ipython>=8.0.0",
+    "ipdb>=0.13.0",
+    "pytest-asyncio>=0.23.0",
+    "sphinx-rtd-theme>=3.1.0",
+    "shibuya>=2026.1.9",
+    "sphinx-design>=0.7.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[project.urls]
+Homepage = "https://github.com/EmKaCe/pyscript_review"
+Repository = "https://github.com/EmKaCe/pyscript_review"
+
+# pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+    "--color=yes",
+]
+asyncio_mode = "auto"
+markers = [
+    "unit: marks tests as unit tests",
+    "integration: marks tests as integration tests",
+    "slow: marks tests as slow",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src"]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/conftest.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+precision = 2
+show_missing = true
+skip_covered = false
+skip_empty = true
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+# pyright configuration (for IDE intellisense)
+[tool.pyright]
+include = ["src", "tests"]
+exclude = [
+    ".venv",
+    "__pycache__",
+    ".git",
+    ".pytest_cache",
+    ".ruff_cache",
+    "htmlcov",
+]
+pythonVersion = "3.13"
+pythonPlatform = "Linux"
+strict = []
+typeCheckingMode = "basic"
+reportMissingImports = false  # PyScript runtime modules (js, pyodide.ffi) not available locally
+reportMissingTypeStubs = false
+reportGeneralTypeIssues = true
+reportPropertyTypeMismatch = true
+reportFunctionMemberAccess = false
+reportUnknownMemberType = false
+reportUnknownVariableType = false
+reportOptionalMemberAccess = false
+reportOptionalCall = false
+reportArgumentType = false
+reportAttributeAccessIssue = false
+reportCallIssue = false
+reportInconsistentOverload = false
+reportAssignmentType = false
+
+# ruff configuration (linting)
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # Pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "UP", # pyupgrade
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "SIM", # flake8-simplify
+    "ARG", # flake8-unused-arguments
+]
+ignore = [
+    "E501",
+    "N812",
+    "N816",
+    "SIM117",  # PuePy requires nested `with` for component composition
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = ["pyscript_review"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = ["S101", "ARG001", "ARG002", "ARG005"]
+
+# taskipy configuration - npm-like scripts
+[tool.taskipy.settings]
+venv_path = ".venv"
+
+[tool.uv]
+default-groups = ["dev"]
+sources = { puepy = { path = "static/puepy-0.6.5-py3-none-any.whl" } }
+
+[tool.taskipy.tasks]
+# Check code quality (lint + type check)
+check = { cmd = "ruff check src/ tests/ && pyright src/", help = "Run linting and type checking" }
+
+# Auto-format code
+format = { cmd = "ruff format src/ tests/", help = "Auto-format code with ruff" }
+
+# Run all tests
+test = { cmd = "pytest tests/ -v", help = "Run all tests" }
+
+# Run only unit tests
+"test:unit" = { cmd = "pytest tests/unit -v", help = "Run unit tests only" }
+
+# Start development server
+dev = { cmd = "task download-wheels && task docs && python -m http.server 8080 --directory .", help = "Ensure wheels are present, build docs, and start dev server on http://localhost:8080" }
+
+# Start production-like server
+start = { cmd = "task docs && python -m http.server 8080 --directory .", help = "Build docs and start production server on http://localhost:8080" }
+
+# Clean build artifacts and caches
+clean = { cmd = "rm -rf .pytest_cache/ .ruff_cache/ htmlcov/ .coverage coverage.xml dist/ build/ docs-static/ src/*.egg-info && find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true", help = "Clean build artifacts and caches" }
+
+# Full CI pipeline (check + test)
+ci = { cmd = "task check && task test && task docs", help = "Run full CI pipeline (lint, type-check, test, docs)" }
+
+# Build documentation
+docs = { cmd = "sphinx-build docs/ docs-static/", help = "Build Sphinx documentation into docs-static/" }
+
+# Download wheels (placeholder for PyScript wheel downloads)
+"download-wheels" = { cmd = "python scripts/download_wheels.py", help = "Download PyScript wheel dependencies" }
+"download-wheels:dry-run" = { cmd = "python scripts/download_wheels.py --dry-run", help = "Preview wheel downloads without fetching" }
+"download-wheels:list" = { cmd = "python scripts/download_wheels.py --list", help = "List currently available wheels" }
+
+# Serve static files
+serve = { cmd = "python -m http.server 8080 --directory .", help = "Serve static files on http://localhost:8080" }

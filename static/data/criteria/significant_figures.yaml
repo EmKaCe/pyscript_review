@@ -1,0 +1,23 @@
+general:
+  significantFigures:
+    title: Significant Figures
+    additional_notes: true
+    positive:
+    - main_point: The significant figures for your final numeric value(s) was
+      sub_points:
+      - text: correct - good job!
+    neutral: []
+    negative:
+    - main_point: The significant figures for your final numeric value(s) was
+      sub_points:
+      - text: incorrect
+    - main_point: The number of significant figures should have been
+      sub_points:
+      - text: '1'
+      - text: '2'
+      - text: '3'
+      - text: '4'
+      - text: '5'
+      - text: '6'
+      - text: '7'
+assignment_specific: []

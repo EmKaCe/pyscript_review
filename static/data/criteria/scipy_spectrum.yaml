@@ -1,0 +1,65 @@
+general:
+  MethaneSpectrumAssignment:
+    title: The v4 IR Spectrum of Methane
+    additional_notes: true
+    positive:
+    - main_point: Modeling & Optimization
+      sub_points:
+      - text: Good implementation of the double Gaussian model function.
+      - text: Properly utilized scipy.optimize.curve_fit for parameter optimization.
+      - text: Correctly identified and applied initial guesses for amplitudes and
+          centers from the provided spectrum.
+      - text: Very well done on implementing 'bound' constraints to ensure physically
+          meaningful parameters.
+    - main_point: Data Handling
+      sub_points:
+      - text: Efficiently loaded the spectral data using Pandas.
+      - text: Correctly extracted wavenumber and absorbance values as NumPy arrays
+          for processing.
+    - main_point: Visualization
+      sub_points:
+      - text: 'Axis inversion: Good job on inverting the x-axis (matching the assignment
+          sheet).'
+      - text: Proper labeling of axes (Wavenumber cm-1 vs Absorbance) and legend usage.
+    - main_point: FWHM Analysis
+      sub_points:
+      - text: Accurate calculation of the Full Width at Half Maximum (FWHM) using
+          the roots function.
+      - text: The FWHM value matches the expected result (ca. 0.469 cm-1).
+    neutral:
+    - main_point: Optimization Refinements
+      sub_points:
+      - text: Consider using the 'bounds' parameter in curve_fit to prevent non-physical
+          results (e.g., negative widths).
+    negative:
+    - main_point: 'Task 2: Model Implementation'
+      sub_points:
+      - text: 'Equation error: The Gaussian function does not match the provided Equation
+          2.'
+      - text: 'Parameter mismatch: The model function should take exactly 7 arguments
+          (x + 6 parameters).'
+      - text: 'Convergence failure: curve_fit did not converge, likely due to poor
+          initial guesses (p0).'
+    - main_point: 'Task 3: Visualization Issues'
+      sub_points:
+      - text: 'Color: The optimized model curve should be plotted in a different color
+          to distinguish it from the raw data.'
+      - text: 'Formatting: The plot lacks axis lables or units on the x-axis (cm-1).'
+      - text: 'Missing Plot: No visualization was provided to verify the fit quality.'
+      - text: To best match Figure 1 on the assignment sheet, the x-axis should be
+          reversed (high to low wavenumber).
+    - main_point: 'Task 3: FWHM Calculation'
+      sub_points:
+      - text: Citation - where did you learn about the analytic solution for FWHM
+          of a Gaussian function? Please provide a reference.
+      - text: 'Incorrect FWHM: The calculated FWHM value is far from the expected
+          0.469 cm-1.'
+      - text: 'Logic Error: FWHM was determined for Peak 2, not Peak 1.'
+      - text: 'Root finding failed: The scipy.optimize.root function was not used.'
+      - text: 'Root finding failed: The scipy.optimize.root function did not find
+          the half-maximum points correctly.'
+    - main_point: Results
+      sub_points:
+      - text: Incorrect - Some or all of your results are wrong, which could be seen
+          in the visualization (i.e. plots).
+assignment_specific: []

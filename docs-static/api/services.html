@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Services API - SciPro Review</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Browser Interop API" href="browser.html" /><link rel="prev" title="Models API" href="models.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9cf7cb20" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="Services API"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      <img class="light-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <strong>SciPro Review</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="/.html">App Home</a></li><li class="link"><a href="/%23/review.html">Review</a></li><li class="link"><a href="/%23/settings.html">Settings</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="2"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/getting-started.html">Getting Started with SciPro Review</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/grading.html">Grading System Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/deployment.html">Deployment Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../user-guide.html">User Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../yaml-content.html">YAML Content Management</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../contributing.html">Contributing to SciPro Review</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 _expand"><a class="reference internal" href="models.html">Models API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Services API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="browser.html">Browser Interop API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="state.html">State Management API</a></li>
+</ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#src.services.criteria_loader.get_assignments_from_criteria"><code class="docutils literal notranslate"><span class="pre">get_assignments_from_criteria()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.criteria_loader.get_criteria_for_assignment"><code class="docutils literal notranslate"><span class="pre">get_criteria_for_assignment()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.criteria_loader.load_all_criteria"><code class="docutils literal notranslate"><span class="pre">load_all_criteria()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.criteria_loader.load_assignments"><code class="docutils literal notranslate"><span class="pre">load_assignments()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.criteria_loader.load_assignments_list"><code class="docutils literal notranslate"><span class="pre">load_assignments_list()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.criteria_loader.load_criteria_bundle"><code class="docutils literal notranslate"><span class="pre">load_criteria_bundle()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.criteria_loader.load_criteria_for_assignment"><code class="docutils literal notranslate"><span class="pre">load_criteria_for_assignment()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.criteria_loader.parse_assignments_yaml"><code class="docutils literal notranslate"><span class="pre">parse_assignments_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.criteria_loader.parse_criteria_yaml"><code class="docutils literal notranslate"><span class="pre">parse_criteria_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.grade_calculator.calculate_grade"><code class="docutils literal notranslate"><span class="pre">calculate_grade()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.grade_calculator.get_grade_boundary"><code class="docutils literal notranslate"><span class="pre">get_grade_boundary()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.text_generator.generate_evaluation_text"><code class="docutils literal notranslate"><span class="pre">generate_evaluation_text()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.grading_config.default_grading_inputs"><code class="docutils literal notranslate"><span class="pre">default_grading_inputs()</span></code></a></li>
+<li><a class="reference internal" href="#src.services.grading_config.weight_percentage"><code class="docutils literal notranslate"><span class="pre">weight_percentage()</span></code></a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">SciPro Review</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Services API</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="module-src.services.criteria_loader">
+<span id="services-api"></span><h1>Services API<a class="headerlink" href="#module-src.services.criteria_loader" title="Link to this heading">¶</a></h1>
+<p>Load assignment definitions and criteria bundles from YAML files.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.get_assignments_from_criteria">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">get_assignments_from_criteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/assignments.yaml'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#src.models.criteria.AssignmentConfig" title="src.models.criteria.AssignmentConfig"><span class="pre">AssignmentConfig</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/services/criteria_loader.html#get_assignments_from_criteria"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.criteria_loader.get_assignments_from_criteria" title="Link to this definition">¶</a></dt>
+<dd><p>Get list of enabled assignments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to the assignments YAML file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of enabled AssignmentConfig objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.get_criteria_for_assignment">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">get_criteria_for_assignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">assignment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignments_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/assignments.yaml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criteria_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/criteria/'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.criteria.CriteriaBundle" title="src.models.criteria.CriteriaBundle"><span class="pre">CriteriaBundle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/services/criteria_loader.html#get_criteria_for_assignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.criteria_loader.get_criteria_for_assignment" title="Link to this definition">¶</a></dt>
+<dd><p>Get criteria bundle for a specific assignment, merging general.yaml.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>assignment_id</strong> – Assignment identifier.</p></li>
+<li><p><strong>assignments_path</strong> – Path to the assignments YAML file.</p></li>
+<li><p><strong>criteria_dir</strong> – Directory containing criteria YAML files.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>CriteriaBundle, or None if the assignment is not found or disabled.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.load_all_criteria">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">load_all_criteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">assignments_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/assignments.yaml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criteria_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/criteria/'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#src.models.criteria.CriteriaBundle" title="src.models.criteria.CriteriaBundle"><span class="pre">CriteriaBundle</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/services/criteria_loader.html#load_all_criteria"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.criteria_loader.load_all_criteria" title="Link to this definition">¶</a></dt>
+<dd><p>Load criteria bundles for all enabled assignments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>assignments_path</strong> – Path to the assignments YAML file.</p></li>
+<li><p><strong>criteria_dir</strong> – Directory containing criteria YAML files.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of CriteriaBundle objects for enabled assignments
+(empty list if no assignments or all disabled).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.load_assignments">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">load_assignments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/assignments.yaml'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#src.models.criteria.AssignmentConfig" title="src.models.criteria.AssignmentConfig"><span class="pre">AssignmentConfig</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/services/criteria_loader.html#load_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.criteria_loader.load_assignments" title="Link to this definition">¶</a></dt>
+<dd><p>Load assignment definitions from a YAML file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to the assignments YAML file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of AssignmentConfig objects (empty if file not found).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.load_assignments_list">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">load_assignments_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/assignments.yaml'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#src.models.criteria.AssignmentConfig" title="src.models.criteria.AssignmentConfig"><span class="pre">AssignmentConfig</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.services.criteria_loader.load_assignments_list" title="Link to this definition">¶</a></dt>
+<dd><p>Get list of enabled assignments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to the assignments YAML file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of enabled AssignmentConfig objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.load_criteria_bundle">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">load_criteria_bundle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">assignment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignments_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/assignments.yaml'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criteria_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/criteria/'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.criteria.CriteriaBundle" title="src.models.criteria.CriteriaBundle"><span class="pre">CriteriaBundle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#src.services.criteria_loader.load_criteria_bundle" title="Link to this definition">¶</a></dt>
+<dd><p>Get criteria bundle for a specific assignment, merging general.yaml.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>assignment_id</strong> – Assignment identifier.</p></li>
+<li><p><strong>assignments_path</strong> – Path to the assignments YAML file.</p></li>
+<li><p><strong>criteria_dir</strong> – Directory containing criteria YAML files.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>CriteriaBundle, or None if the assignment is not found or disabled.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.load_criteria_for_assignment">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">load_criteria_for_assignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">criteria_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criteria_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'static/data/criteria/'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.criteria.CriteriaBundle" title="src.models.criteria.CriteriaBundle"><span class="pre">CriteriaBundle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/services/criteria_loader.html#load_criteria_for_assignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.criteria_loader.load_criteria_for_assignment" title="Link to this definition">¶</a></dt>
+<dd><p>Load a single criteria bundle from a YAML file.</p>
+<p>The assignment name is derived from the filename stem as a fallback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>criteria_file</strong> – Filename of the criteria YAML file.</p></li>
+<li><p><strong>criteria_dir</strong> – Directory containing criteria YAML files.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>CriteriaBundle, or None if the file cannot be read.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.parse_assignments_yaml">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">parse_assignments_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="models.html#src.models.criteria.AssignmentConfig" title="src.models.criteria.AssignmentConfig"><span class="pre">AssignmentConfig</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/services/criteria_loader.html#parse_assignments_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.criteria_loader.parse_assignments_yaml" title="Link to this definition">¶</a></dt>
+<dd><p>Parse assignments YAML data into a list of AssignmentConfig.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Parsed YAML data dict, or None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of AssignmentConfig objects (empty if data is None or malformed).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.criteria_loader.parse_criteria_yaml">
+<span class="sig-prename descclassname"><span class="pre">src.services.criteria_loader.</span></span><span class="sig-name descname"><span class="pre">parse_criteria_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.criteria.CriteriaBundle" title="src.models.criteria.CriteriaBundle"><span class="pre">CriteriaBundle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/services/criteria_loader.html#parse_criteria_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.criteria_loader.parse_criteria_yaml" title="Link to this definition">¶</a></dt>
+<dd><p>Parse criteria YAML data into a CriteriaBundle.</p>
+<p>Flattens the ‘general’ (dict keyed by slug) and ‘assignment_specific’
+(list) sections into a single list of Category objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Parsed YAML data dict, or None.</p></li>
+<li><p><strong>assignment_id</strong> – Unique assignment identifier.</p></li>
+<li><p><strong>assignment_name</strong> – Human-readable assignment name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>CriteriaBundle, or None if data is None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-src.services.grade_calculator">Weighted grade calculation matching the Svelte grade-calculator.ts formula.</p>
+<dl class="simple">
+<dt>Exports two functions:</dt><dd><ul class="simple">
+<li><p>get_grade_boundary(): Look up a German grade boundary by percentage.</p></li>
+<li><p>calculate_grade(): Compute a full GradeResult from inputs and config.</p></li>
+</ul>
+</dd>
+<dt>Formula (from Svelte):</dt><dd><p>weighted_score = score * weight
+total_raw      = Σ(weighted_score)
+max_raw        = Σ(max_points * weight)
+percentage     = (total_raw / max_raw) * 100</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.grade_calculator.calculate_grade">
+<span class="sig-prename descclassname"><span class="pre">src.services.grade_calculator.</span></span><span class="sig-name descname"><span class="pre">calculate_grade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.grading.GradingInputs" title="src.models.grading.GradingInputs"><span class="pre">GradingInputs</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.grading.GradingConfig" title="src.models.grading.GradingConfig"><span class="pre">GradingConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.grading.GradeResult" title="src.models.grading.GradeResult"><span class="pre">GradeResult</span></a></span></span><a class="reference internal" href="../_modules/src/services/grade_calculator.html#calculate_grade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.grade_calculator.calculate_grade" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate a weighted German grade using the review-app formula.</p>
+<dl class="simple">
+<dt>For each dimension:</dt><dd><ol class="arabic simple">
+<li><p>Clamp the raw score to [0, max_points].</p></li>
+<li><p>Compute weighted_score = clamped_score * weight.</p></li>
+<li><p>Compute per-dimension percentage = (score / max_points) * 100.</p></li>
+</ol>
+</dd>
+</dl>
+<p>The overall percentage is: (Σ(weighted_score) / Σ(max_points * weight)) * 100.
+The grade is then looked up via get_grade_boundary().
+The near_fence flag is True when within 2 percentage points of the
+next (better) boundary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> – Raw grading scores per dimension (via inputs.scores dict).</p></li>
+<li><p><strong>config</strong> – Grading configuration with ordered dimensions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A GradeResult with overall percentage, grade, near_fence flag,
+and per-dimension breakdowns.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">inputs</span> <span class="o">=</span> <span class="n">default_grading_inputs</span><span class="p">()</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">calculate_grade</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">DEFAULT_GRADING_CONFIG</span><span class="p">)</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">grade</span>
+</span><span data-line="4"><span class="go">5.0</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.grade_calculator.get_grade_boundary">
+<span class="sig-prename descclassname"><span class="pre">src.services.grade_calculator.</span></span><span class="sig-name descname"><span class="pre">get_grade_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">percentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.grading.GradeBoundary" title="src.models.grading.GradeBoundary"><span class="pre">GradeBoundary</span></a></span></span><a class="reference internal" href="../_modules/src/services/grade_calculator.html#get_grade_boundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.grade_calculator.get_grade_boundary" title="Link to this definition">¶</a></dt>
+<dd><p>Find the German grade boundary for a given percentage.</p>
+<p>Iterates the GERMAN_GRADE_BOUNDARIES list (sorted descending by
+min_percentage) and returns the first boundary whose minimum
+percentage the score meets or exceeds. Falls back to the last
+boundary (5.0 / failing) if no boundary is matched.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>percentage</strong> – The overall percentage score (0-100).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matching GradeBoundary.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">get_grade_boundary</span><span class="p">(</span><span class="mf">95.0</span><span class="p">)</span>
+</span><span data-line="2"><span class="go">GradeBoundary(min_percentage=95.0, grade=1.0)</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">get_grade_boundary</span><span class="p">(</span><span class="mf">49.9</span><span class="p">)</span>
+</span><span data-line="4"><span class="go">GradeBoundary(min_percentage=0.0, grade=5.0)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<p id="module-src.services.text_generator">Text generation service for producing structured evaluation text.</p>
+<p>Generates markdown-style plain text from review rubric selections,
+matching the Svelte text-generator.ts output format.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.text_generator.generate_evaluation_text">
+<span class="sig-prename descclassname"><span class="pre">src.services.text_generator.</span></span><span class="sig-name descname"><span class="pre">generate_evaluation_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.session.ReviewSession" title="src.models.session.ReviewSession"><span class="pre">ReviewSession</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">criteria_bundle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.criteria.CriteriaBundle" title="src.models.criteria.CriteriaBundle"><span class="pre">CriteriaBundle</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/services/text_generator.html#generate_evaluation_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.text_generator.generate_evaluation_text" title="Link to this definition">¶</a></dt>
+<dd><p>Generate structured evaluation text from review rubric selections.</p>
+<p>Produces a plain-text report with three sections — Positive Observations,
+General Observations, and Areas for Improvement — grouped by rubric
+category. Includes additional notes if any category has non-empty notes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – The review session with selections and metadata.</p></li>
+<li><p><strong>criteria_bundle</strong> – The criteria definitions for the assignment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Formatted evaluation string suitable for display or export.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p id="module-src.services.grading_config">Grading configuration — single source of truth for all grading dimensions.</p>
+<dl class="simple">
+<dt>Weights are chosen so that max scores yield exactly 100%:</dt><dd><p>6x4 + 6x4 + 6x4 + 6x4 + 4x1 = 24+24+24+24+4 = 100</p>
+</dd>
+<dt>This matches the old_review_app calculation (table.js):</dt><dd><p>weightedSum = Sigma(value x factor)
+where factor = weight, and the sum IS the percentage directly.</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.grading_config.default_grading_inputs">
+<span class="sig-prename descclassname"><span class="pre">src.services.grading_config.</span></span><span class="sig-name descname"><span class="pre">default_grading_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.grading.GradingInputs" title="src.models.grading.GradingInputs"><span class="pre">GradingInputs</span></a></span></span><a class="reference internal" href="../_modules/src/services/grading_config.html#default_grading_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.grading_config.default_grading_inputs" title="Link to this definition">¶</a></dt>
+<dd><p>Create a fresh set of zeroed grading inputs.</p>
+<p>All dimension scores are initialized to 0. Use this as the starting
+point for a new review session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>GradingInputs with every dimension set to 0.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.services.grading_config.weight_percentage">
+<span class="sig-prename descclassname"><span class="pre">src.services.grading_config.</span></span><span class="sig-name descname"><span class="pre">weight_percentage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.grading.GradingConfig" title="src.models.grading.GradingConfig"><span class="pre">GradingConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/src/services/grading_config.html#weight_percentage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.services.grading_config.weight_percentage" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the percentage weight of a dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dim_name</strong> – Name of the dimension (e.g. “code_quality_design”).</p></li>
+<li><p><strong>config</strong> – A GradingConfig instance containing the dimensions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Percentage contribution (0-100) of the dimension’s weight.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If no dimension with the given name is found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="models.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Models API</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="browser.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Browser Interop API</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2026, SciPro Team</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+<a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+  <iconify-icon icon="simple-icons:github"></iconify-icon>
+</a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/shibuya.js?v=cac61aee"></script></body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>State Management API - SciPro Review</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="Browser Interop API" href="browser.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9cf7cb20" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="State Management API"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      <img class="light-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <strong>SciPro Review</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="/.html">App Home</a></li><li class="link"><a href="/%23/review.html">Review</a></li><li class="link"><a href="/%23/settings.html">Settings</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="2"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/getting-started.html">Getting Started with SciPro Review</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/grading.html">Grading System Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../guides/deployment.html">Deployment Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../user-guide.html">User Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../yaml-content.html">YAML Content Management</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../contributing.html">Contributing to SciPro Review</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 _expand"><a class="reference internal" href="models.html">Models API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="services.html">Services API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="browser.html">Browser Interop API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">State Management API</a></li>
+</ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#src.state.ReviewState"><code class="docutils literal notranslate"><span class="pre">ReviewState</span></code></a><ul>
+<li><a class="reference internal" href="#src.state.ReviewState._state"><code class="docutils literal notranslate">_state</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState._undo_stack"><code class="docutils literal notranslate">_undo_stack</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState._redo_stack"><code class="docutils literal notranslate">_redo_stack</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.assignment_id"><code class="docutils literal notranslate">assignment_id</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.can_redo"><code class="docutils literal notranslate">can_redo</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.can_undo"><code class="docutils literal notranslate">can_undo</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.category_progress"><code class="docutils literal notranslate">category_progress</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.category_selections"><code class="docutils literal notranslate">category_selections</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.clear_grading_inputs"><code class="docutils literal notranslate">clear_grading_inputs()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.clear_history"><code class="docutils literal notranslate">clear_history()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.export_json"><code class="docutils literal notranslate">export_json()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.generated_text"><code class="docutils literal notranslate">generated_text</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.grading_inputs"><code class="docutils literal notranslate">grading_inputs</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.load_from_session"><code class="docutils literal notranslate">load_from_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.mode"><code class="docutils literal notranslate">mode</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.notification"><code class="docutils literal notranslate">notification</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.push_undo"><code class="docutils literal notranslate">push_undo()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.redo"><code class="docutils literal notranslate">redo()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.reset_session"><code class="docutils literal notranslate">reset_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.set_comment"><code class="docutils literal notranslate">set_comment()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.set_grading_input"><code class="docutils literal notranslate">set_grading_input()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.student_id"><code class="docutils literal notranslate">student_id</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.to_session"><code class="docutils literal notranslate">to_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.toggle_checkbox"><code class="docutils literal notranslate">toggle_checkbox()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.ReviewState.undo"><code class="docutils literal notranslate">undo()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.state.create_default_state"><code class="docutils literal notranslate"><span class="pre">create_default_state()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.dict_to_session"><code class="docutils literal notranslate"><span class="pre">dict_to_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.state.session_to_dict"><code class="docutils literal notranslate"><span class="pre">session_to_dict()</span></code></a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">SciPro Review</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">State Management API</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="module-src.state">
+<span id="state-management-api"></span><h1>State Management API<a class="headerlink" href="#module-src.state" title="Link to this heading">¶</a></h1>
+<p>Application state — DEFAULT_STATE, ReviewState, undo/redo, serialization helpers.</p>
+<p>This module provides the central state management for the SciPro review app,
+following the PuePy two-state architecture: self.state for UI-local data,
+self.application.state for shared business data.</p>
+<p>All app-wide state keys must be declared in DEFAULT_STATE. The ReviewState class
+wraps a ReactiveDict with convenience methods for checkbox toggling, grading input
+management, and undo/redo with a 50-snapshot limit.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.state.ReviewState">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">src.state.</span></span><span class="sig-name descname"><span class="pre">ReviewState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReactiveDict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/state.html#ReviewState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Wraps a PuePy ReactiveDict with state management, grading, and undo/redo.</p>
+<p>The ReactiveDict is expected to be bound to a PuePy Application’s
+<cite>self.application.state</cite>. Mutations through this wrapper update the
+reactive dict in-place, automatically triggering PuePy redraws for
+any components watching the changed keys.</p>
+<p>Undo/redo stores shallow snapshots of category_selections and
+grading_inputs only — NOT the full state dict. Snapshots are serialized
+as plain dicts/lists for safe JSON-style copy semantics.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.state.ReviewState._state">
+<span class="sig-name descname"><span class="pre">_state</span></span><a class="headerlink" href="#src.state.ReviewState._state" title="Link to this definition">¶</a></dt>
+<dd><p>The backing ReactiveDict instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.state.ReviewState._undo_stack">
+<span class="sig-name descname"><span class="pre">_undo_stack</span></span><a class="headerlink" href="#src.state.ReviewState._undo_stack" title="Link to this definition">¶</a></dt>
+<dd><p>List of serialized snapshots (oldest first).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.state.ReviewState._redo_stack">
+<span class="sig-name descname"><span class="pre">_redo_stack</span></span><a class="headerlink" href="#src.state.ReviewState._redo_stack" title="Link to this definition">¶</a></dt>
+<dd><p>List of serialized snapshots (oldest first).</p>
+</dd></dl>
+
+<p>Initialise the ReviewState wrapper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>state</strong> – A ReactiveDict pre-loaded with DEFAULT_STATE values.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.assignment_id">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">assignment_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.state.ReviewState.assignment_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.can_redo">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">can_redo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#src.state.ReviewState.can_redo" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.can_undo">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">can_undo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#src.state.ReviewState.can_undo" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.category_progress">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">category_progress</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.state.ReviewState.category_progress" title="Link to this definition">¶</a></dt>
+<dd><p>Count categories with at least one checked item vs total categories.</p>
+<p>Looks up the current criteria_bundle to determine total categories.
+Only counts categories that have entries in category_selections with
+a non-empty checked_items list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dict with keys “filled” (int) and “total” (int).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.category_selections">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">category_selections</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="models.html#src.models.session.CategorySelections" title="src.models.session.CategorySelections"><span class="pre">CategorySelections</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.state.ReviewState.category_selections" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.clear_grading_inputs">
+<span class="sig-name descname"><span class="pre">clear_grading_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.clear_grading_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.clear_grading_inputs" title="Link to this definition">¶</a></dt>
+<dd><p>Reset all grading dimension scores to zero.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.clear_history">
+<span class="sig-name descname"><span class="pre">clear_history</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.clear_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.clear_history" title="Link to this definition">¶</a></dt>
+<dd><p>Clear both undo and redo stacks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.export_json">
+<span class="sig-name descname"><span class="pre">export_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.export_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.export_json" title="Link to this definition">¶</a></dt>
+<dd><p>Export the current session as a JSON string.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.generated_text">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">generated_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.state.ReviewState.generated_text" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.grading_inputs">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">grading_inputs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#src.state.ReviewState.grading_inputs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.load_from_session">
+<span class="sig-name descname"><span class="pre">load_from_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.session.ReviewSession" title="src.models.session.ReviewSession"><span class="pre">ReviewSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.load_from_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.load_from_session" title="Link to this definition">¶</a></dt>
+<dd><p>Restore state from a ReviewSession instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> – The ReviewSession to restore state from.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.mode">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">mode</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.state.ReviewState.mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.notification">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">notification</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.state.ReviewState.notification" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.push_undo">
+<span class="sig-name descname"><span class="pre">push_undo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.push_undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.push_undo" title="Link to this definition">¶</a></dt>
+<dd><p>Push current review state snapshot onto the undo stack.</p>
+<p>The redo stack is cleared (new action invalidates redo history).
+When the undo stack exceeds _MAX_UNDO (50), the oldest entry is
+evicted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.redo">
+<span class="sig-name descname"><span class="pre">redo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.redo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.redo" title="Link to this definition">¶</a></dt>
+<dd><p>Re-apply the most recently undone action.</p>
+<p>The current state is pushed onto the undo stack, then the most
+recent redo snapshot is restored.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.reset_session">
+<span class="sig-name descname"><span class="pre">reset_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.reset_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.reset_session" title="Link to this definition">¶</a></dt>
+<dd><p>Clear all inputs in the current session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.set_comment">
+<span class="sig-name descname"><span class="pre">set_comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category_slug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.set_comment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.set_comment" title="Link to this definition">¶</a></dt>
+<dd><p>Update additional notes for a category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>category_slug</strong> – Slug identifying the rubric category.</p></li>
+<li><p><strong>text</strong> – Comment text to store.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.set_grading_input">
+<span class="sig-name descname"><span class="pre">set_grading_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.set_grading_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.set_grading_input" title="Link to this definition">¶</a></dt>
+<dd><p>Set the raw score for a grading dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dimension</strong> – Dimension key (e.g. ‘code_quality_design’).</p></li>
+<li><p><strong>value</strong> – Raw score value to set.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.state.ReviewState.student_id">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">student_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#src.state.ReviewState.student_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.to_session">
+<span class="sig-name descname"><span class="pre">to_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.session.ReviewSession" title="src.models.session.ReviewSession"><span class="pre">ReviewSession</span></a></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.to_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.to_session" title="Link to this definition">¶</a></dt>
+<dd><p>Build a ReviewSession dataclass from the current state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A ReviewSession populated from the reactive state.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.toggle_checkbox">
+<span class="sig-name descname"><span class="pre">toggle_checkbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category_slug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.toggle_checkbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.toggle_checkbox" title="Link to this definition">¶</a></dt>
+<dd><p>Toggle a checked item for a category.</p>
+<p>If the item is already checked, it is removed. Otherwise it is added.
+If the category does not yet exist in selections, it is created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>category_slug</strong> – Slug identifying the rubric category (e.g. ‘code_quality’).</p></li>
+<li><p><strong>point_id</strong> – Scoped sub-point identifier, format ‘{slug}::{sentiment}::{text}’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.state.ReviewState.undo">
+<span class="sig-name descname"><span class="pre">undo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/src/state.html#ReviewState.undo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.ReviewState.undo" title="Link to this definition">¶</a></dt>
+<dd><p>Revert the last mutable action.</p>
+<p>The current state is pushed onto the redo stack, then the most
+recent undo snapshot is restored.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.state.create_default_state">
+<span class="sig-prename descclassname"><span class="pre">src.state.</span></span><span class="sig-name descname"><span class="pre">create_default_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ReactiveDict</span></span></span><a class="reference internal" href="../_modules/src/state.html#create_default_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.create_default_state" title="Link to this definition">¶</a></dt>
+<dd><p>Create a fresh ReactiveDict populated with DEFAULT_STATE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new ReactiveDict ready for binding to a PuePy Application.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.state.dict_to_session">
+<span class="sig-prename descclassname"><span class="pre">src.state.</span></span><span class="sig-name descname"><span class="pre">dict_to_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="models.html#src.models.session.ReviewSession" title="src.models.session.ReviewSession"><span class="pre">ReviewSession</span></a></span></span><a class="reference internal" href="../_modules/src/state.html#dict_to_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.dict_to_session" title="Link to this definition">¶</a></dt>
+<dd><p>Rehydrate a plain dict back to a ReviewSession dataclass.</p>
+<p>Handles nested category_selections dicts by converting them back to
+CategorySelections dataclass instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – A plain dict (typically from IndexedDB or JSON deserialization).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A fully rehydrated ReviewSession.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.state.session_to_dict">
+<span class="sig-prename descclassname"><span class="pre">src.state.</span></span><span class="sig-name descname"><span class="pre">session_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="models.html#src.models.session.ReviewSession" title="src.models.session.ReviewSession"><span class="pre">ReviewSession</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/src/state.html#session_to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.state.session_to_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a ReviewSession dataclass to a plain serializable dict.</p>
+<p>Ensures CategorySelections dataclass instances are converted to plain
+dicts so the result is safe for IndexedDB or JSON serialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> – The ReviewSession to serialize.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A plain dict representation without dataclass instances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="browser.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Browser Interop API</div></div>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2026, SciPro Team</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+<a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+  <iconify-icon icon="simple-icons:github"></iconify-icon>
+</a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/shibuya.js?v=cac61aee"></script></body>
+</html>

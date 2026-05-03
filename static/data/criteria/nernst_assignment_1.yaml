@@ -1,0 +1,106 @@
+general:
+  followingInstructions:
+    title: Following Instructions
+    additional_notes: true
+    positive: []
+    neutral: []
+    negative:
+    - main_point: You did not follow the assignment's instructions, which includes
+      sub_points:
+      - text: not putting your name at the top of the assignment
+      - text: using the following libraries that were disallowed
+        comment: true
+      - text: not turning in the solution as a Jupyter-notebook
+  academicScholarship:
+    title: Academic Scholarship (Writing, Citing, References, Units and )
+    additional_notes: true
+    positive:
+    - main_point: 'Writing and communication - the following were done well:'
+      sub_points:
+      - text: good writing and communication
+    - main_point: 'Citations and references - the following were done well:'
+      sub_points:
+      - text: citing source of information and knowledge
+      - text: citing the references in proper order (e.g. ...[1-2]...[3]...)
+    - main_point: 'Units - the following were done well:'
+      sub_points:
+      - text: providing units for your numeric answers
+    neutral: []
+    negative:
+    - main_point: 'Writing and communication - the following were not done well:'
+      sub_points:
+      - text: difficult to understand sentences
+      - text: improper sentences (e.g., capitalization, punctuations) when appropriate
+          (e.g., in markdown, comments)
+      - text: no context given for the problem
+      - text: many misspelled English words
+      - text: mixing of English and German words
+      - text: an image of the homework assignment is not good enough and implies a
+          lack of effort
+    - main_point: 'Citations and references - the following were not done well:'
+      sub_points:
+      - text: no citation of sources. As a university student, you should cite sources
+          of knowledge. This is required for your thesis.
+      - text: not citing sources for the equation
+      - text: not including (or incompletely done) citations (e.g., [1, 2]) within
+          your text. You need to show how the references were used.
+      - text: the references are missing important components (e.g., a year, author,
+          title, accessed date, etc.)
+      - text: citing references out-of-order (e.g., the 1st citation is not to reference
+          1)
+    - main_point: Units - the following were not done well
+      sub_points:
+      - text: no (or incompletely done) units given with your numbers (e.g., constants,
+          inputs values, answers).
+  jupyterNotebooks:
+    title: Jupyter Notebooks
+    additional_notes: true
+    positive:
+    - main_point: Overall Notebook Structure
+      sub_points:
+      - text: Good use of cells structure to separate ideas (e.g. thoughts, tasks/subtasks,
+          user-defined functions).
+      - text: Good use of the Jupyter-notebook as a laboratory notebook.
+      - text: Logical ordering and mixture of the markdown and code cells.
+    - main_point: Markdown Cells
+      sub_points:
+      - text: Good use of markdown cells to communicate the problem being investigated;
+          your thoughts and ideas; or methodological workflow.
+    neutral:
+    - main_point: Overall Notebook Structure
+      sub_points:
+      - text: Some separation concerning the tasks, subtasks, or ideas into different
+          cells is seen in your solution. However, more could have been done to improve
+          the notebook's organization and understanding.
+    - main_point: Markdown Cells
+      sub_points:
+      - text: Some markdown cells usage is demonstrated in your solution. However,
+          including some more information would have improved the notebook's ability
+          to convey your thoughts/ideas.
+    negative:
+    - main_point: Overall Notebook Structure
+      sub_points:
+      - text: Significant work is needed to better separate the tasks, subtasks, or
+          thoughts/ideas into separate cells for improving the notebook's organization
+          and understanding.
+    - main_point: Markdown Cells
+      sub_points:
+      - text: Please provided more context through markdown cells that state the problem
+          being investigated; your ideas and thoughts; or the methodological workflow.
+    - main_point: Code Cells
+      sub_points:
+      - text: Separating your code into different code cells that isolate a general
+          idea or concept would improve the ease of understanding, readability, and
+          transferability to future projects.
+      - text: Writing your entire, lengthy solution into 1 code cell is not ideal,
+          and does not make good use of a Jupyter-notebook's capability.
+  wrongNumbers:
+    title: Wrong Numbers
+    additional_notes: false
+    positive: []
+    neutral: []
+    negative:
+    - main_point: ''
+      sub_points:
+      - text: The mass of the sun and/or the earth is wrong!
+assignment_specific: []

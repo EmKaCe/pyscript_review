@@ -1,0 +1,65 @@
+general:
+  plotting:
+    title: Plotting
+    additional_notes: true
+    positive:
+    - main_point: Overall plot feedback
+      sub_points:
+      - text: General - Choices behind the plot(s) were well done, resulting in clear
+          and informative data presentation
+      - text: Color palette - well chosen
+    - main_point: The plot details were good regarding
+      sub_points:
+      - text: axis labels
+      - text: color
+      - text: font size
+      - text: legend
+      - text: line style
+      - text: line thickness
+      - text: point style
+      - text: point size
+      - text: title
+      - text: units
+    neutral:
+    - main_point: Overall plot feedback
+      sub_points:
+      - text: The choices behind the plot creation were generally good, but there
+          is some room for improvement.
+    negative:
+    - main_point: Overall plot feedback
+      sub_points:
+      - text: Plotting data - Data was not visualized/plotted.
+      - text: Plot type(s) - Type was poorly chosen. It would have been more appropriate
+          to plot the data as
+        comment: true
+      - text: Related plots/data - Do not have the same axis range, preventing direct
+          comparisons.
+    - main_point: 'Composition: Data Overload/Too Many Plots'
+      sub_points:
+      - text: 'Too Many Plots: Combining the data into a single (or a reduced number)
+          plots would have been a more concise presentation and allowed easier comparison.'
+      - text: 'Data Overload: The amount of data presented in a single plot was excessive
+          (too many series/variables), leading to clutter. Consider separating the
+          data.'
+    - main_point: Missing Essential Plot Elements
+      sub_points:
+      - text: Axis labels - Missing or incomplete
+      - text: Legend - Missing when multiple data series are present
+      - text: Units - Missing on axis labels or title
+      - text: Title - Plot title is missing
+    - main_point: Poor Choice or Execution of Elements
+      sub_points:
+      - text: Axes and data - independent data should be on the x-axis and dependent
+          data on the y-axis
+      - text: Axis labels - Insufficient detail, misleading, or without untis.
+      - text: Color choice - Poor contrast or poor color mapping (i.e., dificult to
+          distinquish).
+      - text: Color choice - Different data series should be assigned different colors
+          to distinguish them.
+      - text: Font size - Too small/large, which significantly impacting readability.
+      - text: Font size - Too small/large, which significantly impacting readability.
+      - text: Line/point styles - Confusingly similar or inappropriate for the data
+          type.
+      - text: Line styles - A different thickness would have been more appropriate.
+      - text: Point styles - A different size would have been more appropriate.
+assignment_specific: []

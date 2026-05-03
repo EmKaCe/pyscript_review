@@ -1,0 +1,101 @@
+general:
+  Pandas:
+    title: Pandas
+    additional_notes: true
+    positive:
+    - main_point: Overall Pandas feedback
+      sub_points:
+      - text: Good use of Pandas.
+      - text: Good use of the Pandas functions.
+      - text: Good use of 'to_numpy()'.
+      - text: Good job on keeping a single DataFrame throughout the assignment.
+    neutral: []
+    negative:
+    - main_point: Reading Data Into Pandas
+      sub_points:
+      - text: Would have been clear enough to use a single DataFrame throughout the
+          assignment, reducing the number of objects that were used.
+      - text: Delimiter (i.e., `sep`) - incorrectly specified the separator used within
+          the CSV-formatted file.
+      - text: Incorrectly read in the data.
+    - main_point: Cleaning Data
+      sub_points:
+      - text: Data cleaning not done - you did not drop duplicated rows and/or rows
+          with empty cells.
+      - text: '`drop_duplicates` - you did not save the results (e.g., using `inplace`
+          or assigning it to a new object).'
+      - text: '`dropna` - you did not save the results (e.g., using `inplace` or assigning
+          it to a new object).'
+    - main_point: Miscellaneous
+      sub_points:
+      - text: 'Displaying Data: data is not displayed well (e.g., via a print statement)
+          - should display data in a Pandas'' table when possible.'
+  Correlation:
+    title: Correlations
+    additional_notes: true
+    positive:
+    - main_point: The following points were well done
+      sub_points:
+      - text: Correlation correctly computed.
+      - text: Good job on the correlation analysis.
+      - text: Good job on using Panda's built-in correlations function.
+      - text: Good job on using seaborn to display the correlation table.
+    neutral: []
+    negative:
+    - main_point: The following points would improve your correlation analysis
+      sub_points:
+      - text: Correlation analysis was not done well or was incorrect.
+      - text: Correlation was not computed using Pandas' built-in function.
+      - text: Correlation was not computed using Pearson method.
+      - text: Correlation table was not display the using seaborn.
+      - text: The color key bar should be from -1.0 to +1.0.
+      - text: The color palette choice should have been a divergent color scheme.
+      - text: (Minor) The choice of colors was not chosen well (e.g., positive correlation
+          is normally blue, and negative is red).
+  NumPy:
+    title: NumPy Library
+    additional_notes: true
+    positive:
+    - main_point: The following points were well done
+      sub_points:
+      - text: Good use of Numpy functions.
+    neutral:
+    - main_point: The following points would improve your NumPy solution slightly
+      sub_points:
+      - text: 'NumPy: use the community abbreviation of ''np''.'
+    negative: []
+  sklearn:
+    title: sklearn
+    additional_notes: true
+    positive:
+    - main_point: Overall sklearn feedback
+      sub_points:
+      - text: analysis - strong domain knowledge shown by recognizing the limitations
+          of a specific model (e.g., K Neighbors Regressor) for the given problem.
+      - text: evaluation metrics - done correctly.
+      - text: Good use of sklearn and its functions.
+      - text: Good use of 'MinMaxScaler' function for normalizing the data.
+      - text: Good job and separating the the target data from the other features.
+    neutral: []
+    negative:
+    - main_point: The following points were problems in your solution
+      sub_points:
+      - text: Data normalization - not done or incorrectly done.
+      - text: Data splitting - not done use sklearn's 'train_test_split'.
+      - text: Data splitting - not done use 'random_state=1' keyword and parameter
+          combination.
+      - text: Data splitting object naming - (minor critique) would have been good
+          for the names different than the sklearn'ed example (e.g., not X_train etc.).
+      - text: Model - did not use sklearn's 'K Neighbors Regressor', 'Logistic Regression',
+          'Decision Tree Classifier', and/or 'Random Forest Classifier' functions.
+      - text: Model - did not properly set the parameters for each model (e.g., 1
+          neighbor; Newton conjugate gradient solver; 100 trees; etc.).
+      - text: Model - did not train using the training dataset from the split.
+      - text: Model - did not evaluate the trained model using the testing data set
+          from the split
+      - text: Model - did not evaluate the trained model using Precision, Recall and
+          F1-Score.
+      - text: Results - incorrectly computed models.
+      - text: Results - incorrect, poor (e.g., no discussion of which model performs
+          best/worse), or no analysis done.
+assignment_specific: []

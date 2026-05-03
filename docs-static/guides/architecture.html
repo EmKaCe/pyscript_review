@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Architecture Guide - SciPro Review</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=9cf7cb20" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="Architecture Guide"/>
+    <meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      <img class="light-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <img class="dark-logo" src="../_static/logo.svg" alt="SciPro Review" height="28" loading="lazy" />
+      <strong>SciPro Review</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="/.html">App Home</a></li><li class="link"><a href="/%23/review.html">Review</a></li><li class="link"><a href="/%23/settings.html">Settings</a></li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="2"><p class="caption" role="heading" aria-level="3"><span class="caption-text">Guides:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="getting-started.html">Getting Started with SciPro Review</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="grading.html">Grading System Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="deployment.html">Deployment Guide</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../yaml-content.html">YAML Content Management</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../contributing.html">Contributing to SciPro Review</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../api/models.html">Models API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../api/services.html">Services API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../api/browser.html">Browser Interop API</a></li>
+<li class="toctree-l1 _expand"><a class="reference internal" href="../api/state.html">State Management API</a></li>
+</ul>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#puepy-two-state-model">PuePy Two-State Model</a><ul>
+<li><a class="reference internal" href="#self-state-local-state"><code class="docutils literal notranslate">state</span></code> (Local State)</a></li>
+<li><a class="reference internal" href="#self-application-state-global-state"><code class="docutils literal notranslate">application.state</span></code> (Global State)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#component-lifecycle">Component Lifecycle</a></li>
+<li><a class="reference internal" href="#component-instantiation">Component Instantiation</a><ul>
+<li><a class="reference internal" href="#how-the-builder-works">How the Builder Works</a></li>
+<li><a class="reference internal" href="#correct-pattern">Correct Pattern</a></li>
+<li><a class="reference internal" href="#naming-convention">Naming Convention</a></li>
+<li><a class="reference internal" href="#anti-pattern-direct-instantiation">Anti-Pattern: Direct Instantiation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#component-authoring">Component Authoring</a><ul>
+<li><a class="reference internal" href="#props">Props</a></li>
+<li><a class="reference internal" href="#events">Events</a></li>
+<li><a class="reference internal" href="#slots">Slots</a></li>
+<li><a class="reference internal" href="#parent-child-relationships">Parent/Child Relationships</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#browser-interop-pattern">Browser Interop Pattern</a></li>
+<li><a class="reference internal" href="#core-system-components">Core System Components</a><ul>
+<li><a class="reference internal" href="#basecoat-bridge">Basecoat Bridge</a></li>
+<li><a class="reference internal" href="#indexeddb-persistence">IndexedDB Persistence</a></li>
+</ul>
+</li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">SciPro Review</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Architecture Guide</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue" role="main">
+          <section id="architecture-guide">
+<h1>Architecture Guide<a class="headerlink" href="#architecture-guide" title="Link to this heading">¶</a></h1>
+<p>This document explains the architectural patterns used in SciPro Review.</p>
+<section id="puepy-two-state-model">
+<h2>PuePy Two-State Model<a class="headerlink" href="#puepy-two-state-model" title="Link to this heading">¶</a></h2>
+<p>The application uses a dual-state architecture to separate UI-local state from business data.</p>
+<section id="self-state-local-state">
+<h3><code class="docutils literal notranslate"><span class="pre">self.state</span></code> (Local State)<a class="headerlink" href="#self-state-local-state" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Scope</strong>: Component-level or Page-level.</p></li>
+<li><p><strong>Lifetime</strong>: Ephemeral; lost on navigation or component destruction.</p></li>
+<li><p><strong>Use Case</strong>: UI flags, active tab indices, accordion states, drag-and-drop indicators.</p></li>
+</ul>
+</section>
+<section id="self-application-state-global-state">
+<h3><code class="docutils literal notranslate"><span class="pre">self.application.state</span></code> (Global State)<a class="headerlink" href="#self-application-state-global-state" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Scope</strong>: Application-wide.</p></li>
+<li><p><strong>Lifetime</strong>: Persistent across navigation and page transitions.</p></li>
+<li><p><strong>Use Case</strong>: User session, grading criteria, form inputs, final grades, and shared configuration.</p></li>
+</ul>
+<p><strong>Rule</strong>: If data must survive navigation or is shared between different components, it MUST reside in <code class="docutils literal notranslate"><span class="pre">self.application.state</span></code>.</p>
+</section>
+</section>
+<section id="component-lifecycle">
+<h2>Component Lifecycle<a class="headerlink" href="#component-lifecycle" title="Link to this heading">¶</a></h2>
+<p>PuePy components follow a strict initialization sequence:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__()</span></code>: Basic object instantiation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_configure(kwargs)</span></code>: Processing of component properties (props).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_handle_bind(kwargs)</span></code>: Binding keys are processed here.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_handle_attrs(kwargs)</span></code>: HTML attributes are set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.state</span> <span class="pre">=</span> <span class="pre">ReactiveDict(self.initial())</span></code>: Local state is initialized.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bind()</span></code>: Logic for connecting state to UI.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">populate()</span></code>: Final data population before render.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_ready()</span></code>: Component is fully mounted in the DOM.</p></li>
+</ol>
+</section>
+<section id="component-instantiation">
+<h2>Component Instantiation<a class="headerlink" href="#component-instantiation" title="Link to this heading">¶</a></h2>
+<p><strong>PuePy’s official documentation explicitly states</strong>: “Components should not be created directly. In your <code class="docutils literal notranslate"><span class="pre">populate()</span></code> method, call <code class="docutils literal notranslate"><span class="pre">t.tag_name()</span></code> to create a component. There’s no reason an application developer should directly instantiate a component instance and doing so is not supported.”</p>
+<section id="how-the-builder-works">
+<h3>How the Builder Works<a class="headerlink" href="#how-the-builder-works" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;t.component()</span></code> decorator registers a class with PuePy’s <code class="docutils literal notranslate"><span class="pre">t</span></code> Builder object. When you call <code class="docutils literal notranslate"><span class="pre">t.component_name()</span></code> in <code class="docutils literal notranslate"><span class="pre">populate()</span></code>, it invokes <code class="docutils literal notranslate"><span class="pre">Builder.generate_tag()</span></code>, which automatically provides the required <code class="docutils literal notranslate"><span class="pre">ref</span></code>, <code class="docutils literal notranslate"><span class="pre">origin</span></code>, and <code class="docutils literal notranslate"><span class="pre">page</span></code> arguments that the component’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code> expects.</p>
+<p>Direct class instantiation (e.g., <code class="docutils literal notranslate"><span class="pre">SciProCard(...)</span></code>) bypasses the Builder and results in a <code class="docutils literal notranslate"><span class="pre">Tag.__init__()</span> <span class="pre">missing</span> <span class="pre">1</span> <span class="pre">required</span> <span class="pre">positional</span> <span class="pre">argument:</span> <span class="pre">'ref'</span></code> runtime error.</p>
+</section>
+<section id="correct-pattern">
+<h3>Correct Pattern<a class="headerlink" href="#correct-pattern" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 1. Define and register the component</span>
+</span><span data-line="2"><span class="nd">@t</span><span class="o">.</span><span class="n">component</span><span class="p">()</span>
+</span><span data-line="3"><span class="k">class</span><span class="w"> </span><span class="nc">SciProCard</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span data-line="4">    <span class="n">component_name</span> <span class="o">=</span> <span class="s2">&quot;sci-pro-card&quot;</span>  <span class="c1"># → t.sci_pro_card()</span>
+</span><span data-line="5">    <span class="n">props</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;variant&quot;</span><span class="p">]</span>
+</span><span data-line="6">
+</span><span data-line="7">    <span class="k">def</span><span class="w"> </span><span class="nf">populate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="8">        <span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;card&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;card-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">variant</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]):</span>
+</span><span data-line="9">            <span class="bp">self</span><span class="o">.</span><span class="n">insert_slot</span><span class="p">()</span>  <span class="c1"># default slot</span>
+</span><span data-line="10">
+</span><span data-line="11"><span class="c1"># 2. Use it in a page via the Builder</span>
+</span><span data-line="12"><span class="k">class</span><span class="w"> </span><span class="nc">ReviewPage</span><span class="p">(</span><span class="n">Page</span><span class="p">):</span>
+</span><span data-line="13">    <span class="k">def</span><span class="w"> </span><span class="nf">populate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="14">        <span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">sci_pro_card</span><span class="p">(</span><span class="n">variant</span><span class="o">=</span><span class="s2">&quot;outlined&quot;</span><span class="p">):</span>
+</span><span data-line="15">            <span class="n">t</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="s2">&quot;Content inside the card&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="naming-convention">
+<h3>Naming Convention<a class="headerlink" href="#naming-convention" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Class Name</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">component_name</span></code></p></th>
+<th class="head"><p>Builder Call</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SciProCard</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;sci-pro-card&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">t.sci_pro_card()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SciProButton</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;sci-pro-button&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">t.sci_pro_button()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SciProInput</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;sci-pro-input&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">t.sci_pro_input()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SciProGradeSlider</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;sci-pro-grade-slider&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">t.sci_pro_grade_slider()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="anti-pattern-direct-instantiation">
+<h3>Anti-Pattern: Direct Instantiation<a class="headerlink" href="#anti-pattern-direct-instantiation" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># ❌ WRONG — crashes with Tag.__init__() missing &#39;ref&#39;</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">src.components.atomic.card</span><span class="w"> </span><span class="kn">import</span> <span class="n">SciProCard</span>
+</span><span data-line="3"><span class="n">SciProCard</span><span class="p">(</span><span class="n">variant</span><span class="o">=</span><span class="s2">&quot;outlined&quot;</span><span class="p">)</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="c1"># ✅ CORRECT — via Builder</span>
+</span><span data-line="6"><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">sci_pro_card</span><span class="p">(</span><span class="n">variant</span><span class="o">=</span><span class="s2">&quot;outlined&quot;</span><span class="p">):</span>
+</span><span data-line="7">    <span class="n">t</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="s2">&quot;Content&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>Pages must NEVER import component classes. The <code class="docutils literal notranslate"><span class="pre">t</span></code> Builder is the sole entry point for creating component instances.</p>
+</section>
+</section>
+<section id="component-authoring">
+<h2>Component Authoring<a class="headerlink" href="#component-authoring" title="Link to this heading">¶</a></h2>
+<section id="props">
+<h3>Props<a class="headerlink" href="#props" title="Link to this heading">¶</a></h3>
+<p>Define accepted data as a list of strings or <code class="docutils literal notranslate"><span class="pre">Prop</span></code> instances:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span><span class="w"> </span><span class="nc">SciProCard</span><span class="p">(</span><span class="n">Component</span><span class="p">):</span>
+</span><span data-line="2">    <span class="n">props</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;variant&quot;</span><span class="p">,</span> <span class="n">Prop</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="s2">&quot;Card size&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;md&quot;</span><span class="p">)]</span>
+</span></pre></div>
+</div>
+<p>Kwargs that don’t match any prop become HTML attributes on the rendered element.</p>
+</section>
+<section id="events">
+<h3>Events<a class="headerlink" href="#events" title="Link to this heading">¶</a></h3>
+<p>Emit custom events with <code class="docutils literal notranslate"><span class="pre">self.trigger_event(&quot;name&quot;,</span> <span class="pre">detail={...})</span></code>. Consume with <code class="docutils literal notranslate"><span class="pre">on_name=self.handler</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># In component:</span>
+</span><span data-line="2"><span class="k">def</span><span class="w"> </span><span class="nf">some_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="3">    <span class="bp">self</span><span class="o">.</span><span class="n">trigger_event</span><span class="p">(</span><span class="s2">&quot;greeting&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello&quot;</span><span class="p">})</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="c1"># In parent:</span>
+</span><span data-line="6"><span class="k">class</span><span class="w"> </span><span class="nc">MyPage</span><span class="p">(</span><span class="n">Page</span><span class="p">):</span>
+</span><span data-line="7">    <span class="k">def</span><span class="w"> </span><span class="nf">populate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="8">        <span class="n">t</span><span class="o">.</span><span class="n">my_component</span><span class="p">(</span><span class="n">on_greeting</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_greeting_sent</span><span class="p">)</span>
+</span><span data-line="9">
+</span><span data-line="10">    <span class="k">def</span><span class="w"> </span><span class="nf">on_greeting_sent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+</span><span data-line="11">        <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">detail</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">))</span>
+</span></pre></div>
+</div>
+</section>
+<section id="slots">
+<h3>Slots<a class="headerlink" href="#slots" title="Link to this heading">¶</a></h3>
+<p>Define slots with <code class="docutils literal notranslate"><span class="pre">self.insert_slot()</span></code> in <code class="docutils literal notranslate"><span class="pre">populate()</span></code>. Consume with <code class="docutils literal notranslate"><span class="pre">component.slot()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># In component:</span>
+</span><span data-line="2"><span class="k">def</span><span class="w"> </span><span class="nf">populate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="3">    <span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">div</span><span class="p">():</span>
+</span><span data-line="4">        <span class="bp">self</span><span class="o">.</span><span class="n">insert_slot</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">)</span>
+</span><span data-line="5">        <span class="bp">self</span><span class="o">.</span><span class="n">insert_slot</span><span class="p">()</span>  <span class="c1"># default slot</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># In parent:</span>
+</span><span data-line="8"><span class="k">with</span> <span class="n">t</span><span class="o">.</span><span class="n">sci_pro_card</span><span class="p">()</span> <span class="k">as</span> <span class="n">card</span><span class="p">:</span>
+</span><span data-line="9">    <span class="k">with</span> <span class="n">card</span><span class="o">.</span><span class="n">slot</span><span class="p">(</span><span class="s2">&quot;header&quot;</span><span class="p">):</span>
+</span><span data-line="10">        <span class="n">t</span><span class="o">.</span><span class="n">h3</span><span class="p">(</span><span class="s2">&quot;Title&quot;</span><span class="p">)</span>
+</span><span data-line="11">    <span class="k">with</span> <span class="n">card</span><span class="o">.</span><span class="n">slot</span><span class="p">():</span>
+</span><span data-line="12">        <span class="n">t</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="s2">&quot;Body content&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><strong>Important</strong>: Use <code class="docutils literal notranslate"><span class="pre">card.slot(&quot;header&quot;)</span></code>, NOT <code class="docutils literal notranslate"><span class="pre">t.slot(&quot;header&quot;)</span></code> or <code class="docutils literal notranslate"><span class="pre">self.slot(&quot;header&quot;)</span></code>.</p>
+</section>
+<section id="parent-child-relationships">
+<h3>Parent/Child Relationships<a class="headerlink" href="#parent-child-relationships" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">self.page</span></code> — the Page instance responsible for rendering</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.origin</span></code> — the Component that created this one in its <code class="docutils literal notranslate"><span class="pre">populate()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">self.parent</span></code> — direct DOM parent (a <code class="docutils literal notranslate"><span class="pre">Tag</span></code> instance, not necessarily a Component)</p></li>
+</ul>
+<p>Do NOT modify these attributes.</p>
+</section>
+</section>
+<section id="browser-interop-pattern">
+<h2>Browser Interop Pattern<a class="headerlink" href="#browser-interop-pattern" title="Link to this heading">¶</a></h2>
+<p>Since the app runs in PyScript (Pyodide), it interacts with the browser’s JavaScript environment. To support both browser execution and <code class="docutils literal notranslate"><span class="pre">pytest</span></code> execution, a dual-mode import pattern is used:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">try</span><span class="p">:</span>
+</span><span data-line="2">    <span class="kn">from</span><span class="w"> </span><span class="nn">js</span><span class="w"> </span><span class="kn">import</span> <span class="n">window</span><span class="p">,</span> <span class="n">document</span><span class="p">,</span> <span class="n">localStorage</span>
+</span><span data-line="3"><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span><span data-line="4">    <span class="kn">from</span><span class="w"> </span><span class="nn">unittest.mock</span><span class="w"> </span><span class="kn">import</span> <span class="n">MagicMock</span>
+</span><span data-line="5">    <span class="n">window</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+</span><span data-line="6">    <span class="n">document</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+</span><span data-line="7">    <span class="n">localStorage</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+</span></pre></div>
+</div>
+</section>
+<section id="core-system-components">
+<h2>Core System Components<a class="headerlink" href="#core-system-components" title="Link to this heading">¶</a></h2>
+<section id="basecoat-bridge">
+<h3>Basecoat Bridge<a class="headerlink" href="#basecoat-bridge" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">BasecoatBridge</span></code> provides a unified interface to the Basecoat UI framework. It is initialized via <code class="docutils literal notranslate"><span class="pre">init_basecoat()</span></code> and manages global UI themes and layout behaviors.</p>
+</section>
+<section id="indexeddb-persistence">
+<h3>IndexedDB Persistence<a class="headerlink" href="#indexeddb-persistence" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">BrowserStorage</span></code> service handles the persistence of session data into IndexedDB, ensuring that review progress is not lost on page refresh.</p>
+</section>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2026, SciPro Team</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+<a href="https://github.com/ohmyopen-code/scipro" aria-label="GitHub">
+  <iconify-icon icon="simple-icons:github"></iconify-icon>
+</a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/shibuya.js?v=cac61aee"></script></body>
+</html>

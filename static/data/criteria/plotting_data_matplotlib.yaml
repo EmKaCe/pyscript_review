@@ -1,0 +1,21 @@
+general:
+  plotting:
+    title: Plotting
+    additional_notes: true
+    positive:
+    - main_point: Additional Points
+      sub_points:
+      - text: Good exploration of the input data (e.g., statistics, correlation analysis,
+          running averages, etc.)
+      - text: Good choice of a topic - very interesting
+    neutral:
+    - main_point: Overall plot feedback
+      sub_points:
+      - text: The choices behind the plot creation were generally good, but there
+          is some room for improvement.
+    negative:
+    - main_point: Additional Issues
+      sub_points:
+      - text: additional data exploration could have been done
+      - text: tick-mark labels were missing - leaving gaps in conveying the information
+assignment_specific: []
